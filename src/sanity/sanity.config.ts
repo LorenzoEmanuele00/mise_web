@@ -10,6 +10,7 @@ const READONLY = new Set(['contactSubmission', 'volunteerSubmission'])
 export default defineConfig({
   name: 'misericordia-gello',
   title: 'Misericordia di Gello',
+  basePath: '/studio',
   projectId,
   dataset,
   plugins: [

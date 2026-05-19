@@ -1,26 +1,165 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-ink:         #16130E;
+  --color-bg:          #F2ECE0;
+  --color-accent:      #B85333;
+  --color-bg-elev:     #EAE4D4;
+  --color-bg-deep:     #E5DFCF;
+  --color-ink-soft:    #2E2B27;
+  --color-muted:       #B8B5B1;
+  --color-accent-soft: #D48A6B;
+  --color-accent-deep: #7A3218;
+  --color-hair:        rgba(22,19,14,0.12);
+  --color-hair-strong: rgba(22,19,14,0.22);
+
+  --font-display: var(--font-instrument-serif), "Cormorant Garamond", Georgia, serif;
+  --font-sans:    var(--font-dm-sans), system-ui, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  html {
+    background-color: #F2ECE0;
+    color: #16130E;
+  }
+
+  body {
+    font-family: var(--font-sans);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  .h-display {
+    font-family: var(--font-display);
+    font-size: clamp(3.25rem, 6vw, 5.5rem);
+    line-height: 0.96;
+  }
+
+  .h-1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.375rem, 4vw, 3.5rem);
+    line-height: 1.05;
+  }
+
+  .h-2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.625rem, 2.8vw, 2.25rem);
+    line-height: 1.1;
+  }
+
+  .h-3 {
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 2vw, 1.625rem);
+    line-height: 1.2;
+  }
+
+  .serif {
+    font-family: var(--font-display);
+  }
+
+  .serif-it {
+    font-family: var(--font-display);
+    font-style: italic;
+  }
+
+  .body-lg {
+    font-family: var(--font-sans);
+    font-size: clamp(1.125rem, 1.5vw, 1.25rem);
+    line-height: 1.6;
+  }
+
+  .body {
+    font-family: var(--font-sans);
+    font-size: clamp(1rem, 1.2vw, 1.0625rem);
+    line-height: 1.7;
+  }
+
+  .body-sm {
+    font-family: var(--font-sans);
+    font-size: clamp(0.875rem, 1vw, 0.9375rem);
+    line-height: 1.6;
+  }
+
+  .kicker {
+    font-family: var(--font-sans);
+    font-size: clamp(0.75rem, 1vw, 0.8125rem);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+  }
+
+  .kicker::before {
+    content: '';
+    display: inline-block;
+    width: 1.5rem;
+    height: 1px;
+    background-color: currentColor;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+  }
+
+  .shell {
+    max-width: 1200px;
+    padding-left: clamp(1.5rem, 4vw, 3rem);
+    padding-right: clamp(1.5rem, 4vw, 3rem);
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.15s;
+    text-decoration: none;
+  }
+
+  .btn-dark {
+    background-color: #16130E;
+    color: #F2ECE0;
+  }
+
+  .btn-dark:hover {
+    opacity: 0.85;
+  }
+
+  .btn-ghost {
+    border: 1px solid currentColor;
+    color: #16130E;
+  }
+
+  .btn-ghost:hover {
+    background-color: rgba(22,19,14,0.06);
+  }
+
+  .input {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid rgba(22,19,14,0.22);
+    background: transparent;
+    padding: 0.5rem 0;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    outline: none;
+    color: #16130E;
+  }
+
+  .input:focus {
+    border-bottom-color: #16130E;
+  }
+
+  .input-label {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #B8B5B1;
+    margin-bottom: 0.25rem;
+  }
 }

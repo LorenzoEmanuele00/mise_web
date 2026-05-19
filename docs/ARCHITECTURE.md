@@ -157,8 +157,8 @@ mise_web/
 | Route | Metodo | Funzione |
 |-------|--------|---------|
 | `/api/revalidate` | POST | Riceve webhook Sanity, chiama `revalidateTag` |
-| `/api/contact` | POST | Valida form contatti, scrive submission su Sanity |
-| `/api/volunteer` | POST | Valida form volontari, scrive submission su Sanity |
+
+> **Form**: gestiti via **Server Actions** (`src/app/actions/submitForms.ts`), non API routes.
 
 ---
 
@@ -170,6 +170,26 @@ mise_web/
 - **Sanity**: `@sanity/document-internationalization` plugin — un documento per lingua
 - **Priorità v1**: soltanto IT; la struttura EN si predispone ma non si traduce subito
 - **Esclusione middleware**: `/studio` va escluso dal matcher di next-intl
+
+---
+
+## Architettura componenti — layer system
+
+I componenti seguono una gerarchia bottom-up. Ogni layer usa solo quello sottostante.
+
+```
+Layer 1 — globals.css        token + 6-8 classi strutturali (≤ 230 righe)
+Layer 2 — ui/                atomi: Arrow, Btn, Kicker, Num, SanityImage
+Layer 3 — layout/            Section, Header, Footer
+Layer 4 — sections/          HeroSection, StatsStrip, TimelineSection, ...
+Layer 5 — app/*/page.tsx     composizione pura (≤ 70 righe, server component)
+```
+
+**Regole:**
+- Stili dei componenti: Tailwind utilities inline nel TSX. Niente CSS per componente.
+- Eccezioni in globals.css: solo classi che non si esprimono bene con Tailwind (nav offcanvas, dark-band, transizioni drawer).
+- Componenti client (`'use client'`): solo le foglie interattive (accordion, filtri, form).
+- Ogni page.tsx importa sezioni, non fa markup inline.
 
 ---
 

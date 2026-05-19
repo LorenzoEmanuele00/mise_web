@@ -4,8 +4,8 @@ import type { Servizio } from '@/lib/types'
 import { notFound } from 'next/navigation'
 
 export async function generateStaticParams() {
-  const slugs = await client.fetch<{ slug: { current: string } }[]>(ALL_SERVIZI_SLUGS_QUERY)
-  return slugs.map((s) => ({ slug: s.slug.current }))
+  const slugs = await client.fetch<{ slug: string }[]>(ALL_SERVIZI_SLUGS_QUERY)
+  return slugs.map((s) => ({ slug: s.slug }))
 }
 
 export default async function ServizioPage({

@@ -1,11 +1,11 @@
 import { client } from '@/sanity/lib/client'
 import { SERVIZIO_CIVILE_QUERY } from '@/sanity/lib/queries'
 import type { ServizioCivile } from '@/lib/types'
-import Section from '@/components/layout/Section'
-import PageHeader from '@/components/layout/PageHeader'
-import ScTipiSection from '@/components/sections/ScTipiSection'
+import ScTabController from '@/components/sections/ScTabController'
 import ScStepsSection from '@/components/sections/ScStepsSection'
+import ScTestimonianzeSection from '@/components/sections/ScTestimonianzeSection'
 import ScFaqSection from '@/components/sections/ScFaqSection'
+import ScApplySection from '@/components/sections/ScApplySection'
 
 export default async function ServizioCivilePage() {
   const sc = await client.fetch<ServizioCivile | null>(
@@ -16,16 +16,25 @@ export default async function ServizioCivilePage() {
 
   return (
     <main>
-      <Section loose>
-        <PageHeader kicker="Opportunità" title="Servizio Civile" />
-        {sc?.introText && (
-          <p className="body-lg text-ink-soft max-w-xl">{sc.introText}</p>
-        )}
-      </Section>
+      {sc?.tipi && sc.tipi.length > 0 && (
+        <ScTabController tipi={sc.tipi} introText={sc.introText} />
+      )}
 
-      {sc?.tipi && sc.tipi.length > 0 && <ScTipiSection tipi={sc.tipi} />}
-      {sc?.steps && sc.steps.length > 0 && <ScStepsSection steps={sc.steps} />}
-      {sc?.faq && sc.faq.length > 0 && <ScFaqSection faq={sc.faq} />}
+      {sc?.steps && sc.steps.length > 0 && (
+        <ScStepsSection steps={sc.steps} />
+      )}
+
+      {sc?.testimonianze && sc.testimonianze.length > 0 && (
+        <ScTestimonianzeSection testimonianze={sc.testimonianze} />
+      )}
+
+      {sc?.faq && sc.faq.length > 0 && (
+        <ScFaqSection faq={sc.faq} />
+      )}
+
+      {sc?.tipi && sc.tipi.length > 0 && (
+        <ScApplySection tipi={sc.tipi} />
+      )}
     </main>
   )
 }

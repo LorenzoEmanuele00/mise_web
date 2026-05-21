@@ -43,6 +43,15 @@ export default defineType({
     }),
   ],
   preview: {
-    select: { title: 'label', subtitle: 'scadenza' },
+    select: { title: 'label', subtitle: 'scadenza', code: 'code' },
+    prepare({ title, subtitle, code }: { title: string; subtitle?: string; code?: string }) {
+      const formattedDate = subtitle
+        ? new Date(subtitle).toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' })
+        : ''
+      return {
+        title: code ? `${code} — ${title}` : title,
+        subtitle: formattedDate ? `Scadenza: ${formattedDate}` : '',
+      }
+    },
   },
 })

@@ -4,6 +4,15 @@ export default defineType({
   name: 'servizioCivile',
   title: 'Servizio Civile',
   type: 'document',
+  preview: {
+    select: { intro: 'introText' },
+    prepare({ intro }: { intro?: string }) {
+      return {
+        title: 'Servizio Civile',
+        subtitle: intro ? intro.slice(0, 80) + (intro.length > 80 ? '…' : '') : 'Pagina singleton',
+      }
+    },
+  },
   fields: [
     defineField({
       name: 'introText',
@@ -21,10 +30,10 @@ export default defineType({
     }),
     defineField({
       name: 'steps',
-      title: 'Come funziona (5 step)',
+      title: 'Come funziona — step',
       type: 'array',
       of: [{ type: 'scStep' }],
-      validation: (r) => r.min(5).max(5),
+      validation: (r) => r.min(1).max(10),
     }),
     defineField({
       name: 'testimonianze',

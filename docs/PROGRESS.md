@@ -7,10 +7,10 @@
 
 ## Legenda stati
 
-| Simbolo | Significato |
-|---------|-------------|
-| `[ ]`   | Da fare |
-| `[~]`   | In corso |
+| Simbolo | Significato             |
+| ------- | ----------------------- |
+| `[ ]`   | Da fare                 |
+| `[~]`   | In corso                |
 | `[x]`   | Completato e verificato |
 
 ---
@@ -56,16 +56,18 @@
 
 ---
 
-## Fase D — Design system v3 + componenti  ← FASE CORRENTE
+## Fase D — Design system v3 + componenti ← FASE CORRENTE
 
 Implementazione bottom-up dal design v3 (`mise_web-3.zip`).  
 **Regola:** design system → atomi → layout → sezioni → pagine. Niente markup inline nei page.tsx.
 
 ### D1 — `globals.css` (target ≤ 230 righe)
+
 - [x] Aggiungere: `.num`, `.btn-accent`, `.dark-band`, `.rule`
 - [x] Aggiungere: stili strutturali per `.nav` e `.nav-drawer` (offcanvas mobile)
 
 ### D2 — Atomi `src/components/ui/`
+
 - [x] `Arrow.tsx` — SVG freccia, prop `dir: right|left|up|down`
 - [x] `Btn.tsx` — button/link, varianti `dark` `ghost` `accent`
 - [x] `Kicker.tsx` — kicker uppercase + regola decorativa, prop `noRule`
@@ -73,11 +75,13 @@ Implementazione bottom-up dal design v3 (`mise_web-3.zip`).
 - [x] `SanityImage.tsx` — `next/image` con `urlFor`
 
 ### D3 — Layout `src/components/layout/`
+
 - [x] `Header.tsx` — nav desktop + offcanvas drawer destra mobile
 - [x] `Footer.tsx` — griglia 4 colonne + barra legale
 - [x] `Section.tsx` — wrapper `<section>` con varianti `dark` `tight` `loose`, include `SectionLabel`
 
 ### D4 — Sezioni `src/components/sections/`
+
 - [x] `HeroSection.tsx`
 - [x] `StatsStrip.tsx`
 - [x] `TimelineSection.tsx`
@@ -86,6 +90,7 @@ Implementazione bottom-up dal design v3 (`mise_web-3.zip`).
 - [x] `NewsGrid.tsx`
 
 ### D5 — Componenti client (foglie interattive)
+
 - [x] `ServiziAccordion.tsx` (client)
 - [x] `NewsFilter.tsx` (client)
 - [x] `ContactForm.tsx` (client) — Server Action con Zod + honeypot
@@ -93,6 +98,7 @@ Implementazione bottom-up dal design v3 (`mise_web-3.zip`).
 - [x] `src/app/actions/submitForms.ts` — Server Actions
 
 ### D6 — Rebuild pagine (≤ 70 righe cad., solo composizione)
+
 - [x] `app/page.tsx` — Home
 - [x] `app/storia/page.tsx` — timeline statica (CMS non ha campo timeline su page)
 - [x] `app/servizi/page.tsx`
@@ -216,9 +222,6 @@ Implementazione bottom-up dal design v3 (`mise_web-3.zip`).
   - `ContactForm.tsx:23` — `{/* honeypot — nascosto ai visitatori reali */}`
   - `VolunteerForm.tsx:24` — stessa riga
   - `servizio-civile/page.tsx` — 6 commenti di sezione (`{/* Hero */}`, ecc.)
-
-- [ ] **Proteggere la rotta `/studio`** — Vedere `docs/REVIEW.md`. Valutare se rimuovere la pagina Studio dal bundle di produzione o aggiungere auth middleware.
-  - File: `src/app/studio/[[...tool]]/page.tsx`
 
 ---
 

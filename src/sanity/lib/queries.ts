@@ -52,7 +52,7 @@ export const MEZZI_QUERY = groq`
 `
 
 export const SERVIZIO_CIVILE_QUERY = groq`
-  *[_type == "servizioCivile"][0] {
+  *[_type == "servizioCivile" && _id == "singleton-servizio-civile"][0] {
     introText,
     tipi[] {
       code, label, ente,

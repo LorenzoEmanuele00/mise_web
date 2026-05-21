@@ -9,7 +9,6 @@ export default defineType({
       name: 'numero',
       title: 'Numero (es. 01)',
       type: 'string',
-      readOnly: true,
     }),
     defineField({
       name: 'titolo',

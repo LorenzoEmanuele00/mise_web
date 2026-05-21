@@ -106,6 +106,122 @@ Implementazione bottom-up dal design v3 (`mise_web-3.zip`).
 
 ---
 
+## Revisione D — Issues trovati dalla code review
+
+> Review del 21 maggio 2026. Issues raggruppati per priorità.  
+> Completare prima di procedere con Fase 7.
+
+---
+
+### R1 — Bug critici (HTML / accessibilità / font)
+
+- [ ] **`<main>` annidati** — `(site)/layout.tsx:17` wrappa `{children}` in `<main className="flex-1">`, ma **ogni page.tsx ha già il proprio `<main>`**, producendo `<main><main>` (HTML non valido). Fix: sostituire `<main className="flex-1">` con `<div className="flex-1">` nel layout; i page.tsx mantengono i loro `<main>`.
+  - File: `src/app/(site)/layout.tsx:17`
+  - Pagine affette: tutte le 9 route (page.tsx, storia, servizi, servizi/[slug], news, news/[slug], contatti, volontariato, servizio-civile)
+
+- [ ] **`Instrument_Serif` manca variante italic** — `layout.tsx` carica solo `weight: "400"` senza `style: ['normal', 'italic']`. Il browser sintetizza l'obliquo invece di usare il vero italic. Il design usa l'italic serif ovunque (`serif-it`, heading con `<em>`). Fix: aggiungere `style: ['normal', 'italic']` all'oggetto di config `Instrument_Serif`.
+  - File: `src/app/layout.tsx:5-9`
+
+---
+
+### R2 — Design system incompleto
+
+- [ ] **7 classi CSS mancanti in `globals.css`** — Il design v3 `Header.jsx` usa queste classi che non esistono in `globals.css`; l'header le rimpiazza con Tailwind inline. Aggiungere le classi per completare il design system:
+  - `.emerg-badge` — contenitore pill per badge "118" (border 1px solid currentColor, border-radius: 2em, padding: 0.25rem 0.75rem, display: inline-flex, align-items: center, gap: 0.5rem)
+  - `.emerg-dot` — pallino pulsante (w: 0.5rem, h: 0.5rem, rounded-full, background: currentColor, animation: pulse)
+  - `.nav-drawer-head` — intestazione del drawer (px-6 py-5, border-bottom, display: flex, justify-between, align-items: center)
+  - `.nav-drawer-close` — bottone × (p-1, opacity 0.6, hover 1.0, bg trasparente, border none, cursor pointer, font-size 1.5rem)
+  - `.nav-drawer-link` — link nel drawer (display flex, justify-between, align-items center, px-6 py-4, border-bottom, hover bg-white/5, transition)
+  - `.nav-drawer-footer` — footer del drawer (px-6 py-6, mt-auto, display flex, flex-col, gap 1rem, border-top)
+  - `.nav-burger-icon` — icona hamburger (flex-col, gap, width/height)
+  - File: `src/app/globals.css`
+
+- [ ] **`.btn:disabled` non definito** — Il Btn riceve `disabled={pending}` nei form ma nessuna regola CSS cambia l'aspetto. Aggiungere alla fine del blocco `.btn` in `globals.css`: `.btn:disabled { opacity: 0.5; cursor: not-allowed; }`
+  - File: `src/app/globals.css`
+
+- [ ] **Footer `mb-16` → `mb-20`** — Il design v3 `Footer.jsx:7` usa `marginBottom: 80` (80px) tra il grid e la regola. `mb-16` = 64px, `mb-20` = 80px. Differenza: 16px.
+  - File: `src/components/layout/Footer.tsx:31`
+
+---
+
+### R3 — Duplicazioni da rimuovere
+
+- [ ] **`NAV_ITEMS` duplicato** — Definito identicamente in `Header.tsx:8-16` e `Footer.tsx:6-15`. Estrarre in `src/lib/nav.ts` e importarlo in entrambi. Il link `/volontariato` aggiunto manualmente nel drawer (`Header.tsx:165`) dovrebbe essere incluso nella lista canonica.
+  - File: `src/lib/nav.ts` (nuovo), `src/components/layout/Header.tsx:8`, `src/components/layout/Footer.tsx:6`
+
+- [ ] **`LogoMark` inline in Header, duplicato in Footer** — `Header.tsx:18-27` definisce `LogoMark` come funzione interna; `Footer.tsx:34-42` riproduce lo stesso cerchio con "M" via stile inline invece della classe `.nav-logo-mark`. Estrarre `LogoMark` in `src/components/ui/LogoMark.tsx` e usarlo in entrambi.
+  - File: `src/components/ui/LogoMark.tsx` (nuovo), `Header.tsx:18`, `Footer.tsx:34`
+
+- [ ] **Pattern "Kicker accent + h1" triplicato nelle pagine** — `contatti/page.tsx:17-21`, `news/page.tsx:17-21`, `servizi/page.tsx:17-21` hanno identica struttura `<Section loose><Kicker accent>/<h1>`. Estrarre `src/components/layout/PageHeader.tsx` con props `kicker` e `title`, usarlo in tutte e tre.
+  - File: `src/components/layout/PageHeader.tsx` (nuovo), tre page.tsx
+
+- [ ] **Primitivi form duplicati tra `ContactForm` e `VolunteerForm`** — Honeypot identico, blocco errore identico, blocco successo identico (solo testo diverso), pattern `<div flex-col gap-1><label input-label><input input>` ripetuto 6+ volte. Estrarre:
+  - `src/components/forms/FormField.tsx` — `({ id, name, label, type?, required?, rows?, placeholder? })`
+  - `src/components/forms/FormSuccess.tsx` — `({ heading, body })`
+  - Usarli in `ContactForm` e `VolunteerForm`
+  - File: `ContactForm.tsx`, `VolunteerForm.tsx`
+
+- [ ] **`Kicker` non accetta `className`** — Il componente usa solo `style` per overridare il colore, forzando `style={{ color: 'var(--color-accent)' }}` ripetuto in molti punti. Aggiungere prop `className?: string` al Kicker e sostituire tutti gli `style` color con Tailwind class (`text-accent`, `text-bg/50`).
+  - File: `src/components/ui/Kicker.tsx:3`, poi tutti i consumer
+
+---
+
+### R4 — Stile inline dove esistono classi Tailwind
+
+- [ ] **Sostituire `style={{ color/bg: 'var(--color-...)' }}` con classi Tailwind** — Trovate ≥15 occorrenze di inline style per valori già registrati come token Tailwind v4. Elenco completo:
+  - `HeroSection.tsx:18,24,29` → `text-accent`, `text-ink-soft`
+  - `ServiziGrid.tsx:22,25,28,30` → `bg-hair`, `bg-bg`, `text-ink-soft`, `text-accent`
+  - `NewsGrid.tsx:30,42,47,50` → `bg-bg-deep`, `text-accent`, `text-ink-soft`, `text-muted`
+  - `ServiziAccordion.tsx:16,20,27,32-38` → `border-t border-hair`, `border-b border-hair`, `text-ink`, `text-ink-soft`, `text-muted`
+  - `NewsFilter.tsx:51-58` → `border border-hair`, colori vari
+  - `contatti/page.tsx:19`, `news/page.tsx:19`, `servizi/page.tsx:19` → verranno risolti con `PageHeader` (R3)
+
+---
+
+### R5 — Pagine che violano le regole D6
+
+- [ ] **`servizio-civile/page.tsx` — 117 righe, nessun componente del design system** — Usa `<section className="shell py-...">` raw invece di `<Section>`, raw `<p className="kicker ...">` invece di `<Kicker>`, `<span className="body-sm ... font-mono">` invece di `<Num>`. Non rispetta la regola "solo composizione ≤ 70 righe". Refactoring completo: usare `<Section>`, `<Kicker>`, `<Num>`, `<SectionLabel>`, `<Btn>` già esistenti; estrarre sottosezioni complesse (ProgettiList, ScSteps, FaqList) in componenti dedicati in `src/components/sections/`.
+  - File: `src/app/(site)/servizio-civile/page.tsx`
+
+- [ ] **`servizi/[slug]/page.tsx` — usa raw `<p className="kicker">` e `<span className="... font-mono">`** — Non usa `<Kicker>` né `<Num>` né `<Section>`. Fix: sostituire con componenti esistenti.
+  - File: `src/app/(site)/servizi/[slug]/page.tsx:27-36`
+
+- [ ] **`news/[slug]/page.tsx` — corpo articolo non renderizzato** — Il campo `body` (Portable Text) viene fetchato dalla query ma non renderizzato: la pagina mostra solo l'excerpt. Fix: installare `@portabletext/react`, aggiungere `<PortableText value={post.body} />` dopo l'excerpt.
+  - File: `src/app/(site)/news/[slug]/page.tsx:36`
+  - Dipendenza: `npm install @portabletext/react`
+
+---
+
+### R6 — Feature mancante: MezziGrid orfana
+
+- [ ] **`MezziGrid` costruito ma non usato su nessuna pagina** — Il componente esiste, i dati ci sono (6 mezzi nel CMS), ma non è integrato in nessun percorso. Questo crea anche il gap numerico `01 → 04` nelle `SectionLabel` della home (mancano 02 e 03).
+  - Opzione A (raccomandata): aggiungere `MezziGrid` alla home tra `ServiziGrid` e `NewsGrid`, e correggere `NewsGrid` preview da `num="04"` a `num="03"` (o rimuovere il num dalla preview).
+  - Opzione B: creare pagina dedicata `/mezzi` e linkare dal footer.
+  - Decidere con il committente prima di implementare.
+  - File: `src/app/(site)/page.tsx`, `src/components/sections/NewsGrid.tsx:21`
+
+---
+
+### R7 — Minori / robustezza
+
+- [ ] **`SanityImage` carica immagini senza trasformazioni** — `urlFor(source).url()` restituisce l'originale full-res. Aggiungere `.auto('format').fit('max')` per image optimization automatica di Sanity.
+  - File: `src/components/ui/SanityImage.tsx:26`
+
+- [ ] **Footer address split su `—` fragile** — Se l'editor scrive `-` o `–` invece di `—` l'indirizzo non si divide. Fix: cambiare il regex di split in `address.split(/\s*[—–-]\s*/)` oppure documentare il separatore nella descrizione del campo Sanity.
+  - File: `src/components/layout/Footer.tsx:70`
+
+- [ ] **Rimuovere commenti "what"** — Commenti che descrivono cosa fa il codice (invece del perché), da eliminare:
+  - `TimelineSection.tsx:17` — `{/* vertical line */}`
+  - `TimelineSection.tsx:31` — `{/* dot on the line */}`
+  - `ContactForm.tsx:23` — `{/* honeypot — nascosto ai visitatori reali */}`
+  - `VolunteerForm.tsx:24` — stessa riga
+  - `servizio-civile/page.tsx` — 6 commenti di sezione (`{/* Hero */}`, ecc.)
+
+- [ ] **Proteggere la rotta `/studio`** — Vedere `docs/REVIEW.md`. Valutare se rimuovere la pagina Studio dal bundle di produzione o aggiungere auth middleware.
+  - File: `src/app/studio/[[...tool]]/page.tsx`
+
+---
+
 ## Fase 7 — Webhook revalidation
 
 - [ ] `src/app/api/revalidate/route.ts` — endpoint webhook con verifica secret HMAC

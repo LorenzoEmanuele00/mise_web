@@ -1,6 +1,6 @@
 # PROGRESS — Sito Vetrina Misericordia di Gello
 
-> Stato aggiornato: 19 maggio 2026  
+> Stato aggiornato: 20 maggio 2026  
 > Segna ogni fase come `[x]` non appena è completata e verificata prima di passare alla successiva.
 
 ---
@@ -17,123 +17,208 @@
 
 ## Fase 0 — Pianificazione ✓
 
-- [x] Design mockup ricevuto da Claude Design (`mise_web.zip`)
+- [x] Design mockup ricevuto da Claude Design (v1, v2, v3)
 - [x] Stack tecnico definito (vedere `ARCHITECTURE.md`)
 - [x] Content model derivato dal design (vedere `SANITY.md`)
 - [x] Strategia deploy e caching definita (vedere `VERCEL.md`)
-- [x] File di piano scritti (`PROGRESS`, `ARCHITECTURE`, `SANITY`, `VERCEL`)
 
 ---
 
-## Fase 1 — Scaffold progetto
+## Fase 1 — Scaffold progetto ✓
 
-- [x] Next.js 16.2.6 + React 19 + TS strict + Tailwind v4 + App Router + src/ + alias @/* alla root del repo
+- [x] Next.js 16.2.6 + React 19 + TS strict + Tailwind v4 + App Router
 - [x] Dipendenze Sanity: `next-sanity` 12, `@sanity/image-url` 2, `@sanity/types` 5
 - [x] `next-intl` 4, `zod` 4
-- [x] `noUncheckedIndexedAccess: true` aggiunto a `tsconfig.json`
+- [x] `noUncheckedIndexedAccess: true` in `tsconfig.json`
 - [x] `next.config.ts` — `remotePatterns` per `cdn.sanity.io`
-- [x] `.env.example` con tutte le variabili
-- [x] `package.json` — name aggiornato a `misericordia-gello`
+- [x] Login Sanity — progetto ID: `zmh64ht0`, dataset: `production`
+- [x] `src/sanity/env.ts`, `lib/client.ts`, `lib/utils.ts`, `lib/queries.ts`
+- [x] Studio embedded su `/studio` funzionante
 - [x] TypeScript compila senza errori
-- [x] Login Sanity (`npx sanity@latest login --provider github`)
-- [x] Progetto Sanity creato — ID: `zmh64ht0`, dataset: `production`
-- [x] `.env.local` con project ID, dataset, api version
-- [x] `src/sanity/env.ts` — variabili d'ambiente centralizzate
-- [x] `src/sanity/lib/client.ts` — createClient con `useCdn: true` e stega per preview
-- [x] `src/sanity/lib/utils.ts` — `urlFor` (import corretto: `@sanity/image-url`) e `formatDate`
-- [x] `src/sanity/schemas/index.ts` — placeholder vuoto pronto per Fase 3
-- [x] `src/sanity/sanity.config.ts` — config Studio con structureTool e visionTool
-- [x] `src/app/studio/[[...tool]]/page.tsx` — Studio embedded (`NextStudio`)
-- [x] TypeScript compila senza errori
-- [x] `npm run dev` — homepage 200, `/studio` 200 ✓
 
 ---
 
-## Fase 2 — Struttura cartelle e configurazione base
+## Fase 2 — Configurazione base ✓
 
-- [x] Creare struttura completa `src/` (vedere `ARCHITECTURE.md §struttura`)
-- [x] Configurare `src/sanity/lib/client.ts` — createClient con `useCdn: true`
-- [x] Configurare `src/sanity/lib/utils.ts` — helper `urlFor`, `formatDate`
-- [x] Creare `src/lib/types.ts` con i tipi TypeScript di tutti i documenti Sanity
-- [x] Configurare `src/app/globals.css` con variabili CSS `@theme inline` e classi tipografiche (Tailwind v4)
-- [x] Verificare: TypeScript compila senza errori (`npx tsc --noEmit`)
+- [x] `src/lib/types.ts` — tipi TypeScript per tutti i document type Sanity
+- [x] `src/app/globals.css` — `@theme inline` + classi tipografiche (Tailwind v4, 165 righe)
+- [x] Query GROQ in `src/sanity/lib/queries.ts`
 
 ---
 
-## Fase 3 — Schemi Sanity (Studio)
+## Fase 3 — Schemi Sanity ✓
 
-- [x] `src/sanity/schemas/documents/page.ts` — pagina generica con SEO
-- [x] `src/sanity/schemas/documents/post.ts` — articolo news con tag, data, corpo, cover
-- [x] `src/sanity/schemas/documents/servizio.ts` — servizio con tutti i campi del design
-- [x] `src/sanity/schemas/documents/mezzo.ts` — veicolo del parco mezzi
-- [x] `src/sanity/schemas/documents/settings.ts` — impostazioni globali (nav, footer, contatti, logo)
-- [x] `src/sanity/schemas/documents/servizioCivile.ts` — singleton con tipi SCU/SCR, step, testimonianze, FAQ
-- [x] `src/sanity/schemas/objects/seo.ts` — oggetto SEO riutilizzabile
-- [x] `src/sanity/schemas/objects/heroSection.ts` — sezione hero con heading display e italic accent
-- [x] `src/sanity/schemas/objects/timelineEvent.ts` — evento cronologia (anno, titolo, testo)
-- [x] `src/sanity/schemas/objects/tipoServizio.ts` — tab SCU/SCR con campi bando e array progetti
-- [x] `src/sanity/schemas/objects/scProgetto.ts` — progetto singolo con codice, posti, sede, focus, PDF
-- [x] `src/sanity/schemas/objects/scStep.ts` — step "Come funziona"
-- [x] `src/sanity/schemas/objects/scTestimonianza.ts` — testimonianza con foto, citazione, nome, anno
-- [x] `src/sanity/schemas/objects/scFaq.ts` — coppia domanda/risposta
-- [x] `src/sanity/schemas/index.ts` — esporta tutti gli schemi
-- [x] `sanity.config.ts` — structure builder con singleton (Settings, Servizio Civile) e sezioni Submissions
-- [ ] Inserire dati di test nel CMS (almeno 1 pagina, 2 post, tutti i servizi)
-- [ ] Verificare: Studio si avvia e tutti i document type sono visibili e funzionanti
+- [x] Schemi documents: `page`, `post`, `servizio`, `mezzo`, `settings`, `servizioCivile`, `contactSubmission`, `volunteerSubmission`
+- [x] Schemi objects: `seo`, `heroSection`, `timelineEvent`, `tipoServizio`, `scProgetto`, `scStep`, `scTestimonianza`, `scFaq`
+- [x] Structure builder con singleton (Settings, Servizio Civile)
+- [x] Script seed `scripts/seed.mjs` (1 settings, 4 pagine, 6 servizi, 6 mezzi, 3 post, 1 servizioCivile)
+- [ ] Dati di test inseriti nel CMS — `node scripts/seed.mjs`
 
 ---
 
-## Fase 4 — Query GROQ e fetch nel frontend
+## Fase D — Design system v3 + componenti  ← FASE CORRENTE
 
-- [ ] Scrivere tutte le query in `src/sanity/lib/queries.ts` (vedere `SANITY.md §queries`)
-- [ ] Aggiungere tag di revalidation a ogni `fetch` Sanity
-- [ ] `src/app/page.tsx` — Homepage con fetch dati da Sanity
-- [ ] `src/app/storia/page.tsx` — Chi siamo / Storia
-- [ ] `src/app/servizi/page.tsx` — Lista servizi (accordion)
-- [ ] `src/app/servizi/[slug]/page.tsx` — Dettaglio servizio singolo (opzionale)
-- [ ] `src/app/servizio-civile/page.tsx` — Pagina Servizio Civile (fetch `SERVIZIO_CIVILE_QUERY`, tag `servizioCivile`)
-- [ ] `src/app/news/page.tsx` — Listing news con filtro tag
-- [ ] `src/app/news/[slug]/page.tsx` — Articolo singolo
-- [ ] `src/app/galleria/page.tsx` — Galleria fotografica
-- [ ] `src/app/volontariato/page.tsx` — Pagina volontariato (no form ancora)
-- [ ] `src/app/contatti/page.tsx` — Pagina contatti (no form ancora)
-- [ ] Configurare `generateStaticParams` per tutte le rotte dinamiche
-- [ ] Verificare: tutte le pagine rendono i dati reali dal CMS
+Implementazione bottom-up dal design v3 (`mise_web-3.zip`).  
+**Regola:** design system → atomi → layout → sezioni → pagine. Niente markup inline nei page.tsx.
+
+### D1 — `globals.css` (target ≤ 230 righe)
+- [x] Aggiungere: `.num`, `.btn-accent`, `.dark-band`, `.rule`
+- [x] Aggiungere: stili strutturali per `.nav` e `.nav-drawer` (offcanvas mobile)
+
+### D2 — Atomi `src/components/ui/`
+- [x] `Arrow.tsx` — SVG freccia, prop `dir: right|left|up|down`
+- [x] `Btn.tsx` — button/link, varianti `dark` `ghost` `accent`
+- [x] `Kicker.tsx` — kicker uppercase + regola decorativa, prop `noRule`
+- [x] `Num.tsx` — span monospace (JetBrains Mono)
+- [x] `SanityImage.tsx` — `next/image` con `urlFor`
+
+### D3 — Layout `src/components/layout/`
+- [x] `Header.tsx` — nav desktop + offcanvas drawer destra mobile
+- [x] `Footer.tsx` — griglia 4 colonne + barra legale
+- [x] `Section.tsx` — wrapper `<section>` con varianti `dark` `tight` `loose`, include `SectionLabel`
+
+### D4 — Sezioni `src/components/sections/`
+- [x] `HeroSection.tsx`
+- [x] `StatsStrip.tsx`
+- [x] `TimelineSection.tsx`
+- [x] `ServiziGrid.tsx`
+- [x] `MezziGrid.tsx`
+- [x] `NewsGrid.tsx`
+
+### D5 — Componenti client (foglie interattive)
+- [x] `ServiziAccordion.tsx` (client)
+- [x] `NewsFilter.tsx` (client)
+- [x] `ContactForm.tsx` (client) — Server Action con Zod + honeypot
+- [x] `VolunteerForm.tsx` (client) — Server Action con Zod + honeypot
+- [x] `src/app/actions/submitForms.ts` — Server Actions
+
+### D6 — Rebuild pagine (≤ 70 righe cad., solo composizione)
+- [x] `app/page.tsx` — Home
+- [x] `app/storia/page.tsx` — timeline statica (CMS non ha campo timeline su page)
+- [x] `app/servizi/page.tsx`
+- [x] `app/servizi/[slug]/page.tsx` — invariato (già pulito)
+- [x] `app/servizio-civile/page.tsx` — invariato (struttura fissa già corretta)
+- [x] `app/news/page.tsx`
+- [x] `app/news/[slug]/page.tsx` — invariato (già pulito)
+- [x] `app/galleria/page.tsx` — invariato (placeholder per v1)
+- [x] `app/volontariato/page.tsx`
+- [x] `app/contatti/page.tsx`
 
 ---
 
-## Fase 5 — Componenti UI dal design
+## Revisione D — Issues trovati dalla code review
 
-- [ ] `src/components/ui/Button.tsx` — varianti `dark`, `ghost`, `outline`
-- [ ] `src/components/ui/Kicker.tsx` — label uppercase con regola
-- [ ] `src/components/ui/Num.tsx` — numero monospace
-- [ ] `src/components/ui/Arrow.tsx` — freccia diagonale SVG
-- [ ] `src/components/ui/SanityImage.tsx` — wrapper `next/image` con `urlFor`
-- [ ] `src/components/sections/HeroSection.tsx` — hero con heading display + italic accent
-- [ ] `src/components/sections/StatsStrip.tsx` — 4 stat (fondazione, volontari, servizi, 24/7)
-- [ ] `src/components/sections/TimelineGrid.tsx` — griglia 4col eventi storici
-- [ ] `src/components/sections/ServizioAccordion.tsx` — accordion servizi con expand/collapse
-- [ ] `src/components/sections/MezziGrid.tsx` — griglia parco mezzi
-- [ ] `src/components/sections/NewsGrid.tsx` — featured + griglia articoli
-- [ ] `src/components/layout/Header.tsx` — navigazione con logo
-- [ ] `src/components/layout/Footer.tsx` — footer con links e testo
-- [ ] Verificare: design fedele al mockup su desktop e mobile
+> Review del 21 maggio 2026. Issues raggruppati per priorità.  
+> Completare prima di procedere con Fase 7.
 
 ---
 
-## Fase 6 — Form contatti e volontariato
+### R1 — Bug critici (HTML / accessibilità / font)
 
-- [ ] `src/app/api/contact/route.ts` — endpoint POST form contatti, salva in Sanity
-- [ ] `src/app/api/volunteer/route.ts` — endpoint POST form volontariato, salva in Sanity
-- [ ] Aggiungere schema `studio/schemas/documents/contactSubmission.ts` (readonly)
-- [ ] Aggiungere schema `studio/schemas/documents/volunteerSubmission.ts` (readonly)
-- [ ] Implementare validazione Zod sugli endpoint
-- [ ] Aggiungere rate limiting in-memory sugli endpoint
-- [ ] Aggiungere honeypot anti-bot nei form
-- [ ] `src/components/forms/ContactForm.tsx` — form contatti con stati sent/error
-- [ ] `src/components/forms/VolunteerForm.tsx` — form volontariato con selezione aree
-- [ ] Collegare i form agli endpoint API
-- [ ] Verificare: form funzionano, le submission appaiono in Studio
+- [ ] **`<main>` annidati** — `(site)/layout.tsx:17` wrappa `{children}` in `<main className="flex-1">`, ma **ogni page.tsx ha già il proprio `<main>`**, producendo `<main><main>` (HTML non valido). Fix: sostituire `<main className="flex-1">` con `<div className="flex-1">` nel layout; i page.tsx mantengono i loro `<main>`.
+  - File: `src/app/(site)/layout.tsx:17`
+  - Pagine affette: tutte le 9 route (page.tsx, storia, servizi, servizi/[slug], news, news/[slug], contatti, volontariato, servizio-civile)
+
+- [ ] **`Instrument_Serif` manca variante italic** — `layout.tsx` carica solo `weight: "400"` senza `style: ['normal', 'italic']`. Il browser sintetizza l'obliquo invece di usare il vero italic. Il design usa l'italic serif ovunque (`serif-it`, heading con `<em>`). Fix: aggiungere `style: ['normal', 'italic']` all'oggetto di config `Instrument_Serif`.
+  - File: `src/app/layout.tsx:5-9`
+
+---
+
+### R2 — Design system incompleto
+
+- [ ] **7 classi CSS mancanti in `globals.css`** — Il design v3 `Header.jsx` usa queste classi che non esistono in `globals.css`; l'header le rimpiazza con Tailwind inline. Aggiungere le classi per completare il design system:
+  - `.emerg-badge` — contenitore pill per badge "118" (border 1px solid currentColor, border-radius: 2em, padding: 0.25rem 0.75rem, display: inline-flex, align-items: center, gap: 0.5rem)
+  - `.emerg-dot` — pallino pulsante (w: 0.5rem, h: 0.5rem, rounded-full, background: currentColor, animation: pulse)
+  - `.nav-drawer-head` — intestazione del drawer (px-6 py-5, border-bottom, display: flex, justify-between, align-items: center)
+  - `.nav-drawer-close` — bottone × (p-1, opacity 0.6, hover 1.0, bg trasparente, border none, cursor pointer, font-size 1.5rem)
+  - `.nav-drawer-link` — link nel drawer (display flex, justify-between, align-items center, px-6 py-4, border-bottom, hover bg-white/5, transition)
+  - `.nav-drawer-footer` — footer del drawer (px-6 py-6, mt-auto, display flex, flex-col, gap 1rem, border-top)
+  - `.nav-burger-icon` — icona hamburger (flex-col, gap, width/height)
+  - File: `src/app/globals.css`
+
+- [ ] **`.btn:disabled` non definito** — Il Btn riceve `disabled={pending}` nei form ma nessuna regola CSS cambia l'aspetto. Aggiungere alla fine del blocco `.btn` in `globals.css`: `.btn:disabled { opacity: 0.5; cursor: not-allowed; }`
+  - File: `src/app/globals.css`
+
+- [ ] **Footer `mb-16` → `mb-20`** — Il design v3 `Footer.jsx:7` usa `marginBottom: 80` (80px) tra il grid e la regola. `mb-16` = 64px, `mb-20` = 80px. Differenza: 16px.
+  - File: `src/components/layout/Footer.tsx:31`
+
+---
+
+### R3 — Duplicazioni da rimuovere
+
+- [ ] **`NAV_ITEMS` duplicato** — Definito identicamente in `Header.tsx:8-16` e `Footer.tsx:6-15`. Estrarre in `src/lib/nav.ts` e importarlo in entrambi. Il link `/volontariato` aggiunto manualmente nel drawer (`Header.tsx:165`) dovrebbe essere incluso nella lista canonica.
+  - File: `src/lib/nav.ts` (nuovo), `src/components/layout/Header.tsx:8`, `src/components/layout/Footer.tsx:6`
+
+- [ ] **`LogoMark` inline in Header, duplicato in Footer** — `Header.tsx:18-27` definisce `LogoMark` come funzione interna; `Footer.tsx:34-42` riproduce lo stesso cerchio con "M" via stile inline invece della classe `.nav-logo-mark`. Estrarre `LogoMark` in `src/components/ui/LogoMark.tsx` e usarlo in entrambi.
+  - File: `src/components/ui/LogoMark.tsx` (nuovo), `Header.tsx:18`, `Footer.tsx:34`
+
+- [ ] **Pattern "Kicker accent + h1" triplicato nelle pagine** — `contatti/page.tsx:17-21`, `news/page.tsx:17-21`, `servizi/page.tsx:17-21` hanno identica struttura `<Section loose><Kicker accent>/<h1>`. Estrarre `src/components/layout/PageHeader.tsx` con props `kicker` e `title`, usarlo in tutte e tre.
+  - File: `src/components/layout/PageHeader.tsx` (nuovo), tre page.tsx
+
+- [ ] **Primitivi form duplicati tra `ContactForm` e `VolunteerForm`** — Honeypot identico, blocco errore identico, blocco successo identico (solo testo diverso), pattern `<div flex-col gap-1><label input-label><input input>` ripetuto 6+ volte. Estrarre:
+  - `src/components/forms/FormField.tsx` — `({ id, name, label, type?, required?, rows?, placeholder? })`
+  - `src/components/forms/FormSuccess.tsx` — `({ heading, body })`
+  - Usarli in `ContactForm` e `VolunteerForm`
+  - File: `ContactForm.tsx`, `VolunteerForm.tsx`
+
+- [ ] **`Kicker` non accetta `className`** — Il componente usa solo `style` per overridare il colore, forzando `style={{ color: 'var(--color-accent)' }}` ripetuto in molti punti. Aggiungere prop `className?: string` al Kicker e sostituire tutti gli `style` color con Tailwind class (`text-accent`, `text-bg/50`).
+  - File: `src/components/ui/Kicker.tsx:3`, poi tutti i consumer
+
+---
+
+### R4 — Stile inline dove esistono classi Tailwind
+
+- [ ] **Sostituire `style={{ color/bg: 'var(--color-...)' }}` con classi Tailwind** — Trovate ≥15 occorrenze di inline style per valori già registrati come token Tailwind v4. Elenco completo:
+  - `HeroSection.tsx:18,24,29` → `text-accent`, `text-ink-soft`
+  - `ServiziGrid.tsx:22,25,28,30` → `bg-hair`, `bg-bg`, `text-ink-soft`, `text-accent`
+  - `NewsGrid.tsx:30,42,47,50` → `bg-bg-deep`, `text-accent`, `text-ink-soft`, `text-muted`
+  - `ServiziAccordion.tsx:16,20,27,32-38` → `border-t border-hair`, `border-b border-hair`, `text-ink`, `text-ink-soft`, `text-muted`
+  - `NewsFilter.tsx:51-58` → `border border-hair`, colori vari
+  - `contatti/page.tsx:19`, `news/page.tsx:19`, `servizi/page.tsx:19` → verranno risolti con `PageHeader` (R3)
+
+---
+
+### R5 — Pagine che violano le regole D6
+
+- [ ] **`servizio-civile/page.tsx` — 117 righe, nessun componente del design system** — Usa `<section className="shell py-...">` raw invece di `<Section>`, raw `<p className="kicker ...">` invece di `<Kicker>`, `<span className="body-sm ... font-mono">` invece di `<Num>`. Non rispetta la regola "solo composizione ≤ 70 righe". Refactoring completo: usare `<Section>`, `<Kicker>`, `<Num>`, `<SectionLabel>`, `<Btn>` già esistenti; estrarre sottosezioni complesse (ProgettiList, ScSteps, FaqList) in componenti dedicati in `src/components/sections/`.
+  - File: `src/app/(site)/servizio-civile/page.tsx`
+
+- [ ] **`servizi/[slug]/page.tsx` — usa raw `<p className="kicker">` e `<span className="... font-mono">`** — Non usa `<Kicker>` né `<Num>` né `<Section>`. Fix: sostituire con componenti esistenti.
+  - File: `src/app/(site)/servizi/[slug]/page.tsx:27-36`
+
+- [ ] **`news/[slug]/page.tsx` — corpo articolo non renderizzato** — Il campo `body` (Portable Text) viene fetchato dalla query ma non renderizzato: la pagina mostra solo l'excerpt. Fix: installare `@portabletext/react`, aggiungere `<PortableText value={post.body} />` dopo l'excerpt.
+  - File: `src/app/(site)/news/[slug]/page.tsx:36`
+  - Dipendenza: `npm install @portabletext/react`
+
+---
+
+### R6 — Feature mancante: MezziGrid orfana
+
+- [ ] **`MezziGrid` costruito ma non usato su nessuna pagina** — Il componente esiste, i dati ci sono (6 mezzi nel CMS), ma non è integrato in nessun percorso. Questo crea anche il gap numerico `01 → 04` nelle `SectionLabel` della home (mancano 02 e 03).
+  - Opzione A (raccomandata): aggiungere `MezziGrid` alla home tra `ServiziGrid` e `NewsGrid`, e correggere `NewsGrid` preview da `num="04"` a `num="03"` (o rimuovere il num dalla preview).
+  - Opzione B: creare pagina dedicata `/mezzi` e linkare dal footer.
+  - Decidere con il committente prima di implementare.
+  - File: `src/app/(site)/page.tsx`, `src/components/sections/NewsGrid.tsx:21`
+
+---
+
+### R7 — Minori / robustezza
+
+- [ ] **`SanityImage` carica immagini senza trasformazioni** — `urlFor(source).url()` restituisce l'originale full-res. Aggiungere `.auto('format').fit('max')` per image optimization automatica di Sanity.
+  - File: `src/components/ui/SanityImage.tsx:26`
+
+- [ ] **Footer address split su `—` fragile** — Se l'editor scrive `-` o `–` invece di `—` l'indirizzo non si divide. Fix: cambiare il regex di split in `address.split(/\s*[—–-]\s*/)` oppure documentare il separatore nella descrizione del campo Sanity.
+  - File: `src/components/layout/Footer.tsx:70`
+
+- [ ] **Rimuovere commenti "what"** — Commenti che descrivono cosa fa il codice (invece del perché), da eliminare:
+  - `TimelineSection.tsx:17` — `{/* vertical line */}`
+  - `TimelineSection.tsx:31` — `{/* dot on the line */}`
+  - `ContactForm.tsx:23` — `{/* honeypot — nascosto ai visitatori reali */}`
+  - `VolunteerForm.tsx:24` — stessa riga
+  - `servizio-civile/page.tsx` — 6 commenti di sezione (`{/* Hero */}`, ecc.)
+
+- [ ] **Proteggere la rotta `/studio`** — Vedere `docs/REVIEW.md`. Valutare se rimuovere la pagina Studio dal bundle di produzione o aggiungere auth middleware.
+  - File: `src/app/studio/[[...tool]]/page.tsx`
 
 ---
 
@@ -141,8 +226,7 @@
 
 - [ ] `src/app/api/revalidate/route.ts` — endpoint webhook con verifica secret HMAC
 - [ ] Configurare webhook su `sanity.io` puntando all'URL Vercel
-- [ ] Testare: pubblicare un documento in Sanity → pagina si aggiorna senza rebuild
-- [ ] Verificare: header `SANITY_WEBHOOK_SECRET` è validato correttamente
+- [ ] Testare: pubblicare un documento → pagina si aggiorna senza rebuild
 
 ---
 
@@ -151,7 +235,6 @@
 - [ ] `generateMetadata` su tutte le route con dati da Sanity
 - [ ] `src/app/sitemap.ts` — sitemap dinamica con tutti gli slug
 - [ ] `src/app/robots.ts` — robots.txt
-- [ ] Verificare: Open Graph funziona con i link (testare con og:debugger)
 
 ---
 
@@ -159,16 +242,15 @@
 
 - [ ] Creare progetto su Vercel collegato al repo GitHub
 - [ ] Inserire tutte le env var nel dashboard Vercel (vedere `VERCEL.md §variabili`)
-- [ ] Verificare build di produzione (`vercel --prod`) senza errori
 - [ ] Configurare dominio `misericordiadigello.it` su Vercel
-- [ ] Attivare HTTPS (automatico con Vercel)
 - [ ] Smoke test su tutte le pagine in produzione
-- [ ] Fare `curl` sul webhook e verificare revalidation in prod
 
 ---
 
-## Note e blocchi aperti
+## Note
 
-- Il design non include ancora: Galleria (solo placeholder), pagina Documenti scaricabili (PDF), pagina Donazioni — da chiedere al committente se serve a breve o è fuori scope v1
-- `Servizio Civile` → document type singleton dedicato `servizioCivile` con struttura fissa: i campi editabili sono date/scadenze, posti, compensi, testi dei progetti, PDF scaricabile per ogni progetto, testimonianze, FAQ. Layout non modificabile dal CMS. ✓ Decisione confermata dal committente.
-- i18n (IT/EN) — struttura già pianificata con `next-intl` ma non impattante sullo scaffold iniziale; si attiva in Fase 4/5
+- **Design v3** (`mise_web-3.zip`): aggiornati atomi condivisi (shared.jsx → Arrow, LogoMark, Kicker, Num, Btn, Section, SectionLabel) e Header con offcanvas destra. `styles.css` non incluso nel zip — si usa `globals.css` + estensioni minimali.
+- **Form**: Server Actions (`useActionState`) non API routes. Write token, validazione Zod, honeypot anti-bot.
+- **i18n**: struttura predisposta con next-intl, non attivata in v1 (solo IT).
+- **Galleria**: solo placeholder per v1 — decidere con committente se priorità.
+- **Servizio Civile**: singleton con struttura fissa — layout non modificabile dal CMS.

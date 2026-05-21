@@ -51,12 +51,12 @@
 
 ## Fase 2 — Struttura cartelle e configurazione base
 
-- [ ] Creare struttura completa `src/` (vedere `ARCHITECTURE.md §struttura`)
-- [ ] Configurare `src/sanity/lib/client.ts` — createClient con `useCdn: true`
-- [ ] Configurare `src/sanity/lib/utils.ts` — helper `urlFor`, `formatDate`
-- [ ] Creare `src/lib/types.ts` con i tipi TypeScript di tutti i documenti Sanity
-- [ ] Configurare `src/app/globals.css` con variabili CSS `@theme inline` e classi tipografiche (Tailwind v4)
-- [ ] Verificare: TypeScript compila senza errori (`npx tsc --noEmit`)
+- [x] Creare struttura completa `src/` (vedere `ARCHITECTURE.md §struttura`)
+- [x] Configurare `src/sanity/lib/client.ts` — createClient con `useCdn: true`
+- [x] Configurare `src/sanity/lib/utils.ts` — helper `urlFor`, `formatDate`
+- [x] Creare `src/lib/types.ts` con i tipi TypeScript di tutti i documenti Sanity
+- [x] Configurare `src/app/globals.css` con variabili CSS `@theme inline` e classi tipografiche (Tailwind v4)
+- [x] Verificare: TypeScript compila senza errori (`npx tsc --noEmit`)
 
 ---
 

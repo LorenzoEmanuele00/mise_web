@@ -62,20 +62,20 @@ Implementazione bottom-up dal design v3 (`mise_web-3.zip`).
 **Regola:** design system → atomi → layout → sezioni → pagine. Niente markup inline nei page.tsx.
 
 ### D1 — `globals.css` (target ≤ 230 righe)
-- [ ] Aggiungere: `.num`, `.btn-accent`, `.dark-band`, `.rule`
-- [ ] Aggiungere: stili strutturali per `.nav` e `.nav-drawer` (offcanvas mobile)
+- [x] Aggiungere: `.num`, `.btn-accent`, `.dark-band`, `.rule`
+- [x] Aggiungere: stili strutturali per `.nav` e `.nav-drawer` (offcanvas mobile)
 
 ### D2 — Atomi `src/components/ui/`
-- [ ] `Arrow.tsx` — SVG freccia, prop `dir: right|left|up|down`
-- [ ] `Btn.tsx` — button/link, varianti `dark` `ghost` `accent`
-- [ ] `Kicker.tsx` — kicker uppercase + regola decorativa, prop `noRule`
-- [ ] `Num.tsx` — span monospace (JetBrains Mono)
-- [ ] `SanityImage.tsx` — `next/image` con `urlFor`
+- [x] `Arrow.tsx` — SVG freccia, prop `dir: right|left|up|down`
+- [x] `Btn.tsx` — button/link, varianti `dark` `ghost` `accent`
+- [x] `Kicker.tsx` — kicker uppercase + regola decorativa, prop `noRule`
+- [x] `Num.tsx` — span monospace (JetBrains Mono)
+- [x] `SanityImage.tsx` — `next/image` con `urlFor`
 
 ### D3 — Layout `src/components/layout/`
-- [ ] `Header.tsx` — nav desktop + offcanvas drawer destra mobile
-- [ ] `Footer.tsx` — griglia 4 colonne + barra legale
-- [ ] `Section.tsx` — wrapper `<section>` con varianti `dark` `tight` `loose`, include `SectionLabel`
+- [x] `Header.tsx` — nav desktop + offcanvas drawer destra mobile
+- [x] `Footer.tsx` — griglia 4 colonne + barra legale
+- [x] `Section.tsx` — wrapper `<section>` con varianti `dark` `tight` `loose`, include `SectionLabel`
 
 ### D4 — Sezioni `src/components/sections/`
 - [ ] `HeroSection.tsx`

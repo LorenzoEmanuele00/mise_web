@@ -2,6 +2,8 @@ import { client } from '@/sanity/lib/client'
 import { SERVIZIO_QUERY, ALL_SERVIZI_SLUGS_QUERY } from '@/sanity/lib/queries'
 import type { Servizio } from '@/lib/types'
 import { notFound } from 'next/navigation'
+import Section from '@/components/layout/Section'
+import Kicker from '@/components/ui/Kicker'
 
 export async function generateStaticParams() {
   const slugs = await client.fetch<{ slug: string }[]>(ALL_SERVIZI_SLUGS_QUERY)
@@ -24,8 +26,8 @@ export default async function ServizioPage({
 
   return (
     <main>
-      <section className="shell py-24">
-        <p className="kicker text-accent mb-6">{servizio.num}</p>
+      <Section loose>
+        <p className="mb-6"><Kicker className="text-accent">{servizio.num}</Kicker></p>
         <h1 className="h-1 text-ink mb-8">{servizio.title}</h1>
         <p className="body-lg text-ink-soft max-w-2xl">{servizio.shortDesc}</p>
         {servizio.longDesc && (
@@ -36,7 +38,7 @@ export default async function ServizioPage({
           {servizio.orario && <span>Orari: {servizio.orario}</span>}
           {servizio.contatto && <span>Contatto: {servizio.contatto}</span>}
         </div>
-      </section>
+      </Section>
     </main>
   )
 }

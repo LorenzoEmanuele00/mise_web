@@ -3,6 +3,8 @@
 import { useActionState } from 'react'
 import { submitVolunteer, type FormState } from '@/app/actions/submitForms'
 import Btn from '@/components/ui/Btn'
+import FormField from '@/components/forms/FormField'
+import FormSuccess from '@/components/forms/FormSuccess'
 
 const AREE = ['Emergenza', 'Assistenza anziani', 'Trasporti', 'Gestione mezzi', 'Ufficio', 'Formazione']
 const initial: FormState = { success: false }
@@ -11,39 +13,21 @@ export default function VolunteerForm() {
   const [state, action, pending] = useActionState(submitVolunteer, initial)
 
   if (state.success) {
-    return (
-      <div className="p-8" style={{ backgroundColor: 'var(--color-bg-elev)', border: '1px solid var(--color-hair)' }}>
-        <p className="h-3 text-ink mb-2">Candidatura ricevuta</p>
-        <p className="body" style={{ color: 'var(--color-ink-soft)' }}>Ti contatteremo al più presto per i prossimi passi.</p>
-      </div>
-    )
+    return <FormSuccess heading="Candidatura ricevuta" body="Ti contatteremo al più presto per i prossimi passi." />
   }
 
   return (
     <form action={action} className="flex flex-col gap-8">
-      {/* honeypot — nascosto ai visitatori reali */}
       <input type="text" name="website" className="hidden" tabIndex={-1} autoComplete="off" aria-hidden="true" />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-        <div className="flex flex-col gap-1">
-          <label className="input-label" htmlFor="v-nome">Nome *</label>
-          <input id="v-nome" name="nome" type="text" className="input" required />
-        </div>
-        <div className="flex flex-col gap-1">
-          <label className="input-label" htmlFor="v-cognome">Cognome *</label>
-          <input id="v-cognome" name="cognome" type="text" className="input" required />
-        </div>
+        <FormField id="v-nome" name="nome" label="Nome" required />
+        <FormField id="v-cognome" name="cognome" label="Cognome" required />
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-        <div className="flex flex-col gap-1">
-          <label className="input-label" htmlFor="v-email">Email *</label>
-          <input id="v-email" name="email" type="email" className="input" required />
-        </div>
-        <div className="flex flex-col gap-1">
-          <label className="input-label" htmlFor="v-telefono">Telefono</label>
-          <input id="v-telefono" name="telefono" type="tel" className="input" />
-        </div>
+        <FormField id="v-email" name="email" label="Email" type="email" required />
+        <FormField id="v-telefono" name="telefono" label="Telefono" type="tel" />
       </div>
 
       <div className="flex flex-col gap-3">
@@ -58,17 +42,7 @@ export default function VolunteerForm() {
         </div>
       </div>
 
-      <div className="flex flex-col gap-1">
-        <label className="input-label" htmlFor="v-disponibilita">Disponibilità</label>
-        <textarea
-          id="v-disponibilita"
-          name="disponibilita"
-          className="input"
-          rows={3}
-          placeholder="Es. week-end, serate nei giorni feriali…"
-          style={{ resize: 'none' }}
-        />
-      </div>
+      <FormField id="v-disponibilita" name="disponibilita" label="Disponibilità" rows={3} placeholder="Es. week-end, serate nei giorni feriali…" />
 
       {state.error && (
         <p className="body-sm" style={{ color: 'var(--color-accent)' }}>{state.error}</p>

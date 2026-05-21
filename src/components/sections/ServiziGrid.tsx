@@ -19,15 +19,15 @@ export default function ServiziGrid({ servizi, preview = false }: ServiziGridPro
   return (
     <Section>
       <SectionLabel num="01" label="Cosa facciamo" />
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px" style={{ backgroundColor: 'var(--color-hair)' }}>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-hair">
         {items.map((s) => {
           const card = (
-            <div className="p-8 flex flex-col gap-4 h-full" style={{ backgroundColor: 'var(--color-bg)' }}>
+            <div className="p-8 flex flex-col gap-4 h-full bg-bg">
               <Num>{s.num}</Num>
               <h3 className="h-3 text-ink">{s.title}</h3>
-              <p className="body flex-1" style={{ color: 'var(--color-ink-soft)' }}>{s.shortDesc}</p>
+              <p className="body flex-1 text-ink-soft">{s.shortDesc}</p>
               {s.slug?.current && (
-                <span className="flex items-center gap-2 body-sm" style={{ color: 'var(--color-accent)' }}>
+                <span className="flex items-center gap-2 body-sm text-accent">
                   Scopri <Arrow size={12} />
                 </span>
               )}

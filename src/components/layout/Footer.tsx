@@ -2,17 +2,8 @@ import Link from 'next/link'
 import type { Settings } from '@/lib/types'
 import Btn from '@/components/ui/Btn'
 import Kicker from '@/components/ui/Kicker'
-
-const NAV_ITEMS = [
-  { href: '/', label: 'Home' },
-  { href: '/storia', label: 'Storia' },
-  { href: '/servizi', label: 'Servizi' },
-  { href: '/servizio-civile', label: 'Servizio Civile' },
-  { href: '/galleria', label: 'Galleria' },
-  { href: '/news', label: 'News' },
-  { href: '/contatti', label: 'Contatti' },
-  { href: '/volontariato', label: 'Volontariato' },
-]
+import LogoMark from '@/components/ui/LogoMark'
+import { NAV_ITEMS } from '@/lib/nav'
 
 interface FooterProps {
   settings: Settings | null
@@ -28,17 +19,11 @@ export default function Footer({ settings }: FooterProps) {
   return (
     <footer className="dark-band py-[clamp(4rem,7vw,6rem)]">
       <div className="shell">
-        <div className="grid grid-cols-1 md:grid-cols-[1.4fr_1fr_1fr_1fr] gap-12 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-[1.4fr_1fr_1fr_1fr] gap-12 mb-20">
           {/* Brand */}
           <div>
             <div className="flex items-center gap-3.5 mb-6">
-              <div
-                className="w-11 h-11 rounded-full grid place-items-center flex-shrink-0"
-                style={{ background: 'var(--color-bg)', color: 'var(--color-ink)', fontFamily: 'var(--font-display)', fontStyle: 'italic', fontSize: 26 }}
-                aria-hidden="true"
-              >
-                M
-              </div>
+              <LogoMark size={44} />
               <span className="serif text-xl text-bg">Misericordia di Gello</span>
             </div>
             <p className="body text-bg/70 max-w-sm">
@@ -51,7 +36,7 @@ export default function Footer({ settings }: FooterProps) {
 
           {/* Nav */}
           <div>
-            <Kicker noRule style={{ color: 'rgba(242,236,224,0.5)' }}>Naviga</Kicker>
+            <Kicker noRule className="text-bg/50">Naviga</Kicker>
             <ul className="mt-6 list-none p-0 space-y-1.5">
               {NAV_ITEMS.map((item) => (
                 <li key={item.href}>
@@ -65,7 +50,7 @@ export default function Footer({ settings }: FooterProps) {
 
           {/* Contatti */}
           <div>
-            <Kicker noRule style={{ color: 'rgba(242,236,224,0.5)' }}>Contatti</Kicker>
+            <Kicker noRule className="text-bg/50">Contatti</Kicker>
             <div className="mt-6 body text-bg/70 space-y-0.5">
               {address.split('—').map((line, i) => (
                 <p key={i}>{line.trim()}</p>
@@ -85,7 +70,7 @@ export default function Footer({ settings }: FooterProps) {
 
           {/* Emergenze */}
           <div>
-            <Kicker noRule style={{ color: 'rgba(242,236,224,0.5)' }}>Emergenze</Kicker>
+            <Kicker noRule className="text-bg/50">Emergenze</Kicker>
             <div className="mt-6">
               <div className="serif text-bg leading-none" style={{ fontSize: 48 }}>118</div>
               <p className="body-sm text-bg/50 mt-2">Pronto soccorso sanitario</p>

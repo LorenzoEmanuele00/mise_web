@@ -15,18 +15,18 @@ export default function HeroSection({ hero, display = false }: HeroSectionProps)
     <Section loose>
       {hero.kicker && (
         <p className="mb-6">
-          <Kicker style={{ color: 'var(--color-accent)' }}>{hero.kicker}</Kicker>
+          <Kicker className="text-accent">{hero.kicker}</Kicker>
         </p>
       )}
       <h1 className={`${display ? 'h-display' : 'h-1'} text-ink max-w-3xl`}>
         {hero.headingPre}
         {hero.headingEm && (
-          <>{' '}<em className="serif-it" style={{ color: 'var(--color-accent)' }}>{hero.headingEm}</em></>
+          <>{' '}<em className="serif-it text-accent">{hero.headingEm}</em></>
         )}
         {hero.headingPost && <>{' '}{hero.headingPost}</>}
       </h1>
       {hero.body && (
-        <p className="body-lg mt-8 max-w-xl" style={{ color: 'var(--color-ink-soft)' }}>
+        <p className="body-lg mt-8 max-w-xl text-ink-soft">
           {hero.body}
         </p>
       )}

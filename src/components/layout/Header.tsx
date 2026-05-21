@@ -4,27 +4,8 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import Arrow from '@/components/ui/Arrow'
-
-const NAV_ITEMS = [
-  { href: '/', label: 'Home' },
-  { href: '/storia', label: 'Storia' },
-  { href: '/servizi', label: 'Servizi' },
-  { href: '/servizio-civile', label: 'Servizio Civile' },
-  { href: '/galleria', label: 'Galleria' },
-  { href: '/news', label: 'News' },
-  { href: '/contatti', label: 'Contatti' },
-]
-
-function LogoMark({ size = 36 }: { size?: number }) {
-  return (
-    <div
-      className="nav-logo-mark"
-      style={{ width: size, height: size, fontSize: size * 0.6 }}
-    >
-      M
-    </div>
-  )
-}
+import LogoMark from '@/components/ui/LogoMark'
+import { NAV_ITEMS } from '@/lib/nav'
 
 export default function Header() {
   const [open, setOpen] = useState(false)
@@ -68,7 +49,7 @@ export default function Header() {
           </Link>
 
           <nav className="nav-links" aria-label="Navigazione principale">
-            {NAV_ITEMS.map((item) => (
+            {NAV_ITEMS.filter((item) => item.href !== '/volontariato').map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
@@ -162,13 +143,6 @@ export default function Header() {
               <span className="num text-bg/40">0{i + 1}</span>
             </Link>
           ))}
-          <Link
-            href="/volontariato"
-            className={`flex items-center justify-between px-6 py-4 border-b border-white/10 text-bg no-underline hover:bg-white/5 transition-colors${pathname === '/volontariato' ? ' bg-white/10' : ''}`}
-          >
-            <span className="text-base">Volontariato</span>
-            <span className="num text-bg/40">08</span>
-          </Link>
         </nav>
 
         <div className="px-6 py-6 mt-auto flex flex-col gap-4 border-t border-white/10">

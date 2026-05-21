@@ -27,7 +27,7 @@ export default function NewsGrid({ posts, preview = false }: NewsGridProps) {
             className="group flex flex-col gap-4"
           >
             {post.cover && (
-              <div className="relative aspect-[16/9] overflow-hidden" style={{ backgroundColor: 'var(--color-bg-deep)' }}>
+              <div className="relative aspect-[16/9] overflow-hidden bg-bg-deep">
                 <SanityImage
                   source={post.cover}
                   alt={post.title}
@@ -39,15 +39,15 @@ export default function NewsGrid({ posts, preview = false }: NewsGridProps) {
             )}
             <div className="flex flex-col gap-2 flex-1">
               {post.tag && (
-                <span className="kicker no-rule" style={{ color: 'var(--color-accent)' }}>
+                <span className="kicker no-rule text-accent">
                   {post.tag}
                 </span>
               )}
               <h3 className="h-3 text-ink group-hover:opacity-70 transition-opacity">{post.title}</h3>
-              <p className="body flex-1 line-clamp-3" style={{ color: 'var(--color-ink-soft)' }}>
+              <p className="body flex-1 line-clamp-3 text-ink-soft">
                 {post.excerpt}
               </p>
-              <p className="body-sm" style={{ color: 'var(--color-muted)' }}>{formatDate(post.date)}</p>
+              <p className="body-sm text-muted">{formatDate(post.date)}</p>
             </div>
           </Link>
         ))}

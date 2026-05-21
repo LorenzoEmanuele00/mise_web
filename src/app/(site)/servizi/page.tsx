@@ -2,7 +2,7 @@ import { client } from '@/sanity/lib/client'
 import { SERVIZI_QUERY } from '@/sanity/lib/queries'
 import type { ServizioListItem } from '@/lib/types'
 import Section from '@/components/layout/Section'
-import Kicker from '@/components/ui/Kicker'
+import PageHeader from '@/components/layout/PageHeader'
 import ServiziAccordion from '@/components/sections/ServiziAccordion'
 
 export default async function ServiziPage() {
@@ -15,10 +15,7 @@ export default async function ServiziPage() {
   return (
     <main>
       <Section loose>
-        <p className="mb-6">
-          <Kicker style={{ color: 'var(--color-accent)' }}>Cosa facciamo</Kicker>
-        </p>
-        <h1 className="h-1 text-ink mb-16">I nostri servizi</h1>
+        <PageHeader kicker="Cosa facciamo" title="I nostri servizi" />
         <ServiziAccordion servizi={servizi} />
       </Section>
     </main>

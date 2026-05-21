@@ -1,4 +1,25 @@
-import type { SchemaTypeDefinition } from 'sanity'
+import page                from './documents/page'
+import post                from './documents/post'
+import servizio            from './documents/servizio'
+import mezzo               from './documents/mezzo'
+import settings            from './documents/settings'
+import servizioCivile      from './documents/servizioCivile'
+import contactSubmission   from './documents/contactSubmission'
+import volunteerSubmission from './documents/volunteerSubmission'
+import seo                 from './objects/seo'
+import heroSection         from './objects/heroSection'
+import timelineEvent       from './objects/timelineEvent'
+import tipoServizio        from './objects/tipoServizio'
+import scProgetto          from './objects/scProgetto'
+import scStep              from './objects/scStep'
+import scTestimonianza     from './objects/scTestimonianza'
+import scFaq               from './objects/scFaq'
 
-// Schemi aggiunti in Fase 3
-export const schemaTypes: SchemaTypeDefinition[] = []
+export const schemaTypes = [
+  // Documents
+  page, post, servizio, mezzo, settings, servizioCivile,
+  contactSubmission, volunteerSubmission,
+  // Objects
+  seo, heroSection, timelineEvent,
+  tipoServizio, scProgetto, scStep, scTestimonianza, scFaq,
+]

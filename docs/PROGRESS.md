@@ -62,22 +62,22 @@
 
 ## Fase 3 — Schemi Sanity (Studio)
 
-- [ ] `src/sanity/schemas/documents/page.ts` — pagina generica con SEO
-- [ ] `src/sanity/schemas/documents/post.ts` — articolo news con tag, data, corpo, cover
-- [ ] `src/sanity/schemas/documents/servizio.ts` — servizio con tutti i campi del design
-- [ ] `src/sanity/schemas/documents/mezzo.ts` — veicolo del parco mezzi
-- [ ] `src/sanity/schemas/documents/settings.ts` — impostazioni globali (nav, footer, contatti, logo)
-- [ ] `src/sanity/schemas/documents/servizioCivile.ts` — singleton con tipi SCU/SCR, step, testimonianze, FAQ
-- [ ] `src/sanity/schemas/objects/seo.ts` — oggetto SEO riutilizzabile
-- [ ] `src/sanity/schemas/objects/heroSection.ts` — sezione hero con heading display e italic accent
-- [ ] `src/sanity/schemas/objects/timelineEvent.ts` — evento cronologia (anno, titolo, testo)
-- [ ] `src/sanity/schemas/objects/tipoServizio.ts` — tab SCU/SCR con campi bando e array progetti
-- [ ] `src/sanity/schemas/objects/scProgetto.ts` — progetto singolo con codice, posti, sede, focus, PDF
-- [ ] `src/sanity/schemas/objects/scStep.ts` — step "Come funziona"
-- [ ] `src/sanity/schemas/objects/scTestimonianza.ts` — testimonianza con foto, citazione, nome, anno
-- [ ] `src/sanity/schemas/objects/scFaq.ts` — coppia domanda/risposta
-- [ ] `src/sanity/schemas/index.ts` — esporta tutti gli schemi
-- [ ] Configurare Studio embedded in `src/app/studio/[[...tool]]/page.tsx` con `schemaTypes` e plugin Presentation
+- [x] `src/sanity/schemas/documents/page.ts` — pagina generica con SEO
+- [x] `src/sanity/schemas/documents/post.ts` — articolo news con tag, data, corpo, cover
+- [x] `src/sanity/schemas/documents/servizio.ts` — servizio con tutti i campi del design
+- [x] `src/sanity/schemas/documents/mezzo.ts` — veicolo del parco mezzi
+- [x] `src/sanity/schemas/documents/settings.ts` — impostazioni globali (nav, footer, contatti, logo)
+- [x] `src/sanity/schemas/documents/servizioCivile.ts` — singleton con tipi SCU/SCR, step, testimonianze, FAQ
+- [x] `src/sanity/schemas/objects/seo.ts` — oggetto SEO riutilizzabile
+- [x] `src/sanity/schemas/objects/heroSection.ts` — sezione hero con heading display e italic accent
+- [x] `src/sanity/schemas/objects/timelineEvent.ts` — evento cronologia (anno, titolo, testo)
+- [x] `src/sanity/schemas/objects/tipoServizio.ts` — tab SCU/SCR con campi bando e array progetti
+- [x] `src/sanity/schemas/objects/scProgetto.ts` — progetto singolo con codice, posti, sede, focus, PDF
+- [x] `src/sanity/schemas/objects/scStep.ts` — step "Come funziona"
+- [x] `src/sanity/schemas/objects/scTestimonianza.ts` — testimonianza con foto, citazione, nome, anno
+- [x] `src/sanity/schemas/objects/scFaq.ts` — coppia domanda/risposta
+- [x] `src/sanity/schemas/index.ts` — esporta tutti gli schemi
+- [x] `sanity.config.ts` — structure builder con singleton (Settings, Servizio Civile) e sezioni Submissions
 - [ ] Inserire dati di test nel CMS (almeno 1 pagina, 2 post, tutti i servizi)
 - [ ] Verificare: Studio si avvia e tutti i document type sono visibili e funzionanti
 

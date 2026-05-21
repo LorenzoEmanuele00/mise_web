@@ -78,12 +78,12 @@ Implementazione bottom-up dal design v3 (`mise_web-3.zip`).
 - [x] `Section.tsx` — wrapper `<section>` con varianti `dark` `tight` `loose`, include `SectionLabel`
 
 ### D4 — Sezioni `src/components/sections/`
-- [ ] `HeroSection.tsx`
-- [ ] `StatsStrip.tsx`
-- [ ] `TimelineSection.tsx`
-- [ ] `ServiziGrid.tsx`
-- [ ] `MezziGrid.tsx`
-- [ ] `NewsGrid.tsx`
+- [x] `HeroSection.tsx`
+- [x] `StatsStrip.tsx`
+- [x] `TimelineSection.tsx`
+- [x] `ServiziGrid.tsx`
+- [x] `MezziGrid.tsx`
+- [x] `NewsGrid.tsx`
 
 ### D5 — Componenti client (foglie interattive)
 - [ ] `ServiziAccordion.tsx` (client)

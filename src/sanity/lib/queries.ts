@@ -73,7 +73,7 @@ export const SERVIZIO_CIVILE_QUERY = groq`
 export const HOME_QUERY = groq`
   {
     "page":    *[_type == "page" && slug.current == "home" && language == $lang][0] { title, heroSection, seo },
-    "servizi": *[_type == "servizio" && language == $lang] | order(order asc)[0..5] { num, title, shortDesc },
+    "servizi": *[_type == "servizio" && language == $lang] | order(order asc)[0..5] { _id, num, title, shortDesc, slug },
     "news":    *[_type == "post" && language == $lang] | order(date desc)[0..2] { _id, title, slug, tag, date, excerpt, cover }
   }
 `

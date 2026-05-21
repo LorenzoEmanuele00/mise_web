@@ -1,6 +1,9 @@
 import { client } from '@/sanity/lib/client'
 import { SETTINGS_QUERY } from '@/sanity/lib/queries'
 import type { Settings } from '@/lib/types'
+import Section from '@/components/layout/Section'
+import Kicker from '@/components/ui/Kicker'
+import ContactForm from '@/components/forms/ContactForm'
 
 export default async function ContattiPage() {
   const settings = await client.fetch<Settings | null>(
@@ -11,47 +14,33 @@ export default async function ContattiPage() {
 
   return (
     <main>
-      <section className="shell py-24">
-        <p className="kicker text-accent mb-6">Dove siamo</p>
+      <Section loose>
+        <p className="mb-6">
+          <Kicker style={{ color: 'var(--color-accent)' }}>Dove siamo</Kicker>
+        </p>
         <h1 className="h-1 text-ink mb-16">Contatti</h1>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
-          <div>
-            <div className="divide-y divide-hair">
-              {settings?.address && (
-                <div className="py-6">
-                  <p className="body-sm text-muted mb-1 uppercase tracking-wide">Indirizzo</p>
-                  <p className="body text-ink">{settings.address}</p>
-                </div>
-              )}
-              {settings?.phone && (
-                <div className="py-6">
-                  <p className="body-sm text-muted mb-1 uppercase tracking-wide">Telefono</p>
-                  <a href={`tel:${settings.phone}`} className="body text-ink hover:text-accent transition-colors">{settings.phone}</a>
-                </div>
-              )}
-              {settings?.email && (
-                <div className="py-6">
-                  <p className="body-sm text-muted mb-1 uppercase tracking-wide">Email</p>
-                  <a href={`mailto:${settings.email}`} className="body text-ink hover:text-accent transition-colors">{settings.email}</a>
-                </div>
-              )}
-              {settings?.orariSede && (
-                <div className="py-6">
-                  <p className="body-sm text-muted mb-1 uppercase tracking-wide">Orari sede</p>
-                  <p className="body text-ink whitespace-pre-line">{settings.orariSede}</p>
-                </div>
-              )}
-            </div>
+          <div style={{ borderTop: '1px solid var(--color-hair)' }}>
+            {[
+              { label: 'Indirizzo', value: settings?.address },
+              { label: 'Telefono', value: settings?.phone, href: settings?.phone ? `tel:${settings.phone}` : undefined },
+              { label: 'Email', value: settings?.email, href: settings?.email ? `mailto:${settings.email}` : undefined },
+              { label: 'Orari sede', value: settings?.orariSede },
+            ].filter((r) => r.value).map((r) => (
+              <div key={r.label} className="py-6" style={{ borderBottom: '1px solid var(--color-hair)' }}>
+                <p className="input-label mb-2">{r.label}</p>
+                {r.href
+                  ? <a href={r.href} className="body text-ink hover:opacity-70 transition-opacity">{r.value}</a>
+                  : <p className="body text-ink whitespace-pre-line">{r.value}</p>
+                }
+              </div>
+            ))}
           </div>
 
-          <div>
-            <div className="p-8 bg-bg-elev border border-hair body text-ink-soft">
-              Il modulo di contatto sarà disponibile a breve.
-            </div>
-          </div>
+          <ContactForm />
         </div>
-      </section>
+      </Section>
     </main>
   )
 }

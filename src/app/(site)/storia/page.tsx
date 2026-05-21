@@ -1,6 +1,36 @@
 import { client } from '@/sanity/lib/client'
 import { PAGE_QUERY } from '@/sanity/lib/queries'
-import type { Page } from '@/lib/types'
+import type { Page, TimelineEvent } from '@/lib/types'
+import HeroSection from '@/components/sections/HeroSection'
+import TimelineSection from '@/components/sections/TimelineSection'
+
+const TIMELINE: TimelineEvent[] = [
+  {
+    year: '1947',
+    title: 'Fondazione',
+    text: 'La Confraternita Misericordia di Gello nasce grazie all\'impegno di un gruppo di volontari della comunità locale, con l\'obiettivo di assistere malati e anziani.',
+  },
+  {
+    year: '1970',
+    title: 'Servizi di emergenza',
+    text: 'Avvio della collaborazione con il sistema di emergenza sanitaria territoriale e acquisto dei primi mezzi di soccorso.',
+  },
+  {
+    year: '1990',
+    title: 'Espansione',
+    text: 'Potenziamento della flotta, ampliamento delle attività di assistenza e consolidamento della presenza sul territorio di San Giuliano Terme.',
+  },
+  {
+    year: '2010',
+    title: 'Nuova sede',
+    text: 'Inaugurazione della sede ampliata con spazi dedicati alla formazione dei volontari e all\'accoglienza della comunità.',
+  },
+  {
+    year: 'Oggi',
+    title: 'Sempre presenti',
+    text: 'Decine di volontari attivi ogni giorno garantiscono sei servizi operativi h24, dalla protezione civile al trasporto sociale.',
+  },
+]
 
 export default async function StoriaPage() {
   const page = await client.fetch<Page | null>(
@@ -9,21 +39,10 @@ export default async function StoriaPage() {
     { next: { tags: ['page'] } }
   )
 
-  const hero = page?.heroSection
-
   return (
     <main>
-      <section className="shell py-24 md:py-36">
-        {hero?.kicker && <p className="kicker text-accent mb-6">{hero.kicker}</p>}
-        <h1 className="h-1 text-ink max-w-2xl">
-          {hero?.headingPre}{' '}
-          {hero?.headingEm && <em className="serif-it text-accent">{hero.headingEm}</em>}{' '}
-          {hero?.headingPost}
-        </h1>
-        {hero?.body && (
-          <p className="body-lg text-ink-soft mt-8 max-w-xl">{hero.body}</p>
-        )}
-      </section>
+      <HeroSection hero={page?.heroSection} />
+      <TimelineSection events={TIMELINE} />
     </main>
   )
 }

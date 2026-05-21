@@ -86,23 +86,23 @@ Implementazione bottom-up dal design v3 (`mise_web-3.zip`).
 - [x] `NewsGrid.tsx`
 
 ### D5 — Componenti client (foglie interattive)
-- [ ] `ServiziAccordion.tsx` (client)
-- [ ] `NewsFilter.tsx` (client)
-- [ ] `ContactForm.tsx` (client) — Server Action con Zod + honeypot
-- [ ] `VolunteerForm.tsx` (client) — Server Action con Zod + honeypot
-- [ ] `src/app/actions/submitForms.ts` — Server Actions
+- [x] `ServiziAccordion.tsx` (client)
+- [x] `NewsFilter.tsx` (client)
+- [x] `ContactForm.tsx` (client) — Server Action con Zod + honeypot
+- [x] `VolunteerForm.tsx` (client) — Server Action con Zod + honeypot
+- [x] `src/app/actions/submitForms.ts` — Server Actions
 
 ### D6 — Rebuild pagine (≤ 70 righe cad., solo composizione)
-- [ ] `app/page.tsx` — Home
-- [ ] `app/storia/page.tsx`
-- [ ] `app/servizi/page.tsx`
-- [ ] `app/servizi/[slug]/page.tsx`
-- [ ] `app/servizio-civile/page.tsx`
-- [ ] `app/news/page.tsx`
-- [ ] `app/news/[slug]/page.tsx`
-- [ ] `app/galleria/page.tsx`
-- [ ] `app/volontariato/page.tsx`
-- [ ] `app/contatti/page.tsx`
+- [x] `app/page.tsx` — Home
+- [x] `app/storia/page.tsx` — timeline statica (CMS non ha campo timeline su page)
+- [x] `app/servizi/page.tsx`
+- [x] `app/servizi/[slug]/page.tsx` — invariato (già pulito)
+- [x] `app/servizio-civile/page.tsx` — invariato (struttura fissa già corretta)
+- [x] `app/news/page.tsx`
+- [x] `app/news/[slug]/page.tsx` — invariato (già pulito)
+- [x] `app/galleria/page.tsx` — invariato (placeholder per v1)
+- [x] `app/volontariato/page.tsx`
+- [x] `app/contatti/page.tsx`
 
 ---
 

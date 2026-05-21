@@ -209,6 +209,6 @@ export interface MezzoListItem {
 
 export interface HomeData {
   page: Pick<Page, 'title' | 'heroSection' | 'seo'> | null
-  servizi: Pick<Servizio, 'num' | 'title' | 'shortDesc'>[]
+  servizi: Pick<ServizioListItem, '_id' | 'num' | 'title' | 'shortDesc' | 'slug'>[]
   news: PostListItem[]
 }

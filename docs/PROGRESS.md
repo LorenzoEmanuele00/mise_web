@@ -1,6 +1,6 @@
 # PROGRESS — Sito Vetrina Misericordia di Gello
 
-> Stato aggiornato: 20 maggio 2026  
+> Stato aggiornato: 22 maggio 2026  
 > Segna ogni fase come `[x]` non appena è completata e verificata prima di passare alla successiva.
 
 ---
@@ -222,6 +222,64 @@ Implementazione bottom-up dal design v3 (`mise_web-3.zip`).
   - `ContactForm.tsx:23` — `{/* honeypot — nascosto ai visitatori reali */}`
   - `VolunteerForm.tsx:24` — stessa riga
   - `servizio-civile/page.tsx` — 6 commenti di sezione (`{/* Hero */}`, ecc.)
+
+---
+
+## Fase R — Responsive (mobile & tablet) ← FASE CORRENTE
+
+> Analisi del 22 maggio 2026. Obiettivo: rendere fruibile il sito su mobile (≥360px) e tablet (≥768px).
+> Breakpoint di riferimento: `sm` = 640px · `md` = 768px · `lg` = 1024px.
+> Componenti già OK: `ServiziGrid`, `NewsGrid`, `MezziGrid`, `StatsStrip`, `Footer`, `Header` (offcanvas drawer già funzionante).
+
+---
+
+### R-A — Bug critici: layout che si spezza su mobile
+
+I componenti della pagina Servizio Civile usano `gridTemplateColumns` inline con colonne fisse e nessun breakpoint.
+
+- [ ] **`ScTabController.tsx` — Stats grid 5 colonne fisse** — Linea ~93: `gridTemplateColumns: \`repeat(${stats.length}, 1fr)\`` produce 5 col su qualsiasi schermo. Fix: `className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5"` (rimuovere lo `style` di grid).
+  - File: `src/components/sections/ScTabController.tsx`
+
+- [ ] **`ScTabController.tsx` — Projects grid 4 colonne fisse** — Linea ~180: `gridTemplateColumns: '120px 1fr 1fr 200px'`. Su mobile la card dei progetti trabocca. Fix: stacked su mobile (`grid-cols-1`), grid a 4 col da `md` in su (`md:grid-cols-[120px_1fr_1fr_200px]`). Il num + codice diventano una riga inline sopra il titolo su mobile.
+  - File: `src/components/sections/ScTabController.tsx`
+
+- [ ] **`ScTabController.tsx` — Deadline dark band** — Linea ~122: `gridTemplateColumns: '1fr auto'`. Su schermi < 400px il bottone "Candidati" può clipparsi. Fix: `flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between`.
+  - File: `src/components/sections/ScTabController.tsx`
+
+- [ ] **`ScTabController.tsx` — Tab switcher overflow** — I pill tab (`inline-flex`) overflow su mobile se i label sono lunghi. Fix: `flex-wrap` o `overflow-x: auto; max-width: 100%` sul contenitore.
+  - File: `src/components/sections/ScTabController.tsx`
+
+- [ ] **`ScStepsSection.tsx` — Steps grid N colonne fisse** — Linea ~19: `gridTemplateColumns: \`repeat(${Math.min(steps.length, 5)}, 1fr)\``. Fix: `className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5"`.
+  - File: `src/components/sections/ScStepsSection.tsx`
+
+- [ ] **`ScTestimonianzeSection.tsx` — Testimonianze grid 3 colonne fisse** — Linea ~22: `gridTemplateColumns: \`repeat(..., 3), 1fr)\``. Fix: `className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3"`.
+  - File: `src/components/sections/ScTestimonianzeSection.tsx`
+
+- [ ] **`ScFaqSection.tsx` — FAQ layout 2 colonne fisse** — Linea ~17: `gridTemplateColumns: '1fr 2fr'`. Fix: stacked su mobile, `md:grid-cols-[1fr_2fr]` da tablet in su.
+  - File: `src/components/sections/ScFaqSection.tsx`
+
+- [ ] **`ScApplySection.tsx` — Apply form 2 colonne fisse** — Linea ~49: `gridTemplateColumns: '1fr 1.2fr'`. Fix: stacked su mobile, `md:grid-cols-[1fr_1.2fr]` da tablet in su.
+  - File: `src/components/sections/ScApplySection.tsx`
+
+---
+
+### R-B — Padding fissi in pixel (SC components)
+
+I componenti SC usano `paddingTop/Bottom` con valori fissi (es. `96px`, `120px`) invece di `clamp()` come il resto del design system. Su mobile producono spaziature eccessive.
+
+- [ ] **Convertire tutti i padding fissi SC in `clamp()`** — Usare la stessa convenzione di `Section.tsx`:
+  - `ScTabController.tsx:32` `paddingTop: 56` → `pt-[clamp(3rem,5vw,4rem)]`
+  - `ScTabController.tsx:90` `paddingTop: 64, paddingBottom: 80` → `py-[clamp(3rem,6vw,5rem)]`
+  - `ScStepsSection.tsx:7` `paddingTop/Bottom: 96` → `py-[clamp(4rem,8vw,6rem)]`
+  - `ScTestimonianzeSection.tsx:14` `paddingTop/Bottom: 120` → `py-[clamp(5rem,10vw,7.5rem)]`
+  - `ScApplySection.tsx:26,44` `paddingTop/Bottom: 120` → `py-[clamp(5rem,10vw,7.5rem)]`
+
+---
+
+### R-C — Accordion e tabella servizi
+
+- [ ] **`ServiziAccordion.tsx` — contenuto espanso `pl-14`** — Su mobile 56px di padding sinistro è proporzionalmente molto. Fix: `pl-8 md:pl-14`.
+  - File: `src/components/sections/ServiziAccordion.tsx:32`
 
 ---
 

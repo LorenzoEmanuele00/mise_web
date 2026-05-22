@@ -198,7 +198,7 @@ Implementazione bottom-up dal design v3 (`mise_web-3.zip`).
 
 ---
 
-### R6 — Feature mancante: MezziGrid orfana
+### R6 — Feature mancante: MezziGrid orfana ← FASE CORRENTE
 
 - [ ] **`MezziGrid` costruito ma non usato su nessuna pagina** — Il componente esiste, i dati ci sono (6 mezzi nel CMS), ma non è integrato in nessun percorso. Questo crea anche il gap numerico `01 → 04` nelle `SectionLabel` della home (mancano 02 e 03).
   - Opzione A (raccomandata): aggiungere `MezziGrid` alla home tra `ServiziGrid` e `NewsGrid`, e correggere `NewsGrid` preview da `num="04"` a `num="03"` (o rimuovere il num dalla preview).
@@ -225,7 +225,7 @@ Implementazione bottom-up dal design v3 (`mise_web-3.zip`).
 
 ---
 
-## Fase R — Responsive (mobile & tablet) ← FASE CORRENTE
+## Fase R — Responsive (mobile & tablet)
 
 > Analisi del 22 maggio 2026. Obiettivo: rendere fruibile il sito su mobile (≥360px) e tablet (≥768px).
 > Breakpoint di riferimento: `sm` = 640px · `md` = 768px · `lg` = 1024px.
@@ -237,7 +237,7 @@ Implementazione bottom-up dal design v3 (`mise_web-3.zip`).
 
 I componenti della pagina Servizio Civile usano `gridTemplateColumns` inline con colonne fisse e nessun breakpoint.
 
-- [ ] **`ScTabController.tsx` — Stats grid 5 colonne fisse** — Linea ~93: `gridTemplateColumns: \`repeat(${stats.length}, 1fr)\`` produce 5 col su qualsiasi schermo. Fix: `className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5"` (rimuovere lo `style` di grid).
+- [ ] **`ScTabController.tsx` — Stats grid 5 colonne fisse** — Linea ~93: `gridTemplateColumns: \`repeat(${stats.length}, 1fr)\``produce 5 col su qualsiasi schermo. Fix:`className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5"`(rimuovere lo`style` di grid).
   - File: `src/components/sections/ScTabController.tsx`
 
 - [ ] **`ScTabController.tsx` — Projects grid 4 colonne fisse** — Linea ~180: `gridTemplateColumns: '120px 1fr 1fr 200px'`. Su mobile la card dei progetti trabocca. Fix: stacked su mobile (`grid-cols-1`), grid a 4 col da `md` in su (`md:grid-cols-[120px_1fr_1fr_200px]`). Il num + codice diventano una riga inline sopra il titolo su mobile.

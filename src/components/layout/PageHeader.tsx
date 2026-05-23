@@ -1,8 +1,8 @@
-import Kicker from '@/components/ui/Kicker'
+import Kicker from "@/components/ui/Kicker";
 
 interface PageHeaderProps {
-  kicker: string
-  title: string
+  kicker: string;
+  title: string;
 }
 
 export default function PageHeader({ kicker, title }: PageHeaderProps) {
@@ -11,7 +11,7 @@ export default function PageHeader({ kicker, title }: PageHeaderProps) {
       <p className="mb-6">
         <Kicker className="text-accent">{kicker}</Kicker>
       </p>
-      <h1 className="h-1 text-ink mb-12">{title}</h1>
+      <h1 className="heading-01 text-ink mb-12">{title}</h1>
     </>
-  )
+  );
 }

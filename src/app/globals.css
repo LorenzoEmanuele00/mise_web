@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-ink: #16130e;
+  --color-ink: #000039;
   --color-bg: #f2ece0;
   --color-accent: #b85333;
   --color-bg-elev: #eae4d4;
@@ -10,19 +10,19 @@
   --color-muted: #b8b5b1;
   --color-accent-soft: #d48a6b;
   --color-accent-deep: #7a3218;
+  --color-accent-yellow: #f6e328;
   --color-hair: rgba(22, 19, 14, 0.12);
   --color-hair-strong: rgba(22, 19, 14, 0.22);
 
-  --font-display:
-    var(--font-instrument-serif), "Cormorant Garamond", Georgia, serif;
+  --font-display: var(--font-instrument-serif), "Instrument Serif", serif;
   --font-sans: var(--font-dm-sans), system-ui, sans-serif;
   --font-mono: var(--font-jetbrains-mono), "JetBrains Mono", monospace;
 }
 
 @layer base {
   html {
-    background-color: #f2ece0;
-    color: #16130e;
+    background-color: var(--color-bg);
+    color: var(--color-ink);
   }
 
   body {
@@ -37,19 +37,19 @@
     line-height: 0.96;
   }
 
-  .h-1 {
+  .heading-01 {
     font-family: var(--font-display);
     font-size: clamp(2.375rem, 4vw, 3.5rem);
     line-height: 1.05;
   }
 
-  .h-2 {
+  .heading-02 {
     font-family: var(--font-display);
     font-size: clamp(1.625rem, 2.8vw, 2.25rem);
     line-height: 1.1;
   }
 
-  .h-3 {
+  .heading-03 {
     font-family: var(--font-display);
     font-size: clamp(1.25rem, 2vw, 1.625rem);
     line-height: 1.2;
@@ -122,8 +122,8 @@
   }
 
   .btn-dark {
-    background-color: #16130e;
-    color: #f2ece0;
+    background-color: var(--color-ink);
+    color: var(--color-bg);
   }
 
   .btn-dark:hover {
@@ -132,7 +132,7 @@
 
   .btn-ghost {
     border: 1px solid currentColor;
-    color: #16130e;
+    color: var(--color-ink);
   }
 
   .btn-ghost:hover {
@@ -153,11 +153,11 @@
     font-family: var(--font-sans);
     font-size: 1rem;
     outline: none;
-    color: #16130e;
+    color: var(--color-ink);
   }
 
   .input:focus {
-    border-bottom-color: #16130e;
+    border-bottom-color: var(--color-ink);
   }
 
   .input-label {

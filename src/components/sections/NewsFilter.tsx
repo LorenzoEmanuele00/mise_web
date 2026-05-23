@@ -1,22 +1,29 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import Link from 'next/link'
-import type { PostListItem } from '@/lib/types'
-import type { Post } from '@/lib/types'
-import { formatDate } from '@/sanity/lib/utils'
+import { useState } from "react";
+import Link from "next/link";
+import type { PostListItem } from "@/lib/types";
+import type { Post } from "@/lib/types";
+import { formatDate } from "@/sanity/lib/utils";
 
-type FilterTag = Post['tag'] | 'Tutti'
-const TAGS: FilterTag[] = ['Tutti', 'Comunicato', 'Bando', 'Formazione', 'Eventi']
+type FilterTag = Post["tag"] | "Tutti";
+const TAGS: FilterTag[] = [
+  "Tutti",
+  "Comunicato",
+  "Bando",
+  "Formazione",
+  "Eventi",
+];
 
 interface NewsFilterProps {
-  posts: PostListItem[]
+  posts: PostListItem[];
 }
 
 export default function NewsFilter({ posts }: NewsFilterProps) {
-  const [active, setActive] = useState<FilterTag>('Tutti')
+  const [active, setActive] = useState<FilterTag>("Tutti");
 
-  const filtered = active === 'Tutti' ? posts : posts.filter((p) => p.tag === active)
+  const filtered =
+    active === "Tutti" ? posts : posts.filter((p) => p.tag === active);
 
   return (
     <div>
@@ -27,8 +34,8 @@ export default function NewsFilter({ posts }: NewsFilterProps) {
             onClick={() => setActive(tag)}
             className={`kicker no-rule px-4 py-2 transition-colors border ${
               active === tag
-                ? 'border-ink bg-ink text-bg'
-                : 'border-hair bg-transparent text-ink-soft'
+                ? "border-ink bg-ink text-bg"
+                : "border-hair bg-transparent text-ink-soft"
             }`}
           >
             {tag}
@@ -48,14 +55,20 @@ export default function NewsFilter({ posts }: NewsFilterProps) {
             className="group block p-6 transition-colors border border-hair"
           >
             {post.tag && (
-              <p className="body-sm uppercase tracking-wide mb-3 text-accent">{post.tag}</p>
+              <p className="body-sm uppercase tracking-wide mb-3 text-accent">
+                {post.tag}
+              </p>
             )}
-            <h2 className="h-3 mb-3 transition-colors group-hover:opacity-70 text-ink">{post.title}</h2>
-            <p className="body mb-4 line-clamp-3 text-ink-soft">{post.excerpt}</p>
+            <h2 className="heading-03 mb-3 transition-colors group-hover:opacity-70 text-ink">
+              {post.title}
+            </h2>
+            <p className="body mb-4 line-clamp-3 text-ink-soft">
+              {post.excerpt}
+            </p>
             <p className="body-sm text-muted">{formatDate(post.date)}</p>
           </Link>
         ))}
       </div>
     </div>
-  )
+  );
 }

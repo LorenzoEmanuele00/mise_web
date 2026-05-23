@@ -198,30 +198,19 @@ Implementazione bottom-up dal design v3 (`mise_web-3.zip`).
 
 ---
 
-### R6 — Feature mancante: MezziGrid orfana ← FASE CORRENTE
+### R6 — Feature mancante: MezziGrid orfana ✅
 
-- [ ] **`MezziGrid` costruito ma non usato su nessuna pagina** — Il componente esiste, i dati ci sono (6 mezzi nel CMS), ma non è integrato in nessun percorso. Questo crea anche il gap numerico `01 → 04` nelle `SectionLabel` della home (mancano 02 e 03).
-  - Opzione A (raccomandata): aggiungere `MezziGrid` alla home tra `ServiziGrid` e `NewsGrid`, e correggere `NewsGrid` preview da `num="04"` a `num="03"` (o rimuovere il num dalla preview).
-  - Opzione B: creare pagina dedicata `/mezzi` e linkare dal footer.
-  - Decidere con il committente prima di implementare.
-  - File: `src/app/(site)/page.tsx`, `src/components/sections/NewsGrid.tsx:21`
+- [x] **`MezziGrid` integrato nella pagina `/servizi`** — `MezziGrid` aggiunto come sezione separata dopo `ServiziAccordion` in `servizi/page.tsx`. Le fetch vengono fatte in parallelo (`Promise.all`). Tag cache `mezzo` aggiunto.
 
 ---
 
-### R7 — Minori / robustezza
+### R7 — Minori / robustezza ✅
 
-- [ ] **`SanityImage` carica immagini senza trasformazioni** — `urlFor(source).url()` restituisce l'originale full-res. Aggiungere `.auto('format').fit('max')` per image optimization automatica di Sanity.
-  - File: `src/components/ui/SanityImage.tsx:26`
+- [x] **`SanityImage` ottimizzazione immagini** — `urlFor(source).auto('format').fit('max').url()` in `SanityImage.tsx:26`.
 
-- [ ] **Footer address split su `—` fragile** — Se l'editor scrive `-` o `–` invece di `—` l'indirizzo non si divide. Fix: cambiare il regex di split in `address.split(/\s*[—–-]\s*/)` oppure documentare il separatore nella descrizione del campo Sanity.
-  - File: `src/components/layout/Footer.tsx:70`
+- [x] **Footer address split robusto** — `address.split(/\s*[—–-]\s*/)` in `Footer.tsx:55`.
 
-- [ ] **Rimuovere commenti "what"** — Commenti che descrivono cosa fa il codice (invece del perché), da eliminare:
-  - `TimelineSection.tsx:17` — `{/* vertical line */}`
-  - `TimelineSection.tsx:31` — `{/* dot on the line */}`
-  - `ContactForm.tsx:23` — `{/* honeypot — nascosto ai visitatori reali */}`
-  - `VolunteerForm.tsx:24` — stessa riga
-  - `servizio-civile/page.tsx` — 6 commenti di sezione (`{/* Hero */}`, ecc.)
+- [x] **Rimossi commenti "what"** — `{/* vertical line */}` e `{/* dot on the line */}` rimossi da `TimelineSection.tsx`. Gli altri (ContactForm, VolunteerForm, servizio-civile/page.tsx) erano già assenti.
 
 ---
 

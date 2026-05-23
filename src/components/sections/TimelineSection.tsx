@@ -14,7 +14,6 @@ export default function TimelineSection({ events }: TimelineSectionProps) {
     <Section>
       <SectionLabel num="02" label="La nostra storia" />
       <div className="relative">
-        {/* vertical line */}
         <div
           className="absolute left-[5.5rem] top-0 bottom-0 w-px hidden md:block"
           style={{ backgroundColor: "var(--color-hair)" }}
@@ -27,7 +26,6 @@ export default function TimelineSection({ events }: TimelineSectionProps) {
                 <Num>{ev.year}</Num>
               </div>
               <div className="relative flex-1 pb-12 border-b border-hair last:border-0 last:pb-0">
-                {/* dot on the line */}
                 <div
                   className="absolute -left-[calc(1.75rem+1px)] top-1.5 w-2 heading-02 rounded-full hidden md:block"
                   style={{ backgroundColor: "var(--color-accent)" }}

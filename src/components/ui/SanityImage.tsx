@@ -23,7 +23,7 @@ export default function SanityImage({
   sizes,
   priority,
 }: SanityImageProps) {
-  const url = urlFor(source).url()
+  const url = urlFor(source).auto('format').fit('max').url()
   if (!url) return null
 
   if (fill) {

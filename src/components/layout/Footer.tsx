@@ -52,7 +52,7 @@ export default function Footer({ settings }: FooterProps) {
           <div>
             <Kicker noRule className="text-bg/50">Contatti</Kicker>
             <div className="mt-6 body text-bg/70 space-y-0.5">
-              {address.split('—').map((line, i) => (
+              {address.split(/\s*[—–-]\s*/).map((line, i) => (
                 <p key={i}>{line.trim()}</p>
               ))}
               <p className="mt-3">

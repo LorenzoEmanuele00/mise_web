@@ -13,6 +13,23 @@
 
 ---
 
+## Fase 0 — Configurare Cloudflare R2 (storage immagini)
+
+Guida completa: **`docs/CLOUDFLARE-R2.md`**.
+
+Riepilogo dei passi (può procedere in parallelo con le fasi seguenti):
+
+1. Crea il bucket `mise-images` su [dash.cloudflare.com](https://dash.cloudflare.com) → R2 Object Storage → **Create bucket**
+2. Attiva l'accesso pubblico — custom domain `images.misericordiadigello.it` (consigliato) o URL `r2.dev` (rapido)
+3. Configura il CORS (whitelist `misericordiadigello.it` e `localhost:3000`)
+4. Ottimizza le immagini in WebP e caricale nel bucket (convenzione naming: vedere `CLOUDFLARE-R2.md §Fase 4`)
+5. Aggiorna i documenti Sanity con gli URL R2 (logo, foto mezzi, foto testimonianze, cover news)
+6. Aggiungi `NEXT_PUBLIC_R2_BASE_URL` in `.env.local` e in Vercel → Settings → Environment Variables
+
+> **Da completare prima del deploy** (Fase 5). I passi 1–4 si possono fare subito, anche prima di creare il progetto Vercel.
+
+---
+
 ## Fase 1 — Generare i token e il secret
 
 Prima di toccare le dashboard, genera tutte le credenziali che ti serviranno.

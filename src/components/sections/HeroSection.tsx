@@ -2,6 +2,7 @@ import type { HeroSection as HeroSectionData } from "@/lib/types";
 import Section from "@/components/layout/Section";
 import Btn from "@/components/ui/Btn";
 import Kicker from "@/components/ui/Kicker";
+import SanityImage from "@/components/ui/SanityImage";
 
 interface HeroSectionProps {
   hero?: HeroSectionData | null;
@@ -48,6 +49,17 @@ export default function HeroSection({
               {hero.ctaSecondary.label}
             </Btn>
           )}
+        </div>
+      )}
+      {hero.image && (
+        <div className="relative mt-12 aspect-[16/7] w-full overflow-hidden rounded-2xl">
+          <SanityImage
+            source={hero.image}
+            alt="I volontari della Misericordia di Gello"
+            fill
+            className="object-cover"
+            priority={display}
+          />
         </div>
       )}
     </Section>

@@ -16,6 +16,7 @@ export interface HeroSection {
   body?: string
   ctaPrimary?: { label: string; href: string }
   ctaSecondary?: { label: string; href: string }
+  image?: SanityImageSource
 }
 
 export interface TimelineEvent {

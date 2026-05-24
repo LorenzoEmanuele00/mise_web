@@ -272,6 +272,33 @@ I componenti SC usano `paddingTop/Bottom` con valori fissi (es. `96px`, `120px`)
 
 ---
 
+## Fase I — Migrazione Immagini → Cloudflare R2
+
+> Obiettivo: eliminare `next/image` + CDN Sanity per le immagini principali. Ogni immagine viene pre-caricata su Cloudflare R2 e referenziata come stringa URL in Sanity. Il browser le scarica direttamente da R2 — zero Vercel bandwidth.  
+> Guida infrastruttura: `docs/CLOUDFLARE-R2.md`
+
+### I-A — Codice (Claude)
+
+- [ ] Aggiornare schemi Sanity (`src/sanity/schemas/`): `mezzo.photo`, `post.cover`, `settings.logo`, `seo.ogImage`, `scTestimonianza.foto` → `type: 'url'` (stringa)
+- [ ] Aggiornare `src/lib/types.ts`: i campi immagine migrati diventano `string | null`
+- [ ] Sostituire `src/components/ui/SanityImage.tsx` con `R2Image.tsx`: `<img src={src} alt={alt} loading="lazy" />` (nessun `next/image`, nessun `urlFor`)
+- [ ] Aggiornare tutti i componenti che usano `SanityImage`: `MezziGrid`, `NewsGrid`, `ScTestimonianzeSection`, `Header` (logo), `Footer` (logo)
+- [ ] Aggiornare `next.config.ts`: rimuovere `remotePatterns` (`cdn.sanity.io` non più necessario)
+- [ ] Aggiornare la query `POST_QUERY` in `src/sanity/lib/queries.ts`: proiettare `body[] { ..., _type == "image" => { "url": asset->url } }` per le immagini inline del body
+- [ ] Aggiornare `news/[slug]/page.tsx`: custom PortableText component `image` che usa `<img src={value.url}>` plain
+- [ ] Rimuovere `@sanity/image-url` da `package.json` e da `src/sanity/lib/utils.ts`
+- [ ] Aggiornare `ARCHITECTURE.md` se necessario dopo le modifiche
+
+### I-B — Utente (manuale, prima del deploy)
+
+- [ ] Creare bucket R2 e configurarlo pubblico (vedere `docs/CLOUDFLARE-R2.md`)
+- [ ] Ottimizzare le immagini in WebP e caricarle su R2
+- [ ] Aggiungere `NEXT_PUBLIC_R2_BASE_URL` in `.env.local` e in Vercel → Environment Variables
+- [ ] Aggiornare `scripts/seed.mjs`: sostituire i placeholder immagini con gli URL R2 reali dei 6 mezzi
+- [ ] In Sanity Studio: aggiornare logo, foto mezzi, foto testimonianze, cover news, ogImage con gli URL R2
+
+---
+
 ## Fase 7 — Webhook revalidation
 
 - [x] `src/app/api/revalidate/route.ts` — endpoint webhook con verifica secret HMAC

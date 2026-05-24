@@ -73,14 +73,12 @@ export default function ScTabController({
 
           {/* Tab switcher */}
           <div
+            className="flex flex-col lg:flex-row rounded-[20px] lg:rounded-full"
             style={{
               marginTop: 56,
               padding: 6,
               background: "var(--color-bg-elev)",
               border: "1px solid var(--color-hair-strong)",
-              borderRadius: 999,
-              display: "flex",
-              flexWrap: "wrap",
               maxWidth: "100%",
             }}
           >
@@ -89,9 +87,9 @@ export default function ScTabController({
                 key={t.code}
                 type="button"
                 onClick={() => setActiveIdx(i)}
+                className="w-full lg:flex-1 rounded-[14px] lg:rounded-full"
                 style={{
                   padding: "12px 28px",
-                  borderRadius: 999,
                   border: "none",
                   cursor: "pointer",
                   background:
@@ -103,6 +101,7 @@ export default function ScTabController({
                   display: "flex",
                   gap: 12,
                   alignItems: "center",
+                  justifyContent: "center",
                   transition: "all .3s ease",
                 }}
               >
@@ -131,18 +130,16 @@ export default function ScTabController({
               className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5"
               style={{
                 border: "1px solid var(--color-hair-strong)",
-                background: "var(--color-bg-elev)",
+                background: "var(--color-hair-strong)",
+                gap: "1px",
               }}
             >
-              {stats.map(([k, v], i) => (
+              {stats.map(([k, v]) => (
                 <div
                   key={k}
                   style={{
                     padding: "32px 24px",
-                    borderRight:
-                      i < stats.length - 1
-                        ? "1px solid var(--color-hair)"
-                        : "none",
+                    background: "var(--color-bg-elev)",
                   }}
                 >
                   <Kicker noRule>{k}</Kicker>
@@ -242,7 +239,7 @@ export default function ScTabController({
               {data.progetti.map((p, i) => (
                 <div
                   key={p.codice}
-                  className="grid grid-cols-1 md:grid-cols-[120px_1fr_1fr_200px]"
+                  className="grid grid-cols-1 lg:grid-cols-[120px_1fr_1fr_200px]"
                   style={{
                     padding: "40px 0",
                     borderBottom: "1px solid var(--color-hair-strong)",

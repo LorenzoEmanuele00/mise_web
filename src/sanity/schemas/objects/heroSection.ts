@@ -49,5 +49,11 @@ export default defineType({
         defineField({ name: 'href', type: 'string', title: 'URL' }),
       ],
     }),
+    defineField({
+      name: 'image',
+      title: 'Foto volontari',
+      type: 'image',
+      options: { hotspot: true },
+    }),
   ],
 })

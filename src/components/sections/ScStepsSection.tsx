@@ -27,17 +27,16 @@ export default function ScStepsSection({ steps }: { steps: ScStep[] }) {
           className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5"
           style={{
             border: "1px solid rgba(242,236,224,0.15)",
+            background: "rgba(242,236,224,0.15)",
+            gap: "1px",
           }}
         >
-          {steps.map((step, i) => (
+          {steps.map((step) => (
             <div
               key={step.titolo}
               style={{
                 padding: "32px 24px 36px",
-                borderRight:
-                  i < steps.length - 1
-                    ? "1px solid rgba(242,236,224,0.15)"
-                    : "none",
+                background: "var(--color-ink)",
               }}
             >
               {step.numero && (

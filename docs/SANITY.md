@@ -187,11 +187,11 @@ Il design ha due tab con la stessa struttura (SCU — Universale, SCR — Region
   fields: [
     { name: 'nome',  title: 'Nome e età (es. Sofia, 22)', type: 'string', validation: required },
     { name: 'anno',  title: 'Anno servizio (es. SCU 2024)', type: 'string' },
-    { name: 'foto',  title: 'Foto',  type: 'image', options: { hotspot: true } },
+    { name: 'foto',  title: 'Foto (URL Cloudflare R2)', type: 'url' },
     { name: 'testo', title: 'Citazione (senza virgolette)', type: 'text', rows: 4, validation: required },
   ],
   preview: {
-    select: { title: 'nome', subtitle: 'anno', media: 'foto' },
+    select: { title: 'nome', subtitle: 'anno' },
   },
 }
 ```
@@ -231,8 +231,8 @@ Il design ha due tab con la stessa struttura (SCU — Universale, SCR — Region
     { name: 'tag',       type: 'string',   options: { list: ['Comunicato', 'Bando', 'Formazione', 'Eventi'] } },
     { name: 'date',      type: 'date',     validation: required },
     { name: 'excerpt',   type: 'text',     rows: 3, validation: required },
-    { name: 'cover',     type: 'image',    options: { hotspot: true } },
-    { name: 'body',      type: 'array',    of: [{ type: 'block' }, { type: 'image' }] },
+    { name: 'cover',     title: 'Copertina (URL Cloudflare R2)', type: 'url' },
+    { name: 'body',      type: 'array',    of: [{ type: 'block' }, { type: 'image' }] }, // immagini inline nel body restano asset Sanity, proiettate via asset->url in GROQ
     { name: 'seo',       type: 'seo' },
   ],
   orderings: [{ name: 'dateDesc', title: 'Data (recente)', by: [{ field: 'date', direction: 'desc' }] }],
@@ -292,7 +292,7 @@ I 6 servizi del design, gestibili autonomamente dal CMS.
     { name: 'name',   type: 'string',  title: 'Modello (es. Fiat Ducato)' },
     { name: 'year',   type: 'string',  title: 'Anno immatricolazione' },
     { name: 'role',   type: 'string',  title: 'Ruolo / utilizzo' },
-    { name: 'photo',  type: 'image',   options: { hotspot: true } },
+    { name: 'photo',  title: 'Foto (URL Cloudflare R2)', type: 'url' },
     { name: 'order',  type: 'number' },
   ],
 }
@@ -322,7 +322,7 @@ I 6 servizi del design, gestibili autonomamente dal CMS.
   __experimental_actions: ['update', 'publish'],  // no create/delete — singleton
   fields: [
     { name: 'siteName',       type: 'string' },
-    { name: 'logo',           type: 'image' },
+    { name: 'logo',           title: 'Logo (URL Cloudflare R2)', type: 'url' },
     {
       name: 'navigation',
       type: 'array',
@@ -405,7 +405,7 @@ I 6 servizi del design, gestibili autonomamente dal CMS.
   fields: [
     { name: 'metaTitle',       type: 'string',  validation: max(60) },
     { name: 'metaDescription', type: 'text',    rows: 3, validation: max(160) },
-    { name: 'ogImage',         type: 'image' },
+    { name: 'ogImage',         title: 'Open Graph Image (URL Cloudflare R2)', type: 'url' },
   ]
 }
 ```
@@ -532,10 +532,16 @@ export const POSTS_QUERY = groq`
 // Articolo singolo
 export const POST_QUERY = groq`
   *[_type == "post" && slug.current == $slug && language == $lang][0] {
-    title, slug, tag, date, excerpt, cover, body, seo
+    title, slug, tag, date, excerpt, cover, seo,
+    body[] {
+      ...,
+      _type == "image" => { "url": asset->url }
+    }
   }
 `
 // tag: ['post']
+// Nota: cover è un URL R2 (stringa). Le immagini inline nel body restano asset Sanity
+// e vengono proiettate con asset->url per servire direttamente via cdn.sanity.io.
 
 // Tutti i servizi ordinati
 export const SERVIZI_QUERY = groq`
@@ -613,17 +619,12 @@ export const client = createClient({
 
 ---
 
-## Helper immagini — `src/sanity/lib/utils.ts`
+## Helper — `src/sanity/lib/utils.ts`
+
+Le immagini principali sono URL stringa (Cloudflare R2) — non serve `urlFor` né `@sanity/image-url`.  
+La dipendenza `@sanity/image-url` è rimossa dal progetto.
 
 ```ts
-import imageUrlBuilder from '@sanity/image-url'
-import type { SanityImageSource } from '@sanity/image-url/lib/types/types'
-import { client } from './client'
-
-const builder = imageUrlBuilder(client)
-
-export const urlFor = (source: SanityImageSource) => builder.image(source)
-
 export const formatDate = (dateStr: string): string =>
   new Date(dateStr).toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' })
 ```
@@ -674,7 +675,7 @@ export async function POST(req: NextRequest) {
 |-------------------|--------|-----------|
 | API CDN requests | illimitate | `useCdn: true` su tutti i fetch |
 | API non-CDN requests | 500k/mese | Solo webhook + write token form |
-| Bandwidth | 10 GB/mese | Immagini via CDN Sanity, resize tramite `urlFor().width().format('webp')` |
+| Bandwidth | 10 GB/mese | Immagini principali su Cloudflare R2 — zero storage/bandwidth Sanity. Solo immagini inline nel body dei post usano ancora CDN Sanity (`cdn.sanity.io`, non passa per Vercel) |
 | Assets | 20 GB storage | Ottimizzare upload immagini prima del caricamento |
 | Utenti studio | illimitati (OSS) | Nessuna limitazione |
 | Dataset | 2 | Solo `production` |

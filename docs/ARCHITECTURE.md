@@ -16,6 +16,7 @@
 | i18n        | next-intl                                | 4.x                                         |
 | Validazione | Zod                                      | 4.x                                         |
 | Deploy      | Vercel                                   | —                                           |
+| Storage img | Cloudflare R2                            | piano Free (egress gratuito)                |
 | Node        | 20.x LTS                                 | —                                           |
 
 **Note versioni importanti:**
@@ -71,7 +72,7 @@ mise_web/
 │   │   │   ├── Kicker.tsx                ← label uppercase con regola decorativa
 │   │   │   ├── Num.tsx                   ← numero monospace (stats, codici servizio)
 │   │   │   ├── Arrow.tsx                 ← freccia diagonale SVG inline
-│   │   │   └── SanityImage.tsx           ← next/image wrappato con urlFor
+│   │   │   └── R2Image.tsx               ← <img> plain con src URL R2 (no next/image, no urlFor)
 │   │   ├── sections/
 │   │   │   ├── HeroSection.tsx           ← hero display heading + italic accent color
 │   │   │   ├── StatsStrip.tsx            ← 4-col strip statistiche
@@ -180,7 +181,7 @@ I componenti seguono una gerarchia bottom-up. Ogni layer usa solo quello sottost
 
 ```
 Layer 1 — globals.css        token + 6-8 classi strutturali (≤ 230 righe)
-Layer 2 — ui/                atomi: Arrow, Btn, Kicker, Num, SanityImage
+Layer 2 — ui/                atomi: Arrow, Btn, Kicker, Num, R2Image
 Layer 3 — layout/            Section, Header, Footer
 Layer 4 — sections/          HeroSection, StatsStrip, TimelineSection, ...
 Layer 5 — app/*/page.tsx     composizione pura (≤ 70 righe, server component)
@@ -268,10 +269,8 @@ Da aggiungere in `globals.css` con `@layer base` / `@utility`:
 ```ts
 // next.config.ts
 const nextConfig: NextConfig = {
-  images: {
-    remotePatterns: [{ protocol: "https", hostname: "cdn.sanity.io" }],
-  },
-  // Il middleware next-intl va configurato con matcher che esclude /studio e /api
+  // Nessun remotePattern: immagini servite da Cloudflare R2 via <img> plain.
+  // Il middleware next-intl va configurato con matcher che esclude /studio e /api.
 };
 ```
 
@@ -285,7 +284,6 @@ const nextConfig: NextConfig = {
   "react": "19.2.4",
   "react-dom": "19.2.4",
   "next-sanity": "^12.4.5",
-  "@sanity/image-url": "^2.1.1",
   "next-intl": "^4.12.0",
   "zod": "^4.4.3"
 },
@@ -295,6 +293,7 @@ const nextConfig: NextConfig = {
   "@types/react": "^19",
   "@types/react-dom": "^19",
   "@sanity/types": "^5.26.0",
+  // @sanity/image-url rimosso — immagini su Cloudflare R2, non più asset Sanity
   "@tailwindcss/postcss": "^4",
   "tailwindcss": "^4",
   "eslint": "^9",

@@ -38,6 +38,9 @@ SANITY_WEBHOOK_SECRET=       # Secret HMAC condiviso tra Sanity e Vercel
 # next-intl (opzionale, se si imposta locale di default)
 # NEXT_PUBLIC_DEFAULT_LOCALE=it
 
+# Cloudflare R2 — URL base bucket pubblico
+NEXT_PUBLIC_R2_BASE_URL=     # es. https://images.misericordiadigello.it (o URL r2.dev durante sviluppo)
+
 # Sanity Studio — usato nel sanity.config.ts
 SANITY_STUDIO_PREVIEW_URL=   # es. https://misericordiadigello.it (prod) o https://...vercel.app (preview)
 ```
@@ -59,6 +62,7 @@ Tutte le variabili sopra vanno inserite in **Settings → Environment Variables*
 | `SANITY_API_WRITE_TOKEN` | ✓ | ✓ | ✓ |
 | `SANITY_WEBHOOK_SECRET` | ✓ | ✓ | — |
 | `SANITY_STUDIO_PREVIEW_URL` | URL prod | URL preview | `http://localhost:3000` |
+| `NEXT_PUBLIC_R2_BASE_URL` | URL bucket R2 | URL bucket R2 | URL bucket R2 (o r2.dev) |
 
 ---
 
@@ -194,7 +198,7 @@ Non è possibile testarlo con `curl` simulando la firma HMAC in modo semplice, p
 
 | Limite Hobby plan | Valore | Strategia |
 |-------------------|--------|-----------|
-| Bandwidth | 100 GB/mese | Immagini da CDN Sanity (non passano per Vercel) |
+| Bandwidth | 100 GB/mese | Immagini da Cloudflare R2 via `<img>` plain — zero Vercel bandwidth |
 | Build minutes | 6.000/mese | Build solo su push — non in loop |
 | Serverless function duration | 10s max | Le API route form sono leggere (< 1s) |
 | Edge function duration | 25ms budget | Non usare edge per le API route — usare Node.js runtime |
@@ -203,7 +207,7 @@ Non è possibile testarlo con `curl` simulando la firma HMAC in modo semplice, p
 | HTTPS | automatico | — |
 | Cron jobs | non disponibili su Hobby | Non necessari — usiamo webhook Sanity |
 
-**Regola**: le immagini non passano mai per Vercel. Ogni `<img>` o `<Image>` di Sanity usa `urlFor().url()` dalla CDN `cdn.sanity.io`. Il componente `next/image` con `remotePatterns: [{ hostname: 'cdn.sanity.io' }]` ottimizza il formato ma serve bandwidth Vercel — valutare se usarlo solo per immagini critiche (hero) e CDN diretta per il resto.
+**Regola**: le immagini non passano mai per Vercel. Ogni `<img>` usa direttamente l'URL Cloudflare R2 — il browser le scarica da R2 senza toccare i server Vercel. `next/image` **non è usato** per le immagini esterne: passerebbe per l'Image Optimization API di Vercel, consumando bandwidth. Le immagini vengono pre-ottimizzate in WebP prima del caricamento su R2 (vedere `docs/CLOUDFLARE-R2.md`).
 
 ---
 
@@ -224,13 +228,9 @@ Non è possibile testarlo con `curl` simulando la firma HMAC in modo semplice, p
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  images: {
-    remotePatterns: [
-      { protocol: 'https', hostname: 'cdn.sanity.io' },
-    ],
-  },
-  // Escludere /studio dal middleware next-intl
-  // Il middleware va configurato con il matcher appropriato in middleware.ts
+  // Nessun remotePattern: le immagini sono servite da Cloudflare R2 via <img> plain,
+  // non tramite next/image (che userebbe l'Image Optimization API Vercel = bandwidth).
+  // Escludere /studio dal middleware next-intl nel matcher di middleware.ts.
 }
 
 export default nextConfig

@@ -33,10 +33,7 @@ export default function ScApplySection({ tipi }: ScApplySectionProps) {
 
   if (state.success) {
     return (
-      <section
-        className="dark-band"
-        style={{ paddingTop: 120, paddingBottom: 120 }}
-      >
+      <section className="dark-band py-[clamp(5rem,10vw,7.5rem)]">
         <div className="shell" style={{ textAlign: "center" }}>
           <Kicker style={{ color: "rgba(242,236,224,0.6)" }}>
             Richiesta inviata
@@ -71,15 +68,11 @@ export default function ScApplySection({ tipi }: ScApplySectionProps) {
   }
 
   return (
-    <section
-      className="dark-band"
-      style={{ paddingTop: 120, paddingBottom: 120 }}
-    >
+    <section className="dark-band py-[clamp(5rem,10vw,7.5rem)]">
       <div className="shell">
         <div
+          className="grid grid-cols-1 md:grid-cols-[1fr_1.2fr]"
           style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1.2fr",
             gap: 80,
             alignItems: "start",
           }}

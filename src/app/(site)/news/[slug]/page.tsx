@@ -1,22 +1,29 @@
+import type { Metadata } from 'next'
 import { client } from "@/sanity/lib/client";
 import { POST_QUERY, ALL_POST_SLUGS_QUERY } from "@/sanity/lib/queries";
 import { formatDate } from "@/sanity/lib/utils";
 import type { Post } from "@/lib/types";
+import { buildMetadata } from '@/lib/seo'
 import { notFound } from "next/navigation";
 import { PortableText } from "@portabletext/react";
 import Section from "@/components/layout/Section";
 import Kicker from "@/components/ui/Kicker";
+
+type Props = { params: Promise<{ slug: string }> }
 
 export async function generateStaticParams() {
   const slugs = await client.fetch<{ slug: string }[]>(ALL_POST_SLUGS_QUERY);
   return slugs.map((s) => ({ slug: s.slug }));
 }
 
-export default async function PostPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params
+  const post = await client.fetch<Post | null>(POST_QUERY, { slug, lang: 'it' }, { next: { tags: ['post'] } })
+  if (!post) return {}
+  return buildMetadata(post.seo, { title: post.title, description: post.excerpt })
+}
+
+export default async function PostPage({ params }: Props) {
   const { slug } = await params;
   const post = await client.fetch<Post | null>(
     POST_QUERY,

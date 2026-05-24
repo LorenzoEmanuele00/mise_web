@@ -1,9 +1,15 @@
+import type { Metadata } from 'next'
 import { client } from '@/sanity/lib/client'
 import { SETTINGS_QUERY } from '@/sanity/lib/queries'
 import type { Settings } from '@/lib/types'
 import Section from '@/components/layout/Section'
 import PageHeader from '@/components/layout/PageHeader'
 import ContactForm from '@/components/forms/ContactForm'
+
+export const metadata: Metadata = {
+  title: 'Contatti',
+  description: 'Indirizzo, telefono, orari sede e modulo di contatto della Misericordia di Gello a San Giuliano Terme (PI).',
+}
 
 export default async function ContattiPage() {
   const settings = await client.fetch<Settings | null>(

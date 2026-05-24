@@ -8,4 +8,4 @@
 - Covertiamo il codice all'inglese. variabili, componenti ecc.
 - Se faccio un npm run dev l'applicazione da errore
 - Manca un indicazione della pagina corrente. se sono in home la tab home deve essere evidenziata, così anche le altre.
-- c'è un problema con le classi h-\* potrebbe essere un problema con una classe di tailwind già esistente? Da un altezza fissa che non ci dovrebbe essere.
+- Ma una bella fotina dei volontari in homepage?

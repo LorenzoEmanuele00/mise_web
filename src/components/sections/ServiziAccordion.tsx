@@ -29,7 +29,7 @@ export default function ServiziAccordion({ servizi }: ServiziAccordionProps) {
             </button>
 
             {isOpen && (
-              <div className="pb-10 pl-14">
+              <div className="pb-10 pl-8 md:pl-14">
                 <p className="body max-w-2xl text-ink-soft">{s.shortDesc}</p>
                 {s.longDesc && (
                   <p className="body max-w-2xl mt-4 text-ink-soft">

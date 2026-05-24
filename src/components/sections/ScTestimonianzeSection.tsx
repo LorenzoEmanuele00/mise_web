@@ -11,7 +11,7 @@ export default function ScTestimonianzeSection({ testimonianze }: ScTestimonianz
   if (!testimonianze.length) return null
 
   return (
-    <section style={{ paddingTop: 120, paddingBottom: 120 }}>
+    <section className="py-[clamp(5rem,10vw,7.5rem)]">
       <div className="shell">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 64 }}>
           <Kicker>Testimonianze</Kicker>
@@ -19,9 +19,8 @@ export default function ScTestimonianzeSection({ testimonianze }: ScTestimonianz
         </div>
 
         <div
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
           style={{
-            display: 'grid',
-            gridTemplateColumns: `repeat(${Math.min(testimonianze.length, 3)}, 1fr)`,
             gap: 40,
           }}
         >

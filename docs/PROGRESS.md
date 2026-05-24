@@ -226,28 +226,28 @@ Implementazione bottom-up dal design v3 (`mise_web-3.zip`).
 
 I componenti della pagina Servizio Civile usano `gridTemplateColumns` inline con colonne fisse e nessun breakpoint.
 
-- [ ] **`ScTabController.tsx` — Stats grid 5 colonne fisse** — Linea ~93: `gridTemplateColumns: \`repeat(${stats.length}, 1fr)\``produce 5 col su qualsiasi schermo. Fix:`className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5"`(rimuovere lo`style` di grid).
+- [x] **`ScTabController.tsx` — Stats grid 5 colonne fisse** — Linea ~93: `gridTemplateColumns: \`repeat(${stats.length}, 1fr)\``produce 5 col su qualsiasi schermo. Fix:`className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5"`(rimuovere lo`style` di grid).
   - File: `src/components/sections/ScTabController.tsx`
 
-- [ ] **`ScTabController.tsx` — Projects grid 4 colonne fisse** — Linea ~180: `gridTemplateColumns: '120px 1fr 1fr 200px'`. Su mobile la card dei progetti trabocca. Fix: stacked su mobile (`grid-cols-1`), grid a 4 col da `md` in su (`md:grid-cols-[120px_1fr_1fr_200px]`). Il num + codice diventano una riga inline sopra il titolo su mobile.
+- [x] **`ScTabController.tsx` — Projects grid 4 colonne fisse** — Linea ~180: `gridTemplateColumns: '120px 1fr 1fr 200px'`. Su mobile la card dei progetti trabocca. Fix: stacked su mobile (`grid-cols-1`), grid a 4 col da `md` in su (`md:grid-cols-[120px_1fr_1fr_200px]`). Il num + codice diventano una riga inline sopra il titolo su mobile.
   - File: `src/components/sections/ScTabController.tsx`
 
-- [ ] **`ScTabController.tsx` — Deadline dark band** — Linea ~122: `gridTemplateColumns: '1fr auto'`. Su schermi < 400px il bottone "Candidati" può clipparsi. Fix: `flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between`.
+- [x] **`ScTabController.tsx` — Deadline dark band** — Linea ~122: `gridTemplateColumns: '1fr auto'`. Su schermi < 400px il bottone "Candidati" può clipparsi. Fix: `flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between`.
   - File: `src/components/sections/ScTabController.tsx`
 
-- [ ] **`ScTabController.tsx` — Tab switcher overflow** — I pill tab (`inline-flex`) overflow su mobile se i label sono lunghi. Fix: `flex-wrap` o `overflow-x: auto; max-width: 100%` sul contenitore.
+- [x] **`ScTabController.tsx` — Tab switcher overflow** — I pill tab (`inline-flex`) overflow su mobile se i label sono lunghi. Fix: `flex-wrap` o `overflow-x: auto; max-width: 100%` sul contenitore.
   - File: `src/components/sections/ScTabController.tsx`
 
-- [ ] **`ScStepsSection.tsx` — Steps grid N colonne fisse** — Linea ~19: `gridTemplateColumns: \`repeat(${Math.min(steps.length, 5)}, 1fr)\``. Fix: `className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5"`.
+- [x] **`ScStepsSection.tsx` — Steps grid N colonne fisse** — Linea ~19: `gridTemplateColumns: \`repeat(${Math.min(steps.length, 5)}, 1fr)\``. Fix: `className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5"`.
   - File: `src/components/sections/ScStepsSection.tsx`
 
-- [ ] **`ScTestimonianzeSection.tsx` — Testimonianze grid 3 colonne fisse** — Linea ~22: `gridTemplateColumns: \`repeat(..., 3), 1fr)\``. Fix: `className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3"`.
+- [x] **`ScTestimonianzeSection.tsx` — Testimonianze grid 3 colonne fisse** — Linea ~22: `gridTemplateColumns: \`repeat(..., 3), 1fr)\``. Fix: `className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3"`.
   - File: `src/components/sections/ScTestimonianzeSection.tsx`
 
-- [ ] **`ScFaqSection.tsx` — FAQ layout 2 colonne fisse** — Linea ~17: `gridTemplateColumns: '1fr 2fr'`. Fix: stacked su mobile, `md:grid-cols-[1fr_2fr]` da tablet in su.
+- [x] **`ScFaqSection.tsx` — FAQ layout 2 colonne fisse** — Linea ~17: `gridTemplateColumns: '1fr 2fr'`. Fix: stacked su mobile, `md:grid-cols-[1fr_2fr]` da tablet in su.
   - File: `src/components/sections/ScFaqSection.tsx`
 
-- [ ] **`ScApplySection.tsx` — Apply form 2 colonne fisse** — Linea ~49: `gridTemplateColumns: '1fr 1.2fr'`. Fix: stacked su mobile, `md:grid-cols-[1fr_1.2fr]` da tablet in su.
+- [x] **`ScApplySection.tsx` — Apply form 2 colonne fisse** — Linea ~49: `gridTemplateColumns: '1fr 1.2fr'`. Fix: stacked su mobile, `md:grid-cols-[1fr_1.2fr]` da tablet in su.
   - File: `src/components/sections/ScApplySection.tsx`
 
 ---
@@ -256,7 +256,7 @@ I componenti della pagina Servizio Civile usano `gridTemplateColumns` inline con
 
 I componenti SC usano `paddingTop/Bottom` con valori fissi (es. `96px`, `120px`) invece di `clamp()` come il resto del design system. Su mobile producono spaziature eccessive.
 
-- [ ] **Convertire tutti i padding fissi SC in `clamp()`** — Usare la stessa convenzione di `Section.tsx`:
+- [x] **Convertire tutti i padding fissi SC in `clamp()`** — Usare la stessa convenzione di `Section.tsx`:
   - `ScTabController.tsx:32` `paddingTop: 56` → `pt-[clamp(3rem,5vw,4rem)]`
   - `ScTabController.tsx:90` `paddingTop: 64, paddingBottom: 80` → `py-[clamp(3rem,6vw,5rem)]`
   - `ScStepsSection.tsx:7` `paddingTop/Bottom: 96` → `py-[clamp(4rem,8vw,6rem)]`
@@ -267,14 +267,14 @@ I componenti SC usano `paddingTop/Bottom` con valori fissi (es. `96px`, `120px`)
 
 ### R-C — Accordion e tabella servizi
 
-- [ ] **`ServiziAccordion.tsx` — contenuto espanso `pl-14`** — Su mobile 56px di padding sinistro è proporzionalmente molto. Fix: `pl-8 md:pl-14`.
+- [x] **`ServiziAccordion.tsx` — contenuto espanso `pl-14`** — Su mobile 56px di padding sinistro è proporzionalmente molto. Fix: `pl-8 md:pl-14`.
   - File: `src/components/sections/ServiziAccordion.tsx:32`
 
 ---
 
 ## Fase 7 — Webhook revalidation
 
-- [ ] `src/app/api/revalidate/route.ts` — endpoint webhook con verifica secret HMAC
+- [x] `src/app/api/revalidate/route.ts` — endpoint webhook con verifica secret HMAC
 - [ ] Configurare webhook su `sanity.io` puntando all'URL Vercel
 - [ ] Testare: pubblicare un documento → pagina si aggiorna senza rebuild
 
@@ -282,9 +282,9 @@ I componenti SC usano `paddingTop/Bottom` con valori fissi (es. `96px`, `120px`)
 
 ## Fase 8 — SEO e metadati
 
-- [ ] `generateMetadata` su tutte le route con dati da Sanity
-- [ ] `src/app/sitemap.ts` — sitemap dinamica con tutti gli slug
-- [ ] `src/app/robots.ts` — robots.txt
+- [x] `generateMetadata` su tutte le route con dati da Sanity
+- [x] `src/app/sitemap.ts` — sitemap dinamica con tutti gli slug
+- [x] `src/app/robots.ts` — robots.txt
 
 ---
 

@@ -11,9 +11,8 @@ export default function ScFaqSection({ faq }: { faq: ScFaq[] }) {
     <section style={{ paddingTop: 32, paddingBottom: 96 }}>
       <div className="shell">
         <div
+          className="grid grid-cols-1 md:grid-cols-[1fr_2fr]"
           style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 2fr",
             gap: 80,
             alignItems: "start",
           }}

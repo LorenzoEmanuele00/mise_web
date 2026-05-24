@@ -35,7 +35,7 @@ export default function ScTabController({
   return (
     <>
       {/* ── Hero ─────────────────────────────────────── */}
-      <section style={{ paddingTop: 56, paddingBottom: 0 }}>
+      <section className="pt-[clamp(3rem,5vw,4rem)]">
         <div className="shell">
           <div
             style={{
@@ -79,7 +79,9 @@ export default function ScTabController({
               background: "var(--color-bg-elev)",
               border: "1px solid var(--color-hair-strong)",
               borderRadius: 999,
-              display: "inline-flex",
+              display: "flex",
+              flexWrap: "wrap",
+              maxWidth: "100%",
             }}
           >
             {tipi.map((t, i) => (
@@ -122,13 +124,12 @@ export default function ScTabController({
       </section>
 
       {/* ── Summary ──────────────────────────────────── */}
-      <section style={{ paddingTop: 64, paddingBottom: 80 }}>
+      <section className="py-[clamp(3rem,6vw,5rem)]">
         <div className="shell">
           {stats.length > 0 && (
             <div
+              className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5"
               style={{
-                display: "grid",
-                gridTemplateColumns: `repeat(${stats.length}, 1fr)`,
                 border: "1px solid var(--color-hair-strong)",
                 background: "var(--color-bg-elev)",
               }}
@@ -158,14 +159,10 @@ export default function ScTabController({
 
           {data.scadenza && (
             <div
-              className="dark-band"
+              className="dark-band flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between"
               style={{
                 marginTop: 16,
                 padding: "32px 36px",
-                display: "grid",
-                gridTemplateColumns: "1fr auto",
-                gap: 32,
-                alignItems: "center",
               }}
             >
               <div>
@@ -245,11 +242,10 @@ export default function ScTabController({
               {data.progetti.map((p, i) => (
                 <div
                   key={p.codice}
+                  className="grid grid-cols-1 md:grid-cols-[120px_1fr_1fr_200px]"
                   style={{
                     padding: "40px 0",
                     borderBottom: "1px solid var(--color-hair-strong)",
-                    display: "grid",
-                    gridTemplateColumns: "120px 1fr 1fr 200px",
                     gap: 40,
                     alignItems: "start",
                   }}

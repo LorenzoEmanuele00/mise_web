@@ -5,8 +5,7 @@ import type { ScStep } from "@/lib/types";
 export default function ScStepsSection({ steps }: { steps: ScStep[] }) {
   return (
     <section
-      className="dark-band"
-      style={{ paddingTop: 96, paddingBottom: 96 }}
+      className="dark-band py-[clamp(4rem,8vw,6rem)]"
     >
       <div className="shell">
         <div
@@ -25,9 +24,8 @@ export default function ScStepsSection({ steps }: { steps: ScStep[] }) {
           passaggi.
         </h2>
         <div
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5"
           style={{
-            display: "grid",
-            gridTemplateColumns: `repeat(${Math.min(steps.length, 5)}, 1fr)`,
             border: "1px solid rgba(242,236,224,0.15)",
           }}
         >

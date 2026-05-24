@@ -1,20 +1,27 @@
+import type { Metadata } from 'next'
 import { client } from "@/sanity/lib/client";
 import { SERVIZIO_QUERY, ALL_SERVIZI_SLUGS_QUERY } from "@/sanity/lib/queries";
 import type { Servizio } from "@/lib/types";
+import { buildMetadata } from '@/lib/seo'
 import { notFound } from "next/navigation";
 import Section from "@/components/layout/Section";
 import Kicker from "@/components/ui/Kicker";
+
+type Props = { params: Promise<{ slug: string }> }
 
 export async function generateStaticParams() {
   const slugs = await client.fetch<{ slug: string }[]>(ALL_SERVIZI_SLUGS_QUERY);
   return slugs.map((s) => ({ slug: s.slug }));
 }
 
-export default async function ServizioPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params
+  const servizio = await client.fetch<Servizio | null>(SERVIZIO_QUERY, { slug }, { next: { tags: ['servizio'] } })
+  if (!servizio) return {}
+  return buildMetadata(servizio.seo, { title: servizio.title, description: servizio.shortDesc })
+}
+
+export default async function ServizioPage({ params }: Props) {
   const { slug } = await params;
   const servizio = await client.fetch<Servizio | null>(
     SERVIZIO_QUERY,

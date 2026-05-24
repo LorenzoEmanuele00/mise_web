@@ -112,6 +112,7 @@ export interface Servizio {
   orario?: string
   contatto?: string
   order?: number
+  seo?: SeoObject
 }
 
 export interface Mezzo {

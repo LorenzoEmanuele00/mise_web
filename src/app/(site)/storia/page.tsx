@@ -1,6 +1,8 @@
+import type { Metadata } from 'next'
 import { client } from '@/sanity/lib/client'
 import { PAGE_QUERY } from '@/sanity/lib/queries'
 import type { Page, TimelineEvent } from '@/lib/types'
+import { buildMetadata } from '@/lib/seo'
 import HeroSection from '@/components/sections/HeroSection'
 import TimelineSection from '@/components/sections/TimelineSection'
 
@@ -31,6 +33,11 @@ const TIMELINE: TimelineEvent[] = [
     text: 'Decine di volontari attivi ogni giorno garantiscono sei servizi operativi h24, dalla protezione civile al trasporto sociale.',
   },
 ]
+
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await client.fetch<Page | null>(PAGE_QUERY, { slug: 'storia', lang: 'it' }, { next: { tags: ['page'] } })
+  return buildMetadata(page?.seo, { title: 'La nostra storia' })
+}
 
 export default async function StoriaPage() {
   const page = await client.fetch<Page | null>(

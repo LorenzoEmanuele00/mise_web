@@ -1,9 +1,15 @@
+import type { Metadata } from 'next'
 import { client } from '@/sanity/lib/client'
 import { POSTS_QUERY } from '@/sanity/lib/queries'
 import type { PostListItem } from '@/lib/types'
 import Section from '@/components/layout/Section'
-import Kicker from '@/components/ui/Kicker'
+import PageHeader from '@/components/layout/PageHeader'
 import NewsFilter from '@/components/sections/NewsFilter'
+
+export const metadata: Metadata = {
+  title: 'Notizie',
+  description: 'Comunicati, bandi, eventi e aggiornamenti dalla Misericordia di Gello.',
+}
 
 export default async function NewsPage() {
   const posts = await client.fetch<PostListItem[]>(
@@ -15,10 +21,7 @@ export default async function NewsPage() {
   return (
     <main>
       <Section loose>
-        <p className="mb-6">
-          <Kicker style={{ color: 'var(--color-accent)' }}>Aggiornamenti</Kicker>
-        </p>
-        <h1 className="h-1 text-ink mb-12">Notizie</h1>
+        <PageHeader kicker="Aggiornamenti" title="Notizie" />
         <NewsFilter posts={posts} />
       </Section>
     </main>

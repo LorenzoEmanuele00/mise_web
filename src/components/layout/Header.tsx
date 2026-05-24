@@ -1,104 +1,102 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import Arrow from '@/components/ui/Arrow'
-
-const NAV_ITEMS = [
-  { href: '/', label: 'Home' },
-  { href: '/storia', label: 'Storia' },
-  { href: '/servizi', label: 'Servizi' },
-  { href: '/servizio-civile', label: 'Servizio Civile' },
-  { href: '/galleria', label: 'Galleria' },
-  { href: '/news', label: 'News' },
-  { href: '/contatti', label: 'Contatti' },
-]
-
-function LogoMark({ size = 36 }: { size?: number }) {
-  return (
-    <div
-      className="nav-logo-mark"
-      style={{ width: size, height: size, fontSize: size * 0.6 }}
-    >
-      M
-    </div>
-  )
-}
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import Arrow from "@/components/ui/Arrow";
+import LogoMark from "@/components/ui/LogoMark";
+import { NAV_ITEMS } from "@/lib/nav";
 
 export default function Header() {
-  const [open, setOpen] = useState(false)
-  const pathname = usePathname()
-
-  useEffect(() => { setOpen(false) }, [pathname])
+  const [open, setOpen] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
-    const onResize = () => { if (window.innerWidth > 768) setOpen(false) }
-    window.addEventListener('resize', onResize)
-    return () => window.removeEventListener('resize', onResize)
-  }, [])
+    setOpen(false);
+  }, [pathname]);
 
   useEffect(() => {
-    if (!open) return
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpen(false) }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  }, [open])
+    const onResize = () => {
+      if (window.innerWidth > 768) setOpen(false);
+    };
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
 
   useEffect(() => {
-    document.body.style.overflow = open ? 'hidden' : ''
-    return () => { document.body.style.overflow = '' }
-  }, [open])
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
 
   const isActive = (href: string) =>
-    href === '/' ? pathname === '/' : pathname.startsWith(href)
+    href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
     <>
       <header className="nav">
         <div className="shell nav-inner">
-          <Link href="/" className="nav-logo" aria-label="Misericordia di Gello — home">
+          <Link
+            href="/"
+            className="nav-logo"
+            aria-label="Misericordia di Gello — home"
+          >
             <LogoMark />
-            <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
-              <span style={{ fontSize: 18, letterSpacing: '-0.01em' }}>Misericordia</span>
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--color-muted)', marginTop: 4 }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                lineHeight: 1,
+              }}
+            >
+              <span style={{ fontSize: 18, letterSpacing: "-0.01em" }}>
+                Misericordia
+              </span>
+              <span
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontSize: 10,
+                  letterSpacing: "0.2em",
+                  textTransform: "uppercase",
+                  color: "var(--color-muted)",
+                  marginTop: 4,
+                }}
+              >
                 di Gello · dal 1947
               </span>
             </div>
           </Link>
 
           <nav className="nav-links" aria-label="Navigazione principale">
-            {NAV_ITEMS.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`nav-link${isActive(item.href) ? ' active' : ''}`}
-              >
-                {item.label}
-              </Link>
-            ))}
+            {NAV_ITEMS.filter((item) => item.href !== "/volontariato").map(
+              (item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`nav-link${isActive(item.href) ? " active" : ""}`}
+                >
+                  {item.label}
+                </Link>
+              ),
+            )}
           </nav>
 
           <div className="nav-cta">
-            <a
-              href="tel:118"
-              className="hidden md:flex items-center gap-1.5 text-sm"
-              aria-label="Chiama emergenze 118"
-            >
-              <span className="inline-block w-2 h-2 rounded-full bg-accent animate-pulse" aria-hidden="true" />
-              <span className="font-medium">118</span>
-            </a>
-
-            <Link href="/volontariato" className="btn btn-dark hidden md:inline-flex">
-              <span>Unisciti</span>
-              <Arrow />
-            </Link>
-
             <button
               className="nav-burger"
               aria-expanded={open}
               aria-controls="nav-drawer"
-              aria-label={open ? 'Chiudi menu' : 'Apri menu'}
+              aria-label={open ? "Chiudi menu" : "Apri menu"}
               onClick={() => setOpen((o) => !o)}
             >
               <span
@@ -107,7 +105,11 @@ export default function Header() {
               >
                 <span
                   className="block h-px bg-current transition-transform duration-200 w-full"
-                  style={{ transform: open ? 'rotate(45deg) translateY(4px)' : undefined }}
+                  style={{
+                    transform: open
+                      ? "rotate(45deg) translateY(4px)"
+                      : undefined,
+                  }}
                 />
                 <span
                   className="block h-px bg-current transition-opacity duration-200 w-full"
@@ -115,24 +117,28 @@ export default function Header() {
                 />
                 <span
                   className="block h-px bg-current transition-transform duration-200 w-full"
-                  style={{ transform: open ? 'rotate(-45deg) translateY(-4px)' : undefined }}
+                  style={{
+                    transform: open
+                      ? "rotate(-45deg) translateY(-4px)"
+                      : undefined,
+                  }}
                 />
               </span>
-              <span>{open ? 'Chiudi' : 'Menu'}</span>
+              <span>{open ? "Chiudi" : "Menu"}</span>
             </button>
           </div>
         </div>
       </header>
 
       <div
-        className={`nav-scrim${open ? ' open' : ''}`}
+        className={`nav-scrim${open ? " open" : ""}`}
         onClick={() => setOpen(false)}
         aria-hidden="true"
       />
 
       <aside
         id="nav-drawer"
-        className={`nav-drawer${open ? ' open' : ''}`}
+        className={`nav-drawer${open ? " open" : ""}`}
         aria-hidden={!open}
         role="dialog"
         aria-label="Menu di navigazione"
@@ -156,36 +162,14 @@ export default function Header() {
             <Link
               key={item.href}
               href={item.href}
-              className={`flex items-center justify-between px-6 py-4 border-b border-white/10 text-bg no-underline hover:bg-white/5 transition-colors${isActive(item.href) ? ' bg-white/10' : ''}`}
+              className={`flex items-center justify-between px-6 py-4 border-b border-white/10 text-bg no-underline hover:bg-white/5 transition-colors${isActive(item.href) ? " bg-white/10" : ""}`}
             >
               <span className="text-base">{item.label}</span>
               <span className="num text-bg/40">0{i + 1}</span>
             </Link>
           ))}
-          <Link
-            href="/volontariato"
-            className={`flex items-center justify-between px-6 py-4 border-b border-white/10 text-bg no-underline hover:bg-white/5 transition-colors${pathname === '/volontariato' ? ' bg-white/10' : ''}`}
-          >
-            <span className="text-base">Volontariato</span>
-            <span className="num text-bg/40">08</span>
-          </Link>
         </nav>
-
-        <div className="px-6 py-6 mt-auto flex flex-col gap-4 border-t border-white/10">
-          <a
-            href="tel:118"
-            className="flex items-center gap-2 text-bg/80 no-underline"
-            aria-label="Chiama emergenze 118"
-          >
-            <span className="inline-block w-2 h-2 rounded-full bg-accent animate-pulse" aria-hidden="true" />
-            <span className="text-sm">Emergenze · 118</span>
-          </a>
-          <Link href="/volontariato" className="btn btn-dark self-start" onClick={() => setOpen(false)}>
-            <span>Unisciti</span>
-            <Arrow />
-          </Link>
-        </div>
       </aside>
     </>
-  )
+  );
 }

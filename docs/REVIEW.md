@@ -4,4 +4,8 @@
 
 ### Review generica:
 
-- Dobbiamo ricordarci di mettere sotto protezione la rotta /studio. Intendo rimuovere la possibilità di richiedere accesso se possibile.
+- Perchè la timeline eventi non è u contenuto sanity?
+- Covertiamo il codice all'inglese. variabili, componenti ecc.
+- Se faccio un npm run dev l'applicazione da errore
+- Manca un indicazione della pagina corrente. se sono in home la tab home deve essere evidenziata, così anche le altre.
+- Ma una bella fotina dei volontari in homepage?

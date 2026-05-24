@@ -6,6 +6,7 @@ const instrumentSerif = Instrument_Serif({
   variable: "--font-instrument-serif",
   subsets: ["latin"],
   weight: "400",
+  style: ["normal", "italic"],
 });
 
 const dmSans = DM_Sans({
@@ -20,8 +21,11 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Misericordia di Gello",
-  description: "Confraternita Misericordia di Gello — volontariato, soccorso e aggregazione sociale.",
+  title: {
+    template: '%s | Misericordia di Gello',
+    default: 'Misericordia di Gello',
+  },
+  description: 'Confraternita Misericordia di Gello — volontariato, soccorso e aggregazione sociale dal 1947.',
 };
 
 export default function RootLayout({

@@ -14,7 +14,7 @@ export const PAGE_QUERY = groq`
 `
 
 export const ALL_POST_SLUGS_QUERY = groq`
-  *[_type == "post" && defined(slug.current)] { "slug": slug.current }
+  *[_type == "post" && defined(slug.current) && language == "it"] { "slug": slug.current }
 `
 
 export const POSTS_QUERY = groq`
@@ -36,11 +36,11 @@ export const SERVIZI_QUERY = groq`
 `
 
 export const ALL_SERVIZI_SLUGS_QUERY = groq`
-  *[_type == "servizio" && defined(slug.current)] { "slug": slug.current }
+  *[_type == "servizio" && defined(slug.current) && language == "it"] { "slug": slug.current }
 `
 
 export const SERVIZIO_QUERY = groq`
-  *[_type == "servizio" && slug.current == $slug][0] {
+  *[_type == "servizio" && slug.current == $slug && language == "it"][0] {
     _id, num, title, slug, shortDesc, longDesc, mezzi, orario, contatto, seo
   }
 `
@@ -52,7 +52,7 @@ export const MEZZI_QUERY = groq`
 `
 
 export const SERVIZIO_CIVILE_QUERY = groq`
-  *[_type == "servizioCivile"][0] {
+  *[_type == "servizioCivile" && _id == "singleton-servizio-civile"][0] {
     introText,
     tipi[] {
       code, label, ente,

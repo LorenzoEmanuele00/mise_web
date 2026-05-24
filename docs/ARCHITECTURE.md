@@ -6,19 +6,20 @@
 
 ## Stack (versioni reali installate)
 
-| Layer | Scelta | Versione |
-|-------|--------|---------|
-| Framework | Next.js App Router | 16.2.6 |
-| UI | React | 19.2.4 |
-| Linguaggio | TypeScript | 5.x, strict + noUncheckedIndexedAccess |
-| Stile | Tailwind CSS v4 | 4.x (config via CSS, no tailwind.config.ts) |
-| CMS | Sanity v3 (Studio embedded su `/studio`) | next-sanity 12.x |
-| i18n | next-intl | 4.x |
-| Validazione | Zod | 4.x |
-| Deploy | Vercel | — |
-| Node | 20.x LTS | — |
+| Layer       | Scelta                                   | Versione                                    |
+| ----------- | ---------------------------------------- | ------------------------------------------- |
+| Framework   | Next.js App Router                       | 16.2.6                                      |
+| UI          | React                                    | 19.2.4                                      |
+| Linguaggio  | TypeScript                               | 5.x, strict + noUncheckedIndexedAccess      |
+| Stile       | Tailwind CSS v4                          | 4.x (config via CSS, no tailwind.config.ts) |
+| CMS         | Sanity v3 (Studio embedded su `/studio`) | next-sanity 12.x                            |
+| i18n        | next-intl                                | 4.x                                         |
+| Validazione | Zod                                      | 4.x                                         |
+| Deploy      | Vercel                                   | —                                           |
+| Node        | 20.x LTS                                 | —                                           |
 
 **Note versioni importanti:**
+
 - Tailwind v4 usa `@theme inline` in CSS — niente `tailwind.config.ts`
 - next-sanity v12 include `@sanity/client` v7 e `groq` v3
 - `@sanity/types` v5 (allineato a Sanity Studio v3)
@@ -136,27 +137,27 @@ mise_web/
 
 ## Routing — pagine
 
-| Route | File | Tipo | Note |
-|-------|------|------|------|
-| `/` | `app/page.tsx` | Static | Hero, stats, anteprima servizi, news |
-| `/storia` | `app/storia/page.tsx` | Static | Timeline, valori, testo editoriale |
-| `/servizi` | `app/servizi/page.tsx` | Static | Accordion 6 servizi |
-| `/servizi/[slug]` | `app/servizi/[slug]/page.tsx` | Dynamic static | generateStaticParams |
-| `/servizio-civile` | `app/servizio-civile/page.tsx` | Static | Schema singleton dedicato |
-| `/news` | `app/news/page.tsx` | Static | Listing con filtro tag lato client |
-| `/news/[slug]` | `app/news/[slug]/page.tsx` | Dynamic static | generateStaticParams |
-| `/galleria` | `app/galleria/page.tsx` | Static | Griglia immagini |
-| `/volontariato` | `app/volontariato/page.tsx` | Static | Info + form (client component) |
-| `/contatti` | `app/contatti/page.tsx` | Static | Info + mappa + form (client component) |
-| `/studio/[[...tool]]` | Studio embedded | Client only | `'use client'`, escluso da middleware i18n |
+| Route                 | File                           | Tipo           | Note                                       |
+| --------------------- | ------------------------------ | -------------- | ------------------------------------------ |
+| `/`                   | `app/page.tsx`                 | Static         | Hero, stats, anteprima servizi, news       |
+| `/storia`             | `app/storia/page.tsx`          | Static         | Timeline, valori, testo editoriale         |
+| `/servizi`            | `app/servizi/page.tsx`         | Static         | Accordion 6 servizi                        |
+| `/servizi/[slug]`     | `app/servizi/[slug]/page.tsx`  | Dynamic static | generateStaticParams                       |
+| `/servizio-civile`    | `app/servizio-civile/page.tsx` | Static         | Schema singleton dedicato                  |
+| `/news`               | `app/news/page.tsx`            | Static         | Listing con filtro tag lato client         |
+| `/news/[slug]`        | `app/news/[slug]/page.tsx`     | Dynamic static | generateStaticParams                       |
+| `/galleria`           | `app/galleria/page.tsx`        | Static         | Griglia immagini                           |
+| `/volontariato`       | `app/volontariato/page.tsx`    | Static         | Info + form (client component)             |
+| `/contatti`           | `app/contatti/page.tsx`        | Static         | Info + mappa + form (client component)     |
+| `/studio/[[...tool]]` | Studio embedded                | Client only    | `'use client'`, escluso da middleware i18n |
 
 ---
 
 ## Routing — API
 
-| Route | Metodo | Funzione |
-|-------|--------|---------|
-| `/api/revalidate` | POST | Riceve webhook Sanity, chiama `revalidateTag` |
+| Route             | Metodo | Funzione                                      |
+| ----------------- | ------ | --------------------------------------------- |
+| `/api/revalidate` | POST   | Riceve webhook Sanity, chiama `revalidateTag` |
 
 > **Form**: gestiti via **Server Actions** (`src/app/actions/submitForms.ts`), non API routes.
 
@@ -186,6 +187,7 @@ Layer 5 — app/*/page.tsx     composizione pura (≤ 70 righe, server component
 ```
 
 **Regole:**
+
 - Stili dei componenti: Tailwind utilities inline nel TSX. Niente CSS per componente.
 - Eccezioni in globals.css: solo classi che non si esprimono bene con Tailwind (nav offcanvas, dark-band, transizioni drawer).
 - Componenti client (`'use client'`): solo le foglie interattive (accordion, filtri, form).
@@ -202,30 +204,31 @@ In Tailwind v4 la configurazione è tutta in CSS. In `src/app/globals.css`:
 
 @theme inline {
   /* Palette principale */
-  --color-ink:          #16130E;
-  --color-bg:           #F2ECE0;
-  --color-accent:       #B85333;
+  --color-ink: #16130e;
+  --color-bg: #f2ece0;
+  --color-accent: #b85333;
 
   /* Derivate (calcolate via JS al runtime del design mockup,
      qui fissate con i valori della palette default) */
-  --color-bg-elev:      #EAE4D4;   /* bg + 8 */
-  --color-bg-deep:      #E5DFCF;   /* bg - 10 */
-  --color-ink-soft:     #2E2B27;   /* ink + 18 */
-  --color-muted:        #B8B5B1;   /* ink + 90 */
-  --color-accent-soft:  #D48A6B;   /* accent + 36 */
-  --color-accent-deep:  #7A3218;   /* accent - 30 */
-  --color-hair:         rgba(22,19,14,0.12);
-  --color-hair-strong:  rgba(22,19,14,0.22);
+  --color-bg-elev: #eae4d4; /* bg + 8 */
+  --color-bg-deep: #e5dfcf; /* bg - 10 */
+  --color-ink-soft: #2e2b27; /* ink + 18 */
+  --color-muted: #b8b5b1; /* ink + 90 */
+  --color-accent-soft: #d48a6b; /* accent + 36 */
+  --color-accent-deep: #7a3218; /* accent - 30 */
+  --color-hair: rgba(22, 19, 14, 0.12);
+  --color-hair-strong: rgba(22, 19, 14, 0.22);
 
   /* Font */
   --font-display: "Instrument Serif", "Cormorant Garamond", Georgia, serif;
-  --font-sans:    "DM Sans", system-ui, sans-serif;
+  --font-sans: "DM Sans", system-ui, sans-serif;
 }
 ```
 
 Con Tailwind v4, i token `--color-*` diventano automaticamente utility classes: `bg-ink`, `text-accent`, `border-hair-strong`, ecc.
 
 **Palette alternative** (4 opzioni dal design):
+
 ```
 Nero · avorio · terracotta   #16130E · #F2ECE0 · #B85333  (default)
 Nero · crema · vinaccia      #1A1814 · #EDE8DE · #7A1F22
@@ -241,9 +244,9 @@ Da aggiungere in `globals.css` con `@layer base` / `@utility`:
 
 ```
 .h-display  — serif, clamp(52px, 6vw, 88px), line-height 0.96
-.h-1        — serif, clamp(38px, 4vw, 56px)
-.h-2        — serif, clamp(26px, 2.8vw, 36px)
-.h-3        — serif, clamp(20px, 2vw, 26px)
+.heading-01        — serif, clamp(38px, 4vw, 56px)
+.heading-02        — serif, clamp(26px, 2.8vw, 36px)
+.heading-03        — serif, clamp(20px, 2vw, 26px)
 .serif      — font-family display, dimensione body
 .serif-it   — italic del display font
 .body-lg    — sans, 18–20px
@@ -266,12 +269,10 @@ Da aggiungere in `globals.css` con `@layer base` / `@utility`:
 // next.config.ts
 const nextConfig: NextConfig = {
   images: {
-    remotePatterns: [
-      { protocol: 'https', hostname: 'cdn.sanity.io' },
-    ],
+    remotePatterns: [{ protocol: "https", hostname: "cdn.sanity.io" }],
   },
   // Il middleware next-intl va configurato con matcher che esclude /studio e /api
-}
+};
 ```
 
 ---

@@ -1,9 +1,15 @@
+import type { Metadata } from 'next'
 import { client } from '@/sanity/lib/client'
 import { SETTINGS_QUERY } from '@/sanity/lib/queries'
 import type { Settings } from '@/lib/types'
 import Section from '@/components/layout/Section'
-import Kicker from '@/components/ui/Kicker'
+import PageHeader from '@/components/layout/PageHeader'
 import ContactForm from '@/components/forms/ContactForm'
+
+export const metadata: Metadata = {
+  title: 'Contatti',
+  description: 'Indirizzo, telefono, orari sede e modulo di contatto della Misericordia di Gello a San Giuliano Terme (PI).',
+}
 
 export default async function ContattiPage() {
   const settings = await client.fetch<Settings | null>(
@@ -15,10 +21,7 @@ export default async function ContattiPage() {
   return (
     <main>
       <Section loose>
-        <p className="mb-6">
-          <Kicker style={{ color: 'var(--color-accent)' }}>Dove siamo</Kicker>
-        </p>
-        <h1 className="h-1 text-ink mb-16">Contatti</h1>
+        <PageHeader kicker="Dove siamo" title="Contatti" />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
           <div style={{ borderTop: '1px solid var(--color-hair)' }}>

@@ -1,16 +1,16 @@
 # PROGRESS — Sito Vetrina Misericordia di Gello
 
-> Stato aggiornato: 20 maggio 2026  
+> Stato aggiornato: 22 maggio 2026  
 > Segna ogni fase come `[x]` non appena è completata e verificata prima di passare alla successiva.
 
 ---
 
 ## Legenda stati
 
-| Simbolo | Significato |
-|---------|-------------|
-| `[ ]`   | Da fare |
-| `[~]`   | In corso |
+| Simbolo | Significato             |
+| ------- | ----------------------- |
+| `[ ]`   | Da fare                 |
+| `[~]`   | In corso                |
 | `[x]`   | Completato e verificato |
 
 ---
@@ -56,16 +56,18 @@
 
 ---
 
-## Fase D — Design system v3 + componenti  ← FASE CORRENTE
+## Fase D — Design system v3 + componenti ← FASE CORRENTE
 
 Implementazione bottom-up dal design v3 (`mise_web-3.zip`).  
 **Regola:** design system → atomi → layout → sezioni → pagine. Niente markup inline nei page.tsx.
 
 ### D1 — `globals.css` (target ≤ 230 righe)
+
 - [x] Aggiungere: `.num`, `.btn-accent`, `.dark-band`, `.rule`
 - [x] Aggiungere: stili strutturali per `.nav` e `.nav-drawer` (offcanvas mobile)
 
 ### D2 — Atomi `src/components/ui/`
+
 - [x] `Arrow.tsx` — SVG freccia, prop `dir: right|left|up|down`
 - [x] `Btn.tsx` — button/link, varianti `dark` `ghost` `accent`
 - [x] `Kicker.tsx` — kicker uppercase + regola decorativa, prop `noRule`
@@ -73,11 +75,13 @@ Implementazione bottom-up dal design v3 (`mise_web-3.zip`).
 - [x] `SanityImage.tsx` — `next/image` con `urlFor`
 
 ### D3 — Layout `src/components/layout/`
+
 - [x] `Header.tsx` — nav desktop + offcanvas drawer destra mobile
 - [x] `Footer.tsx` — griglia 4 colonne + barra legale
 - [x] `Section.tsx` — wrapper `<section>` con varianti `dark` `tight` `loose`, include `SectionLabel`
 
 ### D4 — Sezioni `src/components/sections/`
+
 - [x] `HeroSection.tsx`
 - [x] `StatsStrip.tsx`
 - [x] `TimelineSection.tsx`
@@ -86,6 +90,7 @@ Implementazione bottom-up dal design v3 (`mise_web-3.zip`).
 - [x] `NewsGrid.tsx`
 
 ### D5 — Componenti client (foglie interattive)
+
 - [x] `ServiziAccordion.tsx` (client)
 - [x] `NewsFilter.tsx` (client)
 - [x] `ContactForm.tsx` (client) — Server Action con Zod + honeypot
@@ -93,6 +98,7 @@ Implementazione bottom-up dal design v3 (`mise_web-3.zip`).
 - [x] `src/app/actions/submitForms.ts` — Server Actions
 
 ### D6 — Rebuild pagine (≤ 70 righe cad., solo composizione)
+
 - [x] `app/page.tsx` — Home
 - [x] `app/storia/page.tsx` — timeline statica (CMS non ha campo timeline su page)
 - [x] `app/servizi/page.tsx`
@@ -115,18 +121,18 @@ Implementazione bottom-up dal design v3 (`mise_web-3.zip`).
 
 ### R1 — Bug critici (HTML / accessibilità / font)
 
-- [ ] **`<main>` annidati** — `(site)/layout.tsx:17` wrappa `{children}` in `<main className="flex-1">`, ma **ogni page.tsx ha già il proprio `<main>`**, producendo `<main><main>` (HTML non valido). Fix: sostituire `<main className="flex-1">` con `<div className="flex-1">` nel layout; i page.tsx mantengono i loro `<main>`.
+- [x] **`<main>` annidati** — `(site)/layout.tsx:17` wrappa `{children}` in `<main className="flex-1">`, ma **ogni page.tsx ha già il proprio `<main>`**, producendo `<main><main>` (HTML non valido). Fix: sostituire `<main className="flex-1">` con `<div className="flex-1">` nel layout; i page.tsx mantengono i loro `<main>`.
   - File: `src/app/(site)/layout.tsx:17`
   - Pagine affette: tutte le 9 route (page.tsx, storia, servizi, servizi/[slug], news, news/[slug], contatti, volontariato, servizio-civile)
 
-- [ ] **`Instrument_Serif` manca variante italic** — `layout.tsx` carica solo `weight: "400"` senza `style: ['normal', 'italic']`. Il browser sintetizza l'obliquo invece di usare il vero italic. Il design usa l'italic serif ovunque (`serif-it`, heading con `<em>`). Fix: aggiungere `style: ['normal', 'italic']` all'oggetto di config `Instrument_Serif`.
+- [x] **`Instrument_Serif` manca variante italic** — `layout.tsx` carica solo `weight: "400"` senza `style: ['normal', 'italic']`. Il browser sintetizza l'obliquo invece di usare il vero italic. Il design usa l'italic serif ovunque (`serif-it`, heading con `<em>`). Fix: aggiungere `style: ['normal', 'italic']` all'oggetto di config `Instrument_Serif`.
   - File: `src/app/layout.tsx:5-9`
 
 ---
 
 ### R2 — Design system incompleto
 
-- [ ] **7 classi CSS mancanti in `globals.css`** — Il design v3 `Header.jsx` usa queste classi che non esistono in `globals.css`; l'header le rimpiazza con Tailwind inline. Aggiungere le classi per completare il design system:
+- [x] **7 classi CSS mancanti in `globals.css`** — Il design v3 `Header.jsx` usa queste classi che non esistono in `globals.css`; l'header le rimpiazza con Tailwind inline. Aggiungere le classi per completare il design system:
   - `.emerg-badge` — contenitore pill per badge "118" (border 1px solid currentColor, border-radius: 2em, padding: 0.25rem 0.75rem, display: inline-flex, align-items: center, gap: 0.5rem)
   - `.emerg-dot` — pallino pulsante (w: 0.5rem, h: 0.5rem, rounded-full, background: currentColor, animation: pulse)
   - `.nav-drawer-head` — intestazione del drawer (px-6 py-5, border-bottom, display: flex, justify-between, align-items: center)
@@ -136,39 +142,39 @@ Implementazione bottom-up dal design v3 (`mise_web-3.zip`).
   - `.nav-burger-icon` — icona hamburger (flex-col, gap, width/height)
   - File: `src/app/globals.css`
 
-- [ ] **`.btn:disabled` non definito** — Il Btn riceve `disabled={pending}` nei form ma nessuna regola CSS cambia l'aspetto. Aggiungere alla fine del blocco `.btn` in `globals.css`: `.btn:disabled { opacity: 0.5; cursor: not-allowed; }`
+- [x] **`.btn:disabled` non definito** — Il Btn riceve `disabled={pending}` nei form ma nessuna regola CSS cambia l'aspetto. Aggiungere alla fine del blocco `.btn` in `globals.css`: `.btn:disabled { opacity: 0.5; cursor: not-allowed; }`
   - File: `src/app/globals.css`
 
-- [ ] **Footer `mb-16` → `mb-20`** — Il design v3 `Footer.jsx:7` usa `marginBottom: 80` (80px) tra il grid e la regola. `mb-16` = 64px, `mb-20` = 80px. Differenza: 16px.
+- [x] **Footer `mb-16` → `mb-20`** — Il design v3 `Footer.jsx:7` usa `marginBottom: 80` (80px) tra il grid e la regola. `mb-16` = 64px, `mb-20` = 80px. Differenza: 16px.
   - File: `src/components/layout/Footer.tsx:31`
 
 ---
 
 ### R3 — Duplicazioni da rimuovere
 
-- [ ] **`NAV_ITEMS` duplicato** — Definito identicamente in `Header.tsx:8-16` e `Footer.tsx:6-15`. Estrarre in `src/lib/nav.ts` e importarlo in entrambi. Il link `/volontariato` aggiunto manualmente nel drawer (`Header.tsx:165`) dovrebbe essere incluso nella lista canonica.
+- [x] **`NAV_ITEMS` duplicato** — Definito identicamente in `Header.tsx:8-16` e `Footer.tsx:6-15`. Estrarre in `src/lib/nav.ts` e importarlo in entrambi. Il link `/volontariato` aggiunto manualmente nel drawer (`Header.tsx:165`) dovrebbe essere incluso nella lista canonica.
   - File: `src/lib/nav.ts` (nuovo), `src/components/layout/Header.tsx:8`, `src/components/layout/Footer.tsx:6`
 
-- [ ] **`LogoMark` inline in Header, duplicato in Footer** — `Header.tsx:18-27` definisce `LogoMark` come funzione interna; `Footer.tsx:34-42` riproduce lo stesso cerchio con "M" via stile inline invece della classe `.nav-logo-mark`. Estrarre `LogoMark` in `src/components/ui/LogoMark.tsx` e usarlo in entrambi.
+- [x] **`LogoMark` inline in Header, duplicato in Footer** — `Header.tsx:18-27` definisce `LogoMark` come funzione interna; `Footer.tsx:34-42` riproduce lo stesso cerchio con "M" via stile inline invece della classe `.nav-logo-mark`. Estrarre `LogoMark` in `src/components/ui/LogoMark.tsx` e usarlo in entrambi.
   - File: `src/components/ui/LogoMark.tsx` (nuovo), `Header.tsx:18`, `Footer.tsx:34`
 
-- [ ] **Pattern "Kicker accent + h1" triplicato nelle pagine** — `contatti/page.tsx:17-21`, `news/page.tsx:17-21`, `servizi/page.tsx:17-21` hanno identica struttura `<Section loose><Kicker accent>/<h1>`. Estrarre `src/components/layout/PageHeader.tsx` con props `kicker` e `title`, usarlo in tutte e tre.
+- [x] **Pattern "Kicker accent + h1" triplicato nelle pagine** — `contatti/page.tsx:17-21`, `news/page.tsx:17-21`, `servizi/page.tsx:17-21` hanno identica struttura `<Section loose><Kicker accent>/<h1>`. Estrarre `src/components/layout/PageHeader.tsx` con props `kicker` e `title`, usarlo in tutte e tre.
   - File: `src/components/layout/PageHeader.tsx` (nuovo), tre page.tsx
 
-- [ ] **Primitivi form duplicati tra `ContactForm` e `VolunteerForm`** — Honeypot identico, blocco errore identico, blocco successo identico (solo testo diverso), pattern `<div flex-col gap-1><label input-label><input input>` ripetuto 6+ volte. Estrarre:
+- [x] **Primitivi form duplicati tra `ContactForm` e `VolunteerForm`** — Honeypot identico, blocco errore identico, blocco successo identico (solo testo diverso), pattern `<div flex-col gap-1><label input-label><input input>` ripetuto 6+ volte. Estrarre:
   - `src/components/forms/FormField.tsx` — `({ id, name, label, type?, required?, rows?, placeholder? })`
   - `src/components/forms/FormSuccess.tsx` — `({ heading, body })`
   - Usarli in `ContactForm` e `VolunteerForm`
   - File: `ContactForm.tsx`, `VolunteerForm.tsx`
 
-- [ ] **`Kicker` non accetta `className`** — Il componente usa solo `style` per overridare il colore, forzando `style={{ color: 'var(--color-accent)' }}` ripetuto in molti punti. Aggiungere prop `className?: string` al Kicker e sostituire tutti gli `style` color con Tailwind class (`text-accent`, `text-bg/50`).
+- [x] **`Kicker` non accetta `className`** — Il componente usa solo `style` per overridare il colore, forzando `style={{ color: 'var(--color-accent)' }}` ripetuto in molti punti. Aggiungere prop `className?: string` al Kicker e sostituire tutti gli `style` color con Tailwind class (`text-accent`, `text-bg/50`).
   - File: `src/components/ui/Kicker.tsx:3`, poi tutti i consumer
 
 ---
 
 ### R4 — Stile inline dove esistono classi Tailwind
 
-- [ ] **Sostituire `style={{ color/bg: 'var(--color-...)' }}` con classi Tailwind** — Trovate ≥15 occorrenze di inline style per valori già registrati come token Tailwind v4. Elenco completo:
+- [x] **Sostituire `style={{ color/bg: 'var(--color-...)' }}` con classi Tailwind** — Trovate ≥15 occorrenze di inline style per valori già registrati come token Tailwind v4. Elenco completo:
   - `HeroSection.tsx:18,24,29` → `text-accent`, `text-ink-soft`
   - `ServiziGrid.tsx:22,25,28,30` → `bg-hair`, `bg-bg`, `text-ink-soft`, `text-accent`
   - `NewsGrid.tsx:30,42,47,50` → `bg-bg-deep`, `text-accent`, `text-ink-soft`, `text-muted`
@@ -180,51 +186,95 @@ Implementazione bottom-up dal design v3 (`mise_web-3.zip`).
 
 ### R5 — Pagine che violano le regole D6
 
-- [ ] **`servizio-civile/page.tsx` — 117 righe, nessun componente del design system** — Usa `<section className="shell py-...">` raw invece di `<Section>`, raw `<p className="kicker ...">` invece di `<Kicker>`, `<span className="body-sm ... font-mono">` invece di `<Num>`. Non rispetta la regola "solo composizione ≤ 70 righe". Refactoring completo: usare `<Section>`, `<Kicker>`, `<Num>`, `<SectionLabel>`, `<Btn>` già esistenti; estrarre sottosezioni complesse (ProgettiList, ScSteps, FaqList) in componenti dedicati in `src/components/sections/`.
+- [x] **`servizio-civile/page.tsx` — 117 righe, nessun componente del design system** — Usa `<section className="shell py-...">` raw invece di `<Section>`, raw `<p className="kicker ...">` invece di `<Kicker>`, `<span className="body-sm ... font-mono">` invece di `<Num>`. Non rispetta la regola "solo composizione ≤ 70 righe". Refactoring completo: usare `<Section>`, `<Kicker>`, `<Num>`, `<SectionLabel>`, `<Btn>` già esistenti; estrarre sottosezioni complesse (ProgettiList, ScSteps, FaqList) in componenti dedicati in `src/components/sections/`.
   - File: `src/app/(site)/servizio-civile/page.tsx`
 
-- [ ] **`servizi/[slug]/page.tsx` — usa raw `<p className="kicker">` e `<span className="... font-mono">`** — Non usa `<Kicker>` né `<Num>` né `<Section>`. Fix: sostituire con componenti esistenti.
+- [x] **`servizi/[slug]/page.tsx` — usa raw `<p className="kicker">` e `<span className="... font-mono">`** — Non usa `<Kicker>` né `<Num>` né `<Section>`. Fix: sostituire con componenti esistenti.
   - File: `src/app/(site)/servizi/[slug]/page.tsx:27-36`
 
-- [ ] **`news/[slug]/page.tsx` — corpo articolo non renderizzato** — Il campo `body` (Portable Text) viene fetchato dalla query ma non renderizzato: la pagina mostra solo l'excerpt. Fix: installare `@portabletext/react`, aggiungere `<PortableText value={post.body} />` dopo l'excerpt.
+- [x] **`news/[slug]/page.tsx` — corpo articolo non renderizzato** — Il campo `body` (Portable Text) viene fetchato dalla query ma non renderizzato: la pagina mostra solo l'excerpt. Fix: installare `@portabletext/react`, aggiungere `<PortableText value={post.body} />` dopo l'excerpt.
   - File: `src/app/(site)/news/[slug]/page.tsx:36`
   - Dipendenza: `npm install @portabletext/react`
 
 ---
 
-### R6 — Feature mancante: MezziGrid orfana
+### R6 — Feature mancante: MezziGrid orfana ✅
 
-- [ ] **`MezziGrid` costruito ma non usato su nessuna pagina** — Il componente esiste, i dati ci sono (6 mezzi nel CMS), ma non è integrato in nessun percorso. Questo crea anche il gap numerico `01 → 04` nelle `SectionLabel` della home (mancano 02 e 03).
-  - Opzione A (raccomandata): aggiungere `MezziGrid` alla home tra `ServiziGrid` e `NewsGrid`, e correggere `NewsGrid` preview da `num="04"` a `num="03"` (o rimuovere il num dalla preview).
-  - Opzione B: creare pagina dedicata `/mezzi` e linkare dal footer.
-  - Decidere con il committente prima di implementare.
-  - File: `src/app/(site)/page.tsx`, `src/components/sections/NewsGrid.tsx:21`
+- [x] **`MezziGrid` integrato nella pagina `/servizi`** — `MezziGrid` aggiunto come sezione separata dopo `ServiziAccordion` in `servizi/page.tsx`. Le fetch vengono fatte in parallelo (`Promise.all`). Tag cache `mezzo` aggiunto.
 
 ---
 
-### R7 — Minori / robustezza
+### R7 — Minori / robustezza ✅
 
-- [ ] **`SanityImage` carica immagini senza trasformazioni** — `urlFor(source).url()` restituisce l'originale full-res. Aggiungere `.auto('format').fit('max')` per image optimization automatica di Sanity.
-  - File: `src/components/ui/SanityImage.tsx:26`
+- [x] **`SanityImage` ottimizzazione immagini** — `urlFor(source).auto('format').fit('max').url()` in `SanityImage.tsx:26`.
 
-- [ ] **Footer address split su `—` fragile** — Se l'editor scrive `-` o `–` invece di `—` l'indirizzo non si divide. Fix: cambiare il regex di split in `address.split(/\s*[—–-]\s*/)` oppure documentare il separatore nella descrizione del campo Sanity.
-  - File: `src/components/layout/Footer.tsx:70`
+- [x] **Footer address split robusto** — `address.split(/\s*[—–-]\s*/)` in `Footer.tsx:55`.
 
-- [ ] **Rimuovere commenti "what"** — Commenti che descrivono cosa fa il codice (invece del perché), da eliminare:
-  - `TimelineSection.tsx:17` — `{/* vertical line */}`
-  - `TimelineSection.tsx:31` — `{/* dot on the line */}`
-  - `ContactForm.tsx:23` — `{/* honeypot — nascosto ai visitatori reali */}`
-  - `VolunteerForm.tsx:24` — stessa riga
-  - `servizio-civile/page.tsx` — 6 commenti di sezione (`{/* Hero */}`, ecc.)
+- [x] **Rimossi commenti "what"** — `{/* vertical line */}` e `{/* dot on the line */}` rimossi da `TimelineSection.tsx`. Gli altri (ContactForm, VolunteerForm, servizio-civile/page.tsx) erano già assenti.
 
-- [ ] **Proteggere la rotta `/studio`** — Vedere `docs/REVIEW.md`. Valutare se rimuovere la pagina Studio dal bundle di produzione o aggiungere auth middleware.
-  - File: `src/app/studio/[[...tool]]/page.tsx`
+---
+
+## Fase R — Responsive (mobile & tablet)
+
+> Analisi del 22 maggio 2026. Obiettivo: rendere fruibile il sito su mobile (≥360px) e tablet (≥768px).
+> Breakpoint di riferimento: `sm` = 640px · `md` = 768px · `lg` = 1024px.
+> Componenti già OK: `ServiziGrid`, `NewsGrid`, `MezziGrid`, `StatsStrip`, `Footer`, `Header` (offcanvas drawer già funzionante).
+
+---
+
+### R-A — Bug critici: layout che si spezza su mobile
+
+I componenti della pagina Servizio Civile usano `gridTemplateColumns` inline con colonne fisse e nessun breakpoint.
+
+- [x] **`ScTabController.tsx` — Stats grid 5 colonne fisse** — Linea ~93: `gridTemplateColumns: \`repeat(${stats.length}, 1fr)\``produce 5 col su qualsiasi schermo. Fix:`className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5"`(rimuovere lo`style` di grid).
+  - File: `src/components/sections/ScTabController.tsx`
+
+- [x] **`ScTabController.tsx` — Projects grid 4 colonne fisse** — Linea ~180: `gridTemplateColumns: '120px 1fr 1fr 200px'`. Su mobile la card dei progetti trabocca. Fix: stacked su mobile (`grid-cols-1`), grid a 4 col da `md` in su (`md:grid-cols-[120px_1fr_1fr_200px]`). Il num + codice diventano una riga inline sopra il titolo su mobile.
+  - File: `src/components/sections/ScTabController.tsx`
+
+- [x] **`ScTabController.tsx` — Deadline dark band** — Linea ~122: `gridTemplateColumns: '1fr auto'`. Su schermi < 400px il bottone "Candidati" può clipparsi. Fix: `flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between`.
+  - File: `src/components/sections/ScTabController.tsx`
+
+- [x] **`ScTabController.tsx` — Tab switcher overflow** — I pill tab (`inline-flex`) overflow su mobile se i label sono lunghi. Fix: `flex-wrap` o `overflow-x: auto; max-width: 100%` sul contenitore.
+  - File: `src/components/sections/ScTabController.tsx`
+
+- [x] **`ScStepsSection.tsx` — Steps grid N colonne fisse** — Linea ~19: `gridTemplateColumns: \`repeat(${Math.min(steps.length, 5)}, 1fr)\``. Fix: `className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5"`.
+  - File: `src/components/sections/ScStepsSection.tsx`
+
+- [x] **`ScTestimonianzeSection.tsx` — Testimonianze grid 3 colonne fisse** — Linea ~22: `gridTemplateColumns: \`repeat(..., 3), 1fr)\``. Fix: `className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3"`.
+  - File: `src/components/sections/ScTestimonianzeSection.tsx`
+
+- [x] **`ScFaqSection.tsx` — FAQ layout 2 colonne fisse** — Linea ~17: `gridTemplateColumns: '1fr 2fr'`. Fix: stacked su mobile, `md:grid-cols-[1fr_2fr]` da tablet in su.
+  - File: `src/components/sections/ScFaqSection.tsx`
+
+- [x] **`ScApplySection.tsx` — Apply form 2 colonne fisse** — Linea ~49: `gridTemplateColumns: '1fr 1.2fr'`. Fix: stacked su mobile, `md:grid-cols-[1fr_1.2fr]` da tablet in su.
+  - File: `src/components/sections/ScApplySection.tsx`
+
+---
+
+### R-B — Padding fissi in pixel (SC components)
+
+I componenti SC usano `paddingTop/Bottom` con valori fissi (es. `96px`, `120px`) invece di `clamp()` come il resto del design system. Su mobile producono spaziature eccessive.
+
+- [x] **Convertire tutti i padding fissi SC in `clamp()`** — Usare la stessa convenzione di `Section.tsx`:
+  - `ScTabController.tsx:32` `paddingTop: 56` → `pt-[clamp(3rem,5vw,4rem)]`
+  - `ScTabController.tsx:90` `paddingTop: 64, paddingBottom: 80` → `py-[clamp(3rem,6vw,5rem)]`
+  - `ScStepsSection.tsx:7` `paddingTop/Bottom: 96` → `py-[clamp(4rem,8vw,6rem)]`
+  - `ScTestimonianzeSection.tsx:14` `paddingTop/Bottom: 120` → `py-[clamp(5rem,10vw,7.5rem)]`
+  - `ScApplySection.tsx:26,44` `paddingTop/Bottom: 120` → `py-[clamp(5rem,10vw,7.5rem)]`
+
+---
+
+### R-C — Accordion e tabella servizi
+
+- [x] **`ServiziAccordion.tsx` — contenuto espanso `pl-14`** — Su mobile 56px di padding sinistro è proporzionalmente molto. Fix: `pl-8 md:pl-14`.
+  - File: `src/components/sections/ServiziAccordion.tsx:32`
 
 ---
 
 ## Fase 7 — Webhook revalidation
 
-- [ ] `src/app/api/revalidate/route.ts` — endpoint webhook con verifica secret HMAC
+- [x] `src/app/api/revalidate/route.ts` — endpoint webhook con verifica secret HMAC
 - [ ] Configurare webhook su `sanity.io` puntando all'URL Vercel
 - [ ] Testare: pubblicare un documento → pagina si aggiorna senza rebuild
 
@@ -232,9 +282,9 @@ Implementazione bottom-up dal design v3 (`mise_web-3.zip`).
 
 ## Fase 8 — SEO e metadati
 
-- [ ] `generateMetadata` su tutte le route con dati da Sanity
-- [ ] `src/app/sitemap.ts` — sitemap dinamica con tutti gli slug
-- [ ] `src/app/robots.ts` — robots.txt
+- [x] `generateMetadata` su tutte le route con dati da Sanity
+- [x] `src/app/sitemap.ts` — sitemap dinamica con tutti gli slug
+- [x] `src/app/robots.ts` — robots.txt
 
 ---
 

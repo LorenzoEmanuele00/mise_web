@@ -35,7 +35,7 @@ export default defineConfig({
                 S.editor()
                   .id('servizioCivile')
                   .schemaType('servizioCivile')
-                  .documentId('servizioCivile'),
+                  .documentId('singleton-servizio-civile'),
               ),
             S.divider(),
             ...S.documentTypeListItems().filter(

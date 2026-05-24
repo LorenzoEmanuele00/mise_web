@@ -130,51 +130,63 @@ Utente          Vercel Edge Cache       Next.js Data Cache      Sanity CDN
 
 ### 2. Verifica HMAC nell'endpoint — `src/app/api/revalidate/route.ts`
 
-```ts
-import { createHmac } from 'crypto'
-import { revalidateTag } from 'next/cache'
-import { NextRequest, NextResponse } from 'next/server'
+Il formato dell'header inviato da Sanity è `t=<unixTs>,v1=<hmac-sha256(secret, '<ts>.<body>')>`.  
+Il body firmato è `<timestamp>.<rawBody>`, non solo il rawBody.
 
-const DOC_TAG: Record<string, string[]> = {
-  page:     ['page'],
-  post:     ['post'],
-  servizio: ['servizio'],
-  mezzo:    ['mezzo'],
-  settings: ['settings'],
+```ts
+import { createHmac, timingSafeEqual } from 'crypto'
+import { revalidateTag } from 'next/cache'
+import type { NextRequest } from 'next/server'
+
+const TAG_MAP: Record<string, string[]> = {
+  settings:       ['settings'],
+  page:           ['page'],
+  post:           ['post'],
+  servizio:       ['servizio'],
+  mezzo:          ['mezzo'],
+  servizioCivile: ['servizioCivile'],
+}
+
+function verifySignature(rawBody: string, header: string, secret: string): boolean {
+  const match = header.match(/^t=(\d+),v1=([a-f0-9]+)$/)
+  if (!match) return false
+  const [, timestamp, received] = match
+  const expected = createHmac('sha256', secret)
+    .update(`${timestamp}.${rawBody}`)
+    .digest('hex')
+  try {
+    return timingSafeEqual(Buffer.from(received!, 'hex'), Buffer.from(expected, 'hex'))
+  } catch {
+    return false
+  }
 }
 
 export async function POST(req: NextRequest) {
+  const secret = process.env.SANITY_WEBHOOK_SECRET
+  if (!secret) return new Response('Webhook secret not configured', { status: 500 })
+
   const rawBody = await req.text()
   const signature = req.headers.get('sanity-webhook-signature') ?? ''
-  const secret = process.env.SANITY_WEBHOOK_SECRET!
 
-  // Sanity firma con HMAC-SHA256 il body raw
-  const expected = createHmac('sha256', secret)
-    .update(rawBody)
-    .digest('hex')
-
-  if (signature !== `sha256=${expected}`) {
-    return NextResponse.json({ error: 'Invalid signature' }, { status: 401 })
+  if (!verifySignature(rawBody, signature, secret)) {
+    return new Response('Unauthorized', { status: 401 })
   }
 
-  const { _type } = JSON.parse(rawBody) as { _type?: string }
-  const tags = DOC_TAG[_type ?? ''] ?? []
-  tags.forEach(revalidateTag)
+  const body = JSON.parse(rawBody) as { _type?: string }
+  const tags = body._type ? TAG_MAP[body._type] : undefined
+  if (tags) {
+    for (const tag of tags) revalidateTag(tag, { expire: 0 })
+  }
 
-  return NextResponse.json({ revalidated: tags, ts: Date.now() })
+  return new Response('OK', { status: 200 })
 }
 ```
 
 ### 3. Testare il webhook
 
-```bash
-# Dopo il deploy, pubblicare un post in Sanity e verificare nei log Vercel
-# oppure chiamare manualmente:
-curl -X POST https://misericordiadigello.it/api/revalidate \
-  -H "Content-Type: application/json" \
-  -H "sanity-webhook-signature: sha256=<firma>" \
-  -d '{"_type":"post"}'
-```
+Il webhook Sanity si testa pubblicando un documento in Studio e verificando i log Vercel (`Functions → /api/revalidate` → status 200).
+
+Non è possibile testarlo con `curl` simulando la firma HMAC in modo semplice, perché il payload firmato include il timestamp corrente (`t=<unixTs>,v1=<hmac(secret, '<ts>.<body>')>`). Il modo più affidabile è usare il webhook reale da Sanity.
 
 ---
 

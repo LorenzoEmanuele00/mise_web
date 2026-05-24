@@ -1,3 +1,4 @@
+import { cache } from 'react'
 import type { Metadata } from 'next'
 import { client } from "@/sanity/lib/client";
 import { POST_QUERY, ALL_POST_SLUGS_QUERY } from "@/sanity/lib/queries";
@@ -11,6 +12,10 @@ import Kicker from "@/components/ui/Kicker";
 
 type Props = { params: Promise<{ slug: string }> }
 
+const getPost = cache((slug: string) =>
+  client.fetch<Post | null>(POST_QUERY, { slug, lang: 'it' }, { next: { tags: ['post'] } })
+)
+
 export async function generateStaticParams() {
   const slugs = await client.fetch<{ slug: string }[]>(ALL_POST_SLUGS_QUERY);
   return slugs.map((s) => ({ slug: s.slug }));
@@ -18,18 +23,14 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
-  const post = await client.fetch<Post | null>(POST_QUERY, { slug, lang: 'it' }, { next: { tags: ['post'] } })
+  const post = await getPost(slug)
   if (!post) return {}
   return buildMetadata(post.seo, { title: post.title, description: post.excerpt })
 }
 
 export default async function PostPage({ params }: Props) {
   const { slug } = await params;
-  const post = await client.fetch<Post | null>(
-    POST_QUERY,
-    { slug, lang: "it" },
-    { next: { tags: ["post"] } },
-  );
+  const post = await getPost(slug);
 
   if (!post) notFound();
 

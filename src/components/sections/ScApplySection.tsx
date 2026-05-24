@@ -15,6 +15,7 @@ const initial: FormState = { success: false };
 export default function ScApplySection({ tipi }: ScApplySectionProps) {
   const [state, action, pending] = useActionState(submitScInterest, initial);
   const [step, setStep] = useState(0);
+  const [stepError, setStepError] = useState<string | undefined>(undefined);
   const [form, setForm] = useState({
     nome: "",
     email: "",
@@ -321,12 +322,12 @@ export default function ScApplySection({ tipi }: ScApplySectionProps) {
               />
             </div>
 
-            {state.error && (
+            {(state.error || stepError) && (
               <p
                 className="body-sm"
                 style={{ color: "var(--color-accent-soft)", marginTop: 16 }}
               >
-                {state.error}
+                {stepError ?? state.error}
               </p>
             )}
 
@@ -341,7 +342,7 @@ export default function ScApplySection({ tipi }: ScApplySectionProps) {
             >
               <button
                 type="button"
-                onClick={() => setStep(Math.max(0, step - 1))}
+                onClick={() => { setStep(Math.max(0, step - 1)); setStepError(undefined) }}
                 disabled={step === 0}
                 style={{
                   background: "transparent",
@@ -361,7 +362,20 @@ export default function ScApplySection({ tipi }: ScApplySectionProps) {
               {step < 2 ? (
                 <button
                   type="button"
-                  onClick={() => setStep(step + 1)}
+                  onClick={() => {
+                    if (step === 0) {
+                      if (form.nome.trim().length < 2) {
+                        setStepError('Inserisci il tuo nome (almeno 2 caratteri)')
+                        return
+                      }
+                      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+                        setStepError("Inserisci un'email valida")
+                        return
+                      }
+                      setStepError(undefined)
+                    }
+                    setStep(step + 1)
+                  }}
                   className="btn btn-accent"
                 >
                   <span>Avanti</span>

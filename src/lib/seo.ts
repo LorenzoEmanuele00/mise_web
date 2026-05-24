@@ -12,8 +12,9 @@ export function buildMetadata(
 ): Metadata {
   const title = seo?.metaTitle ?? fallback.title
   const description = seo?.metaDescription ?? fallback.description ?? DEFAULT_DESCRIPTION
-  const ogImageUrl = seo?.ogImage
-    ? urlFor(seo.ogImage).width(1200).height(630).url()
+  const img = seo?.ogImage as { asset?: { _ref?: string } } | undefined
+  const ogImageUrl = img?.asset?._ref
+    ? urlFor(seo!.ogImage!).width(1200).height(630).url()
     : undefined
 
   return {

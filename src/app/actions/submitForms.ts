@@ -83,7 +83,7 @@ export async function submitScInterest(_: FormState, formData: FormData): Promis
 
   const { nome, email, eta, progetto, motivo } = result.data
   const oggetto = progetto ? `Interesse SC – ${progetto}` : 'Interesse Servizio Civile'
-  const messaggioLines = [
+  const messageLines = [
     eta ? `Età: ${eta}` : null,
     progetto ? `Progetto: ${progetto}` : null,
     motivo ? `\nMotivazione:\n${motivo}` : null,
@@ -95,7 +95,7 @@ export async function submitScInterest(_: FormState, formData: FormData): Promis
       nome,
       email,
       oggetto,
-      messaggio: messaggioLines.join('\n'),
+      messaggio: messageLines.join('\n'),
       createdAt: new Date().toISOString(),
     })
     return { success: true }

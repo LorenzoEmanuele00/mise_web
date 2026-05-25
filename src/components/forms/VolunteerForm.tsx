@@ -45,7 +45,7 @@ export default function VolunteerForm() {
       <FormField id="v-disponibilita" name="disponibilita" label="Disponibilità" rows={3} placeholder="Es. week-end, serate nei giorni feriali…" />
 
       {state.error && (
-        <p className="body-sm" style={{ color: 'var(--color-accent)' }}>{state.error}</p>
+        <p className="body-sm text-accent">{state.error}</p>
       )}
 
       <div>

@@ -25,7 +25,7 @@ export default function ContactForm() {
       <FormField id="c-messaggio" name="messaggio" label="Messaggio" rows={5} required />
 
       {state.error && (
-        <p className="body-sm" style={{ color: 'var(--color-accent)' }}>{state.error}</p>
+        <p className="body-sm text-accent">{state.error}</p>
       )}
 
       <div>

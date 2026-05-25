@@ -8,77 +8,33 @@ export default function ScFaqSection({ faq }: { faq: ScFaq[] }) {
   const [open, setOpen] = useState<number>(-1);
 
   return (
-    <section style={{ paddingTop: 32, paddingBottom: 96 }}>
+    <section className="pt-8 pb-24">
       <div className="shell">
-        <div
-          className="grid grid-cols-1 md:grid-cols-[1fr_2fr]"
-          style={{
-            gap: 80,
-            alignItems: "start",
-          }}
-        >
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-20 items-start">
           <div>
             <Kicker>Domande frequenti</Kicker>
-            <h2 className="heading-02" style={{ marginTop: 24 }}>
+            <h2 className="heading-02 mt-6">
               Le risposte più <em className="serif-it">cercate</em>.
             </h2>
           </div>
 
-          <div style={{ borderTop: "1px solid var(--color-hair-strong)" }}>
+          <div className="border-t border-hair-strong">
             {faq.map((item, i) => (
-              <div
-                key={i}
-                style={{ borderBottom: "1px solid var(--color-hair)" }}
-              >
+              <div key={i} className="border-b border-hair">
                 <button
                   type="button"
                   onClick={() => setOpen(open === i ? -1 : i)}
-                  style={{
-                    width: "100%",
-                    padding: "24px 0",
-                    background: "transparent",
-                    border: "none",
-                    textAlign: "left",
-                    cursor: "pointer",
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    gap: 24,
-                  }}
+                  className="w-full py-6 bg-transparent border-none text-left cursor-pointer flex justify-between items-center gap-6"
                 >
-                  <span
-                    className="serif"
-                    style={{ fontSize: "clamp(18px, 1.5vw, 22px)" }}
-                  >
+                  <span className="serif text-[clamp(18px,1.5vw,22px)]">
                     {item.domanda}
                   </span>
-                  <span
-                    style={{
-                      fontSize: 18,
-                      flexShrink: 0,
-                      transform: open === i ? "rotate(45deg)" : "rotate(0)",
-                      transition: "transform .3s",
-                    }}
-                  >
+                  <span className={`text-lg shrink-0 transition-transform duration-300${open === i ? ' rotate-45' : ''}`}>
                     +
                   </span>
                 </button>
-                <div
-                  style={{
-                    maxHeight: open === i ? 300 : 0,
-                    overflow: "hidden",
-                    transition: "max-height .4s cubic-bezier(.2,.7,.2,1)",
-                  }}
-                >
-                  <p
-                    className="body"
-                    style={{
-                      paddingBottom: 24,
-                      maxWidth: 720,
-                      lineHeight: 1.7,
-                      color: "var(--color-ink-soft)",
-                    }}
-                  >
+                <div className={`overflow-hidden transition-[max-height] duration-[400ms] ease-[cubic-bezier(.2,.7,.2,1)]${open === i ? ' max-h-[300px]' : ' max-h-0'}`}>
+                  <p className="body pb-6 max-w-[720px] leading-[1.7] text-ink-soft">
                     {item.risposta}
                   </p>
                 </div>

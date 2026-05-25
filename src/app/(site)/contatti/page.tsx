@@ -24,14 +24,14 @@ export default async function ContattiPage() {
         <PageHeader kicker="Dove siamo" title="Contatti" />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
-          <div style={{ borderTop: '1px solid var(--color-hair)' }}>
+          <div className="border-t border-hair">
             {[
               { label: 'Indirizzo', value: settings?.address },
               { label: 'Telefono', value: settings?.phone, href: settings?.phone ? `tel:${settings.phone}` : undefined },
               { label: 'Email', value: settings?.email, href: settings?.email ? `mailto:${settings.email}` : undefined },
               { label: 'Orari sede', value: settings?.orariSede },
             ].filter((r) => r.value).map((r) => (
-              <div key={r.label} className="py-6" style={{ borderBottom: '1px solid var(--color-hair)' }}>
+              <div key={r.label} className="py-6 border-b border-hair">
                 <p className="input-label mb-2">{r.label}</p>
                 {r.href
                   ? <a href={r.href} className="body text-ink hover:opacity-70 transition-opacity">{r.value}</a>

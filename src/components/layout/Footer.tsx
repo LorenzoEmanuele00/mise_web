@@ -14,7 +14,7 @@ export default function Footer({ settings }: FooterProps) {
   const phone = settings?.phone ?? '050 000 0000'
   const email = settings?.email ?? 'info@misericordiadigello.it'
   const address = settings?.address ?? 'Via di Gello, 12 — 56017 Gello (PI)'
-  const cf = settings?.codiceFiscale ?? '00000000000'
+  const taxCode = settings?.codiceFiscale ?? '00000000000'
 
   return (
     <footer className="dark-band py-[clamp(4rem,7vw,6rem)]">
@@ -72,7 +72,7 @@ export default function Footer({ settings }: FooterProps) {
           <div>
             <Kicker noRule className="text-bg/50">Emergenze</Kicker>
             <div className="mt-6">
-              <div className="serif text-bg leading-none" style={{ fontSize: 48 }}>118</div>
+              <div className="serif text-5xl text-bg leading-none">118</div>
               <p className="body-sm text-bg/50 mt-2">Pronto soccorso sanitario</p>
             </div>
             <div className="mt-7">
@@ -85,7 +85,7 @@ export default function Footer({ settings }: FooterProps) {
         <div className="rule" />
 
         <div className="flex flex-col md:flex-row justify-between gap-4 pt-6">
-          <p className="body-sm text-bg/50">© {year} Misericordia di Gello — C.F. {cf}</p>
+          <p className="body-sm text-bg/50">© {year} Misericordia di Gello — C.F. {taxCode}</p>
           <div className="flex gap-6 body-sm text-bg/50">
             <Link href="/privacy" className="text-bg/50 no-underline hover:text-bg/80 transition-colors">Privacy</Link>
             <Link href="/trasparenza" className="text-bg/50 no-underline hover:text-bg/80 transition-colors">Trasparenza</Link>

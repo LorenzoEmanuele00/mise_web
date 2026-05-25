@@ -52,26 +52,9 @@ export default function Header() {
             aria-label="Misericordia di Gello — home"
           >
             <LogoMark />
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                lineHeight: 1,
-              }}
-            >
-              <span style={{ fontSize: 18, letterSpacing: "-0.01em" }}>
-                Misericordia
-              </span>
-              <span
-                style={{
-                  fontFamily: "var(--font-mono)",
-                  fontSize: 10,
-                  letterSpacing: "0.2em",
-                  textTransform: "uppercase",
-                  color: "var(--color-muted)",
-                  marginTop: 4,
-                }}
-              >
+            <div className="flex flex-col leading-none">
+              <span className="text-[18px] tracking-[-0.01em]">Misericordia</span>
+              <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-muted mt-1">
                 di Gello · dal 1947
               </span>
             </div>
@@ -103,26 +86,9 @@ export default function Header() {
                 aria-hidden="true"
                 className="flex flex-col justify-center items-center w-5 h-5 gap-1"
               >
-                <span
-                  className="block h-px bg-current transition-transform duration-200 w-full"
-                  style={{
-                    transform: open
-                      ? "rotate(45deg) translateY(4px)"
-                      : undefined,
-                  }}
-                />
-                <span
-                  className="block h-px bg-current transition-opacity duration-200 w-full"
-                  style={{ opacity: open ? 0 : 1 }}
-                />
-                <span
-                  className="block h-px bg-current transition-transform duration-200 w-full"
-                  style={{
-                    transform: open
-                      ? "rotate(-45deg) translateY(-4px)"
-                      : undefined,
-                  }}
-                />
+                <span className={`nav-bar-top block h-px bg-current transition-transform duration-200 w-full${open ? ' open' : ''}`} />
+                <span className={`nav-bar-mid block h-px bg-current transition-opacity duration-200 w-full${open ? ' open' : ''}`} />
+                <span className={`nav-bar-bot block h-px bg-current transition-transform duration-200 w-full${open ? ' open' : ''}`} />
               </span>
               <span>{open ? "Chiudi" : "Menu"}</span>
             </button>

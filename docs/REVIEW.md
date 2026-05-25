@@ -5,7 +5,34 @@
 ### Review generica:
 
 - Perchè la timeline eventi non è u contenuto sanity?
-- Covertiamo il codice all'inglese. variabili, componenti ecc.
 - Se faccio un npm run dev l'applicazione da errore
-- Manca un indicazione della pagina corrente. se sono in home la tab home deve essere evidenziata, così anche le altre.
-- Ma una bella fotina dei volontari in homepage?
+- Manca un indicazione della pagina corrente nel menu. se sono in home la tab home deve essere evidenziata, così anche le altre. (nell'offcanvas servizi e servizio civile si evidenziano entrambi quando clicco servizio civile. non va bene)
+
+- Vorrei una review più approfondita. controlla ogni cartella, ogni componente. Tutto deve essere scritto con variabili in inglese (tranne sanity che può essere scritto in italiano). Controlla che i componenti vengano usati ed elimina quelli inutilizzati, controlla cosa è necessario e cosa può essere inglobato nelle page. Fai un ceck sullo style. niente inline. se serve crea un style.tsx nella cartella e utilizzalo.
+
+- Vorrei utilizzare per i nostri componenti delle animazioni da tailwind. ad esempio degli ingressi per i testi e i menù. I bottoni che si espandono quando siamo in hover. nella pagina del servizio civile sarebbe carino mettere un bounce alla selezione del tipo di servizio. Nella futura gallery sarebbe bello che le immagini comparissero via via che arrivano in pagina come usa sorta di dissolvenza.
+
+### Domande
+
+**Q: Ho già un vecchio sito con url misericordiadigello.it -> posso usare il dominio di quel sito registrato su aruba? sostituendo il vecchio sito con il nuovo hostato da vercel. tenendo quindi soltanto aruba come registrar?**
+
+Sì. Tieni Aruba solo come registrar e nel pannello DNS di Aruba:
+
+- Record **A** per `misericordiadigello.it` → `76.76.21.21` (IP Vercel)
+- Record **CNAME** per `www.misericordiadigello.it` → `cname.vercel-dns.com`
+
+Su Vercel: _Settings → Domains_ → aggiungi `misericordiadigello.it`. Vercel verificherà i record e attiverà il dominio. Propagazione DNS: da pochi minuti a 24–48 ore.
+
+---
+
+**Q: Per avere il sito in https abbiamo bisogno dei certificati? se si come si creano?**
+
+No, non devi fare nulla. Vercel gestisce automaticamente i certificati SSL tramite **Let's Encrypt**: li emette e rinnova in automatico non appena il dominio è collegato e i DNS si propagano.
+
+---
+
+**Q: Noi non prevediamo utilizzo di GTM e google analytics. quindi non dovrebbe servire abilitare una cookiebar, ne avvisare che collezioniamo dati. giusto?**
+
+Sostanzialmente sì, a condizione che il sito non usi altri servizi di terze parti con tracking (pixel, chat widget, etc.). Sanity non imposta cookie sul sito pubblico. Verificare che Vercel Analytics sia disabilitato o configurato in modalità privacy-first (non usa cookie). Resta comunque obbligatoria una **Privacy Policy** di base (titolare del trattamento, contatti) se il sito raccoglie email tramite form di contatto.
+
+- Per essere sicuro che tutto funzioni sarebbe possibile avere una sorta di sito di test temporaneo? che poi verrà sostituito dal reale? (chiuso da password ovviamente, in modo che non si accessibile.)

@@ -1,3 +1,5 @@
+import type { CSSProperties } from 'react'
+
 type Dir = 'right' | 'left' | 'up' | 'down'
 
 const ROT: Record<Dir, number> = { right: 0, left: 180, up: -90, down: 90 }
@@ -13,7 +15,8 @@ export default function Arrow({ size = 14, dir = 'right' as Dir }: { size?: numb
       strokeWidth={1.5}
       strokeLinecap="round"
       strokeLinejoin="round"
-      style={{ transform: `rotate(${ROT[dir]}deg)`, flexShrink: 0 }}
+      className="arrow-icon"
+      style={{ '--rot': `${ROT[dir]}deg` } as CSSProperties}
       aria-hidden="true"
     >
       <path d="M2 8h12M9 3l5 5-5 5" />

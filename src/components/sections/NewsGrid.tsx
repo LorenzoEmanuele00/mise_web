@@ -1,6 +1,5 @@
 import type { PostListItem } from "@/lib/types";
-import Section from "@/components/layout/Section";
-import { SectionLabel } from "@/components/layout/Section";
+import Section, { SectionLabel } from "@/components/layout/Section";
 import Btn from "@/components/ui/Btn";
 import SanityImage from "@/components/ui/SanityImage";
 import { formatDate } from "@/sanity/lib/utils";

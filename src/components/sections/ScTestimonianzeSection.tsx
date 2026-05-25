@@ -13,21 +13,16 @@ export default function ScTestimonianzeSection({ testimonianze }: ScTestimonianz
   return (
     <section className="py-[clamp(5rem,10vw,7.5rem)]">
       <div className="shell">
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 64 }}>
+        <div className="flex justify-between items-center mb-16">
           <Kicker>Testimonianze</Kicker>
           <Num>0{testimonianze.length} voci</Num>
         </div>
 
-        <div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
-          style={{
-            gap: 40,
-          }}
-        >
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {testimonianze.map((t) => (
             <div key={t.nome}>
               {t.foto ? (
-                <div style={{ position: 'relative', height: 320, background: 'var(--color-bg-elev)', overflow: 'hidden' }}>
+                <div className="relative h-80 bg-bg-elev overflow-hidden">
                   <SanityImage
                     source={t.foto}
                     alt={t.nome}
@@ -37,27 +32,18 @@ export default function ScTestimonianzeSection({ testimonianze }: ScTestimonianz
                   />
                 </div>
               ) : (
-                <div
-                  style={{
-                    height: 320,
-                    background: 'var(--color-bg-elev)',
-                    border: '1px solid var(--color-hair)',
-                  }}
-                />
+                <div className="h-80 bg-bg-elev border border-hair" />
               )}
 
-              <p
-                className="serif"
-                style={{ fontSize: 22, lineHeight: 1.4, marginTop: 24, letterSpacing: '-0.005em' }}
-              >
+              <p className="serif text-[22px] leading-[1.4] mt-6 tracking-[-0.005em]">
                 «{t.testo}»
               </p>
 
-              <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 24 }}>
-                <span style={{ fontSize: 14, fontWeight: 500 }}>{t.nome}</span>
-                <span className="body-sm" style={{ color: 'var(--color-muted)' }}>·</span>
+              <div className="flex items-center gap-3 mt-6">
+                <span className="text-sm font-medium">{t.nome}</span>
+                <span className="body-sm text-muted">·</span>
                 {t.anno && (
-                  <Kicker noRule style={{ color: 'var(--color-accent)' }}>{t.anno}</Kicker>
+                  <Kicker noRule className="text-accent">{t.anno}</Kicker>
                 )}
               </div>
             </div>

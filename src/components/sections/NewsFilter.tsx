@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import type { PostListItem } from "@/lib/types";
-import type { Post } from "@/lib/types";
+import type { PostListItem, Post } from "@/lib/types";
 import { formatDate } from "@/sanity/lib/utils";
 
 type FilterTag = Post["tag"] | "Tutti";

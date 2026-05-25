@@ -22,19 +22,10 @@ export default function StatsStrip({ stats = DEFAULT_STATS }: StatsStripProps) {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
         {stats.map((s) => (
           <div key={s.label} className="flex flex-col gap-2">
-            <span
-              style={{
-                fontFamily: 'var(--font-mono)',
-                fontSize: 'clamp(1.75rem, 3vw, 2.5rem)',
-                letterSpacing: '0.04em',
-                color: 'var(--color-bg)',
-              }}
-            >
+            <span className="font-mono text-[clamp(1.75rem,3vw,2.5rem)] tracking-[0.04em] text-bg">
               {s.value}
             </span>
-            <p className="body-sm" style={{ color: 'rgba(242,236,224,0.55)' }}>
-              {s.label}
-            </p>
+            <p className="body-sm text-bg/55">{s.label}</p>
           </div>
         ))}
       </div>

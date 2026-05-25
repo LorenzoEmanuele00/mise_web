@@ -1,6 +1,5 @@
 import type { ServizioListItem } from "@/lib/types";
-import Section from "@/components/layout/Section";
-import { SectionLabel } from "@/components/layout/Section";
+import Section, { SectionLabel } from "@/components/layout/Section";
 import Btn from "@/components/ui/Btn";
 import Num from "@/components/ui/Num";
 import Link from "next/link";

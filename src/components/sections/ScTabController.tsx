@@ -37,14 +37,7 @@ export default function ScTabController({
       {/* ── Hero ─────────────────────────────────────── */}
       <section className="pt-[clamp(3rem,5vw,4rem)]">
         <div className="shell">
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              marginBottom: 56,
-            }}
-          >
+          <div className="flex justify-between items-center mb-14">
             <Kicker>Pagina · Servizio Civile</Kicker>
             <Num>{data.code} · bando 2026</Num>
           </div>
@@ -53,66 +46,24 @@ export default function ScTabController({
             Un anno
             <br />
             dalla parte{" "}
-            <em className="serif-it" style={{ color: "var(--color-accent)" }}>
-              giusta
-            </em>
-            .
+            <em className="serif-it text-accent">giusta</em>.
           </h1>
 
-          <p
-            className="body-lg"
-            style={{
-              maxWidth: 720,
-              marginTop: 32,
-              color: "var(--color-ink-soft)",
-            }}
-          >
+          <p className="body-lg max-w-[720px] mt-8 text-ink-soft">
             {introText ??
               "Vivi dodici mesi dentro la Misericordia. Impari un mestiere fatto di persone, ti formi davvero, ricevi un'indennità mensile. Hai due strade: l'Universale (statale) o il Regionale toscano."}
           </p>
 
           {/* Tab switcher */}
-          <div
-            className="flex flex-col lg:flex-row rounded-[20px] lg:rounded-full"
-            style={{
-              marginTop: 56,
-              padding: 6,
-              background: "var(--color-bg-elev)",
-              border: "1px solid var(--color-hair-strong)",
-              maxWidth: "100%",
-            }}
-          >
+          <div className="flex flex-col lg:flex-row rounded-[20px] lg:rounded-full mt-14 p-1.5 bg-bg-elev border border-hair-strong">
             {tipi.map((t, i) => (
               <button
                 key={t.code}
                 type="button"
                 onClick={() => setActiveIdx(i)}
-                className="w-full lg:flex-1 rounded-[14px] lg:rounded-full"
-                style={{
-                  padding: "12px 28px",
-                  border: "none",
-                  cursor: "pointer",
-                  background:
-                    activeIdx === i ? "var(--color-ink)" : "transparent",
-                  color:
-                    activeIdx === i ? "var(--color-bg)" : "var(--color-ink)",
-                  fontFamily: "var(--font-sans)",
-                  fontSize: 14,
-                  display: "flex",
-                  gap: 12,
-                  alignItems: "center",
-                  justifyContent: "center",
-                  transition: "all .3s ease",
-                }}
+                className={`w-full lg:flex-1 rounded-[14px] lg:rounded-full px-7 py-3 border-none cursor-pointer font-sans text-sm flex gap-3 items-center justify-center transition-all duration-300 ${activeIdx === i ? 'bg-ink text-bg' : 'bg-transparent text-ink'}`}
               >
-                <span
-                  style={{
-                    fontFamily: "var(--font-mono)",
-                    fontSize: 11,
-                    letterSpacing: "0.16em",
-                    opacity: 0.7,
-                  }}
-                >
+                <span className="font-mono text-[11px] tracking-[0.16em] opacity-70">
                   {t.code}
                 </span>
                 <span>{t.label}</span>
@@ -126,69 +77,31 @@ export default function ScTabController({
       <section className="py-[clamp(3rem,6vw,5rem)]">
         <div className="shell">
           {stats.length > 0 && (
-            <div
-              className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5"
-              style={{
-                border: "1px solid var(--color-hair-strong)",
-                background: "var(--color-hair-strong)",
-                gap: "1px",
-              }}
-            >
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 border border-hair-strong bg-hair-strong gap-px">
               {stats.map(([k, v]) => (
-                <div
-                  key={k}
-                  style={{
-                    padding: "32px 24px",
-                    background: "var(--color-bg-elev)",
-                  }}
-                >
+                <div key={k} className="px-6 py-8 bg-bg-elev">
                   <Kicker noRule>{k}</Kicker>
-                  <div
-                    className="serif"
-                    style={{ fontSize: 28, marginTop: 14, lineHeight: 1.05 }}
-                  >
-                    {v}
-                  </div>
+                  <div className="serif text-[28px] mt-3.5 leading-[1.05]">{v}</div>
                 </div>
               ))}
             </div>
           )}
 
           {data.scadenza && (
-            <div
-              className="dark-band flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between"
-              style={{
-                marginTop: 16,
-                padding: "32px 36px",
-              }}
-            >
+            <div className="dark-band flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between mt-4 px-9 py-8">
               <div>
-                <Kicker style={{ color: "rgba(242,236,224,0.6)" }}>
-                  Prossima scadenza
-                </Kicker>
-                <div className="heading-02" style={{ marginTop: 12 }}>
-                  <span style={{ color: "var(--color-accent-soft)" }}>
-                    {formatDate(data.scadenza)}
-                  </span>
+                <Kicker className="text-bg/60">Prossima scadenza</Kicker>
+                <div className="heading-02 mt-3">
+                  <span className="text-accent-soft">{formatDate(data.scadenza)}</span>
                   {data.scadenzaOra && (
-                    <span
-                      style={{
-                        color: "rgba(242,236,224,0.5)",
-                        fontSize: 22,
-                        marginLeft: 24,
-                      }}
-                    >
+                    <span className="text-bg/50 text-[22px] ml-6">
                       ore {data.scadenzaOra}
                     </span>
                   )}
                 </div>
                 {data.ente && (
-                  <p
-                    className="body-sm"
-                    style={{ marginTop: 12, color: "rgba(242,236,224,0.7)" }}
-                  >
-                    La domanda si presenta online sul portale di {data.ente},
-                    tramite SPID.
+                  <p className="body-sm mt-3 text-bg/70">
+                    La domanda si presenta online sul portale di {data.ente}, tramite SPID.
                   </p>
                 )}
               </div>
@@ -203,9 +116,7 @@ export default function ScTabController({
                   <Arrow />
                 </a>
               ) : (
-                <Btn variant="accent" href="/contatti">
-                  Candidati
-                </Btn>
+                <Btn variant="accent" href="/contatti">Candidati</Btn>
               )}
             </div>
           )}
@@ -214,99 +125,52 @@ export default function ScTabController({
 
       {/* ── Projects ─────────────────────────────────── */}
       {data.progetti && data.progetti.length > 0 && (
-        <section style={{ paddingTop: 32, paddingBottom: 96 }}>
+        <section className="pt-8 pb-24">
           <div className="shell">
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                marginBottom: 48,
-              }}
-            >
+            <div className="flex justify-between items-center mb-12">
               <Kicker>Progetti · {data.code} 2026</Kicker>
               <Num>{data.progetti.length} progetti aperti</Num>
             </div>
-            <h2
-              className="heading-01"
-              style={{ marginBottom: 48, maxWidth: 800 }}
-            >
-              Scegli il <em className="serif-it">progetto</em> che ti somiglia
-              di più.
+            <h2 className="heading-01 mb-12 max-w-[800px]">
+              Scegli il <em className="serif-it">progetto</em> che ti somiglia di più.
             </h2>
 
-            <div style={{ borderTop: "1px solid var(--color-hair-strong)" }}>
+            <div className="border-t border-hair-strong">
               {data.progetti.map((p, i) => (
                 <div
                   key={p.codice}
-                  className="grid grid-cols-1 lg:grid-cols-[120px_1fr_1fr_200px]"
-                  style={{
-                    padding: "40px 0",
-                    borderBottom: "1px solid var(--color-hair-strong)",
-                    gap: 40,
-                    alignItems: "start",
-                  }}
+                  className="grid grid-cols-1 lg:grid-cols-[120px_1fr_1fr_200px] py-10 border-b border-hair-strong gap-10 items-start"
                 >
                   <div>
                     <Num>0{i + 1}</Num>
-                    <div
-                      style={{
-                        marginTop: 8,
-                        fontFamily: "var(--font-mono)",
-                        fontSize: 11,
-                        letterSpacing: "0.12em",
-                        color: "var(--color-accent)",
-                      }}
-                    >
+                    <div className="mt-2 font-mono text-[11px] tracking-[0.12em] text-accent">
                       {p.codice}
                     </div>
                   </div>
 
                   <div>
-                    <div
-                      className="serif"
-                      style={{
-                        fontSize: "clamp(22px, 2.2vw, 32px)",
-                        lineHeight: 1.1,
-                      }}
-                    >
+                    <div className="serif text-[clamp(22px,2.2vw,32px)] leading-[1.1]">
                       {p.titolo}
                     </div>
                     {p.focus && (
-                      <p
-                        className="body"
-                        style={{
-                          marginTop: 16,
-                          maxWidth: 480,
-                          color: "var(--color-ink-soft)",
-                        }}
-                      >
-                        {p.focus}
-                      </p>
+                      <p className="body mt-4 max-w-[480px] text-ink-soft">{p.focus}</p>
                     )}
                   </div>
 
-                  <div style={{ display: "grid", gap: 16 }}>
+                  <div className="grid gap-4">
                     <div>
                       <Kicker noRule>Posti</Kicker>
-                      <div
-                        className="serif"
-                        style={{ fontSize: 36, marginTop: 8 }}
-                      >
-                        {p.posti}
-                      </div>
+                      <div className="serif text-[36px] mt-2">{p.posti}</div>
                     </div>
                     {p.sede && (
                       <div>
                         <Kicker noRule>Sede</Kicker>
-                        <div style={{ marginTop: 6, fontSize: 14 }}>
-                          {p.sede}
-                        </div>
+                        <div className="mt-1.5 text-sm">{p.sede}</div>
                       </div>
                     )}
                   </div>
 
-                  <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                  <div className="flex justify-end">
                     {p.schedaPdfUrl ? (
                       <a
                         href={p.schedaPdfUrl}

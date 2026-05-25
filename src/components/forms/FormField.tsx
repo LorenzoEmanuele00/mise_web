@@ -18,11 +18,10 @@ export default function FormField({ id, name, label, type = 'text', required, ro
         <textarea
           id={id}
           name={name}
-          className="input"
+          className="input resize-none"
           rows={rows}
           required={required}
           placeholder={placeholder}
-          style={{ resize: 'none' }}
         />
       ) : (
         <input

@@ -1,6 +1,5 @@
 import type { MezzoListItem } from "@/lib/types";
-import Section from "@/components/layout/Section";
-import { SectionLabel } from "@/components/layout/Section";
+import Section, { SectionLabel } from "@/components/layout/Section";
 import SanityImage from "@/components/ui/SanityImage";
 import Num from "@/components/ui/Num";
 
@@ -17,10 +16,7 @@ export default function MezziGrid({ mezzi }: MezziGridProps) {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {mezzi.map((m) => (
           <div key={m._id} className="flex flex-col gap-4">
-            <div
-              className="relative aspect-[4/3] overflow-hidden"
-              style={{ backgroundColor: "var(--color-bg-deep)" }}
-            >
+            <div className="relative aspect-[4/3] overflow-hidden bg-bg-deep">
               {m.photo ? (
                 <SanityImage
                   source={m.photo}
@@ -31,12 +27,7 @@ export default function MezziGrid({ mezzi }: MezziGridProps) {
                 />
               ) : (
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <span
-                    className="body-sm"
-                    style={{ color: "var(--color-muted)" }}
-                  >
-                    Foto non disponibile
-                  </span>
+                  <span className="body-sm text-muted">Foto non disponibile</span>
                 </div>
               )}
             </div>
@@ -47,21 +38,11 @@ export default function MezziGrid({ mezzi }: MezziGridProps) {
                   <h3 className="heading-03 text-ink mt-1">{m.name}</h3>
                 )}
                 {m.role && (
-                  <p
-                    className="body-sm mt-1"
-                    style={{ color: "var(--color-ink-soft)" }}
-                  >
-                    {m.role}
-                  </p>
+                  <p className="body-sm mt-1 text-ink-soft">{m.role}</p>
                 )}
               </div>
               {m.year && (
-                <span
-                  className="body-sm shrink-0"
-                  style={{ color: "var(--color-muted)" }}
-                >
-                  {m.year}
-                </span>
+                <span className="body-sm shrink-0 text-muted">{m.year}</span>
               )}
             </div>
           </div>

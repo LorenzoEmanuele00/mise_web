@@ -5,10 +5,6 @@
 ### Review generica:
 
 - Perchè la timeline eventi non è u contenuto sanity?
-- Se faccio un npm run dev l'applicazione da errore
-- Manca un indicazione della pagina corrente nel menu. se sono in home la tab home deve essere evidenziata, così anche le altre. (nell'offcanvas servizi e servizio civile si evidenziano entrambi quando clicco servizio civile. non va bene)
-
-- Vorrei una review più approfondita. controlla ogni cartella, ogni componente. Tutto deve essere scritto con variabili in inglese (tranne sanity che può essere scritto in italiano). Controlla che i componenti vengano usati ed elimina quelli inutilizzati, controlla cosa è necessario e cosa può essere inglobato nelle page. Fai un ceck sullo style. niente inline. se serve crea un style.tsx nella cartella e utilizzalo.
 
 - Vorrei utilizzare per i nostri componenti delle animazioni da tailwind. ad esempio degli ingressi per i testi e i menù. I bottoni che si espandono quando siamo in hover. nella pagina del servizio civile sarebbe carino mettere un bounce alla selezione del tipo di servizio. Nella futura gallery sarebbe bello che le immagini comparissero via via che arrivano in pagina come usa sorta di dissolvenza.
 

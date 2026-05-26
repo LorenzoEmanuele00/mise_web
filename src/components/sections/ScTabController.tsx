@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type CSSProperties } from "react";
 import Kicker from "@/components/ui/Kicker";
 import Num from "@/components/ui/Num";
 import Btn from "@/components/ui/Btn";
@@ -18,7 +18,14 @@ export default function ScTabController({
   introText,
 }: ScTabControllerProps) {
   const [activeIdx, setActiveIdx] = useState(0);
+  const [bouncingIdx, setBouncingIdx] = useState<number | null>(null);
   const data = tipi[activeIdx] ?? tipi[0];
+
+  const handleSelect = (i: number) => {
+    if (i === activeIdx) return;
+    setActiveIdx(i);
+    setBouncingIdx(i);
+  };
   if (!data) return null;
 
   const stats: [string, string][] = [
@@ -60,8 +67,9 @@ export default function ScTabController({
               <button
                 key={t.code}
                 type="button"
-                onClick={() => setActiveIdx(i)}
-                className={`w-full lg:flex-1 rounded-[14px] lg:rounded-full px-7 py-3 border-none cursor-pointer font-sans text-sm flex gap-3 items-center justify-center transition-all duration-300 ${activeIdx === i ? 'bg-ink text-bg' : 'bg-transparent text-ink'}`}
+                onClick={() => handleSelect(i)}
+                onAnimationEnd={() => setBouncingIdx(null)}
+                className={`w-full lg:flex-1 rounded-[14px] lg:rounded-full px-7 py-3 border-none cursor-pointer font-sans text-sm flex gap-3 items-center justify-center transition-colors duration-300 ${activeIdx === i ? 'bg-ink text-bg' : 'bg-transparent text-ink'} ${bouncingIdx === i ? 'animate-bounce-in' : ''}`}
               >
                 <span className="font-mono text-[11px] tracking-[0.16em] opacity-70">
                   {t.code}
@@ -75,9 +83,9 @@ export default function ScTabController({
 
       {/* ── Summary ──────────────────────────────────── */}
       <section className="py-[clamp(3rem,6vw,5rem)]">
-        <div className="shell">
+        <div className="shell" key={activeIdx}>
           {stats.length > 0 && (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 border border-hair-strong bg-hair-strong gap-px">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 border border-hair-strong bg-hair-strong gap-px animate-fade-up">
               {stats.map(([k, v]) => (
                 <div key={k} className="px-6 py-8 bg-bg-elev">
                   <Kicker noRule>{k}</Kicker>
@@ -88,7 +96,7 @@ export default function ScTabController({
           )}
 
           {data.scadenza && (
-            <div className="dark-band flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between mt-4 px-9 py-8">
+            <div className="dark-band flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between mt-4 px-9 py-8 animate-fade-up" style={{ "--anim-delay": "0.1s" } as CSSProperties}>
               <div>
                 <Kicker className="text-bg/60">Prossima scadenza</Kicker>
                 <div className="heading-02 mt-3">
@@ -126,7 +134,7 @@ export default function ScTabController({
       {/* ── Projects ─────────────────────────────────── */}
       {data.progetti && data.progetti.length > 0 && (
         <section className="pt-8 pb-24">
-          <div className="shell">
+          <div className="shell animate-fade-up" key={`proj-${activeIdx}`} style={{ "--anim-delay": "0.15s" } as CSSProperties}>
             <div className="flex justify-between items-center mb-12">
               <Kicker>Progetti · {data.code} 2026</Kicker>
               <Num>{data.progetti.length} progetti aperti</Num>

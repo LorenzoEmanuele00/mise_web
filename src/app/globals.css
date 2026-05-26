@@ -220,11 +220,31 @@
     opacity: 0.9;
   }
 
+  /* Grid stagger animation */
+  .stagger-item {
+    opacity: 0;
+  }
+  .stagger-item.stagger-ready {
+    animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) var(--stagger-delay, 0ms) both;
+  }
+  /* 2 columns */
+  @media (min-width: 640px) {
+    .stagger-item:nth-child(2n+2) { --stagger-delay: 100ms; }
+  }
+  /* 3 columns: reset then reapply */
+  @media (min-width: 1024px) {
+    .stagger-item:nth-child(n)    { --stagger-delay: 0ms; }
+    .stagger-item:nth-child(3n+2) { --stagger-delay: 100ms; }
+    .stagger-item:nth-child(3n+3) { --stagger-delay: 200ms; }
+  }
+
   /* Reduced motion: disable all custom animations */
   @media (prefers-reduced-motion: reduce) {
     .animate-fade-up,
     .animate-fade-in,
-    .animate-bounce-in {
+    .animate-bounce-in,
+    .stagger-item,
+    .stagger-item.stagger-ready {
       animation: none;
       opacity: 1;
       transform: none;

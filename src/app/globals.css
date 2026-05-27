@@ -43,6 +43,30 @@
   html {
     background-color: var(--color-bg);
     color: var(--color-ink);
+    background-image: var(--bg-mobile);
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+  }
+
+  @media (min-width: 768px) {
+    html {
+      background-image: var(--bg-tablet, var(--bg-mobile));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    html {
+      background-image: var(--bg-desktop, var(--bg-tablet, var(--bg-mobile)));
+      background-attachment: fixed;
+    }
+  }
+
+  @media (min-width: 1440px) {
+    html {
+      background-image: var(--bg-wide, var(--bg-desktop, var(--bg-tablet, var(--bg-mobile))));
+    }
   }
 
   body {

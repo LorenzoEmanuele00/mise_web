@@ -3,8 +3,13 @@ import { groq } from 'next-sanity'
 export const SETTINGS_QUERY = groq`
   *[_type == "settings"][0] {
     siteName, logo, navigation, footerText,
-    address, phone, email, emailSC, iban, codiceFiscale, orariSede
+    address, phone, email, emailSC, iban, codiceFiscale, orariSede,
+    backgroundImage
   }
+`
+
+export const BACKGROUND_QUERY = groq`
+  *[_type == "settings"][0] { backgroundImage }
 `
 
 export const PAGE_QUERY = groq`

@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import { Instrument_Serif, DM_Sans, JetBrains_Mono } from "next/font/google";
+import { client } from "@/sanity/lib/client";
+import { BACKGROUND_QUERY } from "@/sanity/lib/queries";
+import type { BackgroundImage } from "@/lib/types";
 import "./globals.css";
 
 const instrumentSerif = Instrument_Serif({
@@ -28,15 +31,30 @@ export const metadata: Metadata = {
   description: 'Confraternita Misericordia di Gello — volontariato, soccorso e aggregazione sociale dal 1947.',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const { backgroundImage } = await client.fetch<{ backgroundImage?: BackgroundImage }>(
+    BACKGROUND_QUERY,
+    {},
+    { next: { tags: ['settings'] } }
+  )
+
+  const bg = backgroundImage ?? {}
+  const bgVars = {
+    ...(bg.mobile  && { '--bg-mobile':  `url('${bg.mobile}')` }),
+    ...(bg.tablet  && { '--bg-tablet':  `url('${bg.tablet}')` }),
+    ...(bg.desktop && { '--bg-desktop': `url('${bg.desktop}')` }),
+    ...(bg.wide    && { '--bg-wide':    `url('${bg.wide}')` }),
+  } as React.CSSProperties
+
   return (
     <html
       lang="it"
       className={`${instrumentSerif.variable} ${dmSans.variable} ${jetbrainsMono.variable} h-full antialiased`}
+      style={bgVars}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>

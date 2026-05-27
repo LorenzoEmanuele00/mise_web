@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import type { HeroSection as HeroSectionData } from "@/lib/types";
 import Section from "@/components/layout/Section";
 import Btn from "@/components/ui/Btn";
@@ -18,12 +19,13 @@ export default function HeroSection({
   return (
     <Section loose>
       {hero.kicker && (
-        <p className="mb-6">
+        <p className="mb-6 animate-fade-up" style={{ "--anim-delay": "0s" } as CSSProperties}>
           <Kicker className="text-accent">{hero.kicker}</Kicker>
         </p>
       )}
       <h1
-        className={`${display ? "h-display" : "heading-01"} text-ink max-w-3xl`}
+        className={`${display ? "h-display" : "heading-01"} text-ink max-w-3xl animate-fade-up`}
+        style={{ "--anim-delay": "0.08s" } as CSSProperties}
       >
         {hero.headingPre}
         {hero.headingEm && (
@@ -35,10 +37,18 @@ export default function HeroSection({
         {hero.headingPost && <> {hero.headingPost}</>}
       </h1>
       {hero.body && (
-        <p className="body-lg mt-8 max-w-xl text-ink-soft">{hero.body}</p>
+        <p
+          className="body-lg mt-8 max-w-xl text-ink-soft animate-fade-up"
+          style={{ "--anim-delay": "0.18s" } as CSSProperties}
+        >
+          {hero.body}
+        </p>
       )}
       {(hero.ctaPrimary?.href || hero.ctaSecondary?.href) && (
-        <div className="mt-10 flex flex-wrap gap-4">
+        <div
+          className="mt-10 flex flex-wrap gap-4 animate-fade-up"
+          style={{ "--anim-delay": "0.28s" } as CSSProperties}
+        >
           {hero.ctaPrimary?.href && (
             <Btn href={hero.ctaPrimary.href} variant="dark">
               {hero.ctaPrimary.label}
@@ -52,7 +62,10 @@ export default function HeroSection({
         </div>
       )}
       {hero.image && (
-        <div className="relative mt-12 aspect-[16/7] w-full overflow-hidden rounded-2xl">
+        <div
+          className="relative mt-12 aspect-[16/7] w-full overflow-hidden rounded-2xl animate-fade-up"
+          style={{ "--anim-delay": "0.38s" } as CSSProperties}
+        >
           <SanityImage
             source={hero.image}
             alt="I volontari della Misericordia di Gello"

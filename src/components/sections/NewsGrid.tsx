@@ -4,6 +4,7 @@ import Btn from "@/components/ui/Btn";
 import SanityImage from "@/components/ui/SanityImage";
 import { formatDate } from "@/sanity/lib/utils";
 import Link from "next/link";
+import StaggerGrid from "@/components/ui/StaggerGrid";
 
 interface NewsGridProps {
   posts: PostListItem[];
@@ -18,12 +19,12 @@ export default function NewsGrid({ posts, preview = false }: NewsGridProps) {
   return (
     <Section>
       <SectionLabel num={preview ? "04" : "01"} label="Aggiornamenti" />
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <StaggerGrid className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {items.map((post) => (
           <Link
             key={post._id}
             href={`/news/${post.slug.current}`}
-            className="group flex flex-col gap-4"
+            className="stagger-item group flex flex-col gap-4"
           >
             {post.cover && (
               <div className="relative aspect-[16/9] overflow-hidden bg-bg-deep">
@@ -50,7 +51,7 @@ export default function NewsGrid({ posts, preview = false }: NewsGridProps) {
             </div>
           </Link>
         ))}
-      </div>
+      </StaggerGrid>
       {preview && (
         <>
           <div className="mt-12 rule" />

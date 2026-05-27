@@ -5,12 +5,18 @@
 ### Review generica:
 
 - Perchè la timeline eventi non è u contenuto sanity?
-- Se faccio un npm run dev l'applicazione da errore
-- Manca un indicazione della pagina corrente nel menu. se sono in home la tab home deve essere evidenziata, così anche le altre. (nell'offcanvas servizi e servizio civile si evidenziano entrambi quando clicco servizio civile. non va bene)
 
-- Vorrei una review più approfondita. controlla ogni cartella, ogni componente. Tutto deve essere scritto con variabili in inglese (tranne sanity che può essere scritto in italiano). Controlla che i componenti vengano usati ed elimina quelli inutilizzati, controlla cosa è necessario e cosa può essere inglobato nelle page. Fai un ceck sullo style. niente inline. se serve crea un style.tsx nella cartella e utilizzalo.
+- ma serve una sorta di rotta di healtcheck ? o ce la fornisce vercel?
 
-- Vorrei utilizzare per i nostri componenti delle animazioni da tailwind. ad esempio degli ingressi per i testi e i menù. I bottoni che si espandono quando siamo in hover. nella pagina del servizio civile sarebbe carino mettere un bounce alla selezione del tipo di servizio. Nella futura gallery sarebbe bello che le immagini comparissero via via che arrivano in pagina come usa sorta di dissolvenza.
+- vorrei che le animazioni non fossero semplici animazioni, ma proprio posizionamenti della card. per capire meglio. vorrei che sia scendendo che salendo nella pagina l'animazione avvenisse. Possiamo guardare ad esempio react bits se offre qualcosa per questo
+
+- riguardiamo la parte della timeline please?
+
+- Style: vorrei che il tutto rispecchiasse uno stile più 'FELICE', toni di colore, sfondi e loghi. Vorrei che in alto e sinistra nel menù ci fosse un logo(inseribile tramite sanity).
+  In fondo vorrei i loghi dei partner(sempre tramite sanity).
+  (Piccola precisazione: ovunque si trovi un immagine deve essere sempre gestita tramite il passaggio dal claudflare r2, quindi su sanity si inserisce il path che va nell'src e su r2 si carica l'immagine)
+
+- Piccola aggiunta. per ogni immagine si trovi su sanity vorrei avere anche il campo 'altext' che va a popolare l'alt dell'immagine associata.
 
 ### Domande
 

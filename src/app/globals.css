@@ -1,6 +1,26 @@
 @import "tailwindcss";
 
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(32px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes bounce-in {
+  0%   { transform: scale(1); }
+  35%  { transform: scale(1.05); }
+  65%  { transform: scale(0.97); }
+  100% { transform: scale(1); }
+}
+
 @theme inline {
+  --animate-fade-up: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) var(--anim-delay, 0s) both;
+  --animate-fade-in: fade-in 0.7s ease var(--anim-delay, 0s) both;
+  --animate-bounce-in: bounce-in 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
   --color-ink: #000039;
   --color-bg: #f2ece0;
   --color-accent: #b85333;
@@ -23,6 +43,30 @@
   html {
     background-color: var(--color-bg);
     color: var(--color-ink);
+    background-image: var(--bg-mobile);
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+  }
+
+  @media (min-width: 768px) {
+    html {
+      background-image: var(--bg-tablet, var(--bg-mobile));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    html {
+      background-image: var(--bg-desktop, var(--bg-tablet, var(--bg-mobile)));
+      background-attachment: fixed;
+    }
+  }
+
+  @media (min-width: 1440px) {
+    html {
+      background-image: var(--bg-wide, var(--bg-desktop, var(--bg-tablet, var(--bg-mobile))));
+    }
   }
 
   body {
@@ -117,8 +161,12 @@
     font-size: 0.9375rem;
     font-weight: 500;
     cursor: pointer;
-    transition: opacity 0.15s;
+    transition: opacity 0.2s, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
     text-decoration: none;
+  }
+
+  .btn:hover:not(:disabled) {
+    transform: scale(1.04);
   }
 
   .btn-dark {
@@ -127,7 +175,7 @@
   }
 
   .btn-dark:hover {
-    opacity: 0.85;
+    opacity: 0.9;
   }
 
   .btn-ghost {
@@ -193,7 +241,44 @@
     color: var(--color-bg);
   }
   .btn-accent:hover {
-    opacity: 0.85;
+    opacity: 0.9;
+  }
+
+  /* Grid stagger animation */
+  .stagger-item {
+    opacity: 0;
+  }
+  .stagger-item.stagger-ready {
+    animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) var(--stagger-delay, 0ms) both;
+  }
+  /* 2 columns */
+  @media (min-width: 640px) {
+    .stagger-item:nth-child(2n+2) { --stagger-delay: 100ms; }
+  }
+  /* 3 columns: reset then reapply */
+  @media (min-width: 1024px) {
+    .stagger-item:nth-child(n)    { --stagger-delay: 0ms; }
+    .stagger-item:nth-child(3n+2) { --stagger-delay: 100ms; }
+    .stagger-item:nth-child(3n+3) { --stagger-delay: 200ms; }
+  }
+
+  /* Reduced motion: disable all custom animations */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-fade-up,
+    .animate-fade-in,
+    .animate-bounce-in,
+    .stagger-item,
+    .stagger-item.stagger-ready {
+      animation: none;
+      opacity: 1;
+      transform: none;
+    }
+    .btn {
+      transition: opacity 0.15s;
+    }
+    .btn:hover:not(:disabled) {
+      transform: none;
+    }
   }
 
   /* Kicker without decorative rule */

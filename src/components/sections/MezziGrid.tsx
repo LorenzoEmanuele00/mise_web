@@ -2,6 +2,7 @@ import type { MezzoListItem } from "@/lib/types";
 import Section, { SectionLabel } from "@/components/layout/Section";
 import SanityImage from "@/components/ui/SanityImage";
 import Num from "@/components/ui/Num";
+import StaggerGrid from "@/components/ui/StaggerGrid";
 
 interface MezziGridProps {
   mezzi: MezzoListItem[];
@@ -13,9 +14,9 @@ export default function MezziGrid({ mezzi }: MezziGridProps) {
   return (
     <Section>
       <SectionLabel num="03" label="I nostri mezzi" />
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <StaggerGrid className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {mezzi.map((m) => (
-          <div key={m._id} className="flex flex-col gap-4">
+          <div key={m._id} className="stagger-item flex flex-col gap-4">
             <div className="relative aspect-[4/3] overflow-hidden bg-bg-deep">
               {m.photo ? (
                 <SanityImage
@@ -47,7 +48,7 @@ export default function MezziGrid({ mezzi }: MezziGridProps) {
             </div>
           </div>
         ))}
-      </div>
+      </StaggerGrid>
     </Section>
   );
 }

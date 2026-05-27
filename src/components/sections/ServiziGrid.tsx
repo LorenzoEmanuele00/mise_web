@@ -4,6 +4,7 @@ import Btn from "@/components/ui/Btn";
 import Num from "@/components/ui/Num";
 import Link from "next/link";
 import Arrow from "@/components/ui/Arrow";
+import StaggerGrid from "@/components/ui/StaggerGrid";
 
 interface ServiziGridProps {
   servizi: Pick<
@@ -24,7 +25,7 @@ export default function ServiziGrid({
   return (
     <Section>
       <SectionLabel num="01" label="Cosa facciamo" />
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-hair">
+      <StaggerGrid className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-hair">
         {items.map((s) => {
           const card = (
             <div className="p-8 flex flex-col gap-4 h-full bg-bg">
@@ -44,16 +45,16 @@ export default function ServiziGrid({
               <Link
                 key={s._id}
                 href={`/servizi/${s.slug.current}`}
-                className="block group hover:opacity-90 transition-opacity"
+                className="stagger-item block group hover:opacity-90 transition-opacity"
               >
                 {card}
               </Link>
             );
           }
 
-          return <div key={s._id}>{card}</div>;
+          return <div key={s._id} className="stagger-item">{card}</div>;
         })}
-      </div>
+      </StaggerGrid>
       {preview && <div className="mt-12 rule" />}
       {preview && (
         <div className="mt-8">

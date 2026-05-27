@@ -72,5 +72,18 @@ export default defineType({
       type: 'text',
       rows: 3,
     }),
+    defineField({
+      name: 'backgroundImage',
+      title: 'Immagine di sfondo',
+      type: 'object',
+      description: 'URL delle immagini su Cloudflare R2 per ogni breakpoint. Lascia vuoto i breakpoint non usati: verrà usata l\'immagine del breakpoint inferiore come fallback.',
+      options: { collapsible: true, collapsed: false },
+      fields: [
+        defineField({ name: 'mobile',  title: 'Mobile  (< 768 px)',        type: 'url' }),
+        defineField({ name: 'tablet',  title: 'Tablet  (768 – 1024 px)',   type: 'url' }),
+        defineField({ name: 'desktop', title: 'Desktop (1024 – 1440 px)',  type: 'url' }),
+        defineField({ name: 'wide',    title: 'Wide / 4K  (> 1440 px)',    type: 'url' }),
+      ],
+    }),
   ],
 })

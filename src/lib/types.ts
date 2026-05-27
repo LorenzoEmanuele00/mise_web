@@ -127,6 +127,13 @@ export interface Mezzo {
   order?: number
 }
 
+export interface BackgroundImage {
+  mobile?: string
+  tablet?: string
+  desktop?: string
+  wide?: string
+}
+
 export interface Settings {
   _id: string
   _type: 'settings'
@@ -141,6 +148,7 @@ export interface Settings {
   iban?: string
   codiceFiscale?: string
   orariSede?: string
+  backgroundImage?: BackgroundImage
 }
 
 export interface ServizioCivile {

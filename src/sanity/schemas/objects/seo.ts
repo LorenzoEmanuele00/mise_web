@@ -21,7 +21,7 @@ export default defineType({
     defineField({
       name: 'ogImage',
       title: 'Open Graph image',
-      type: 'image',
+      type: 'r2Image',
     }),
   ],
 })

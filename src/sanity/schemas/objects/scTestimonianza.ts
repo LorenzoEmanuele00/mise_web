@@ -19,8 +19,7 @@ export default defineType({
     defineField({
       name: 'foto',
       title: 'Foto',
-      type: 'image',
-      options: { hotspot: true },
+      type: 'r2Image',
     }),
     defineField({
       name: 'testo',
@@ -31,6 +30,6 @@ export default defineType({
     }),
   ],
   preview: {
-    select: { title: 'nome', subtitle: 'anno', media: 'foto' },
+    select: { title: 'nome', subtitle: 'anno' },
   },
 })

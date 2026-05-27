@@ -52,8 +52,7 @@ export default defineType({
     defineField({
       name: 'image',
       title: 'Foto volontari',
-      type: 'image',
-      options: { hotspot: true },
+      type: 'r2Image',
     }),
   ],
 })

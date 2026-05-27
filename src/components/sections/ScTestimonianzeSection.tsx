@@ -1,6 +1,6 @@
 import Kicker from '@/components/ui/Kicker'
 import Num from '@/components/ui/Num'
-import SanityImage from '@/components/ui/SanityImage'
+import R2Image from '@/components/ui/R2Image'
 import type { ScTestimonianza } from '@/lib/types'
 
 interface ScTestimonianzeSectionProps {
@@ -23,12 +23,10 @@ export default function ScTestimonianzeSection({ testimonianze }: ScTestimonianz
             <div key={t.nome}>
               {t.foto ? (
                 <div className="relative h-80 bg-bg-elev overflow-hidden">
-                  <SanityImage
-                    source={t.foto}
-                    alt={t.nome}
+                  <R2Image
+                    image={t.foto}
                     fill
                     className="object-cover"
-                    sizes="(max-width: 768px) 100vw, 33vw"
                   />
                 </div>
               ) : (

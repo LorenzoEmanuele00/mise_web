@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import type { SeoObject } from '@/lib/types'
-import { urlFor } from '@/sanity/lib/utils'
 
 const SITE_NAME = 'Misericordia di Gello'
 const DEFAULT_DESCRIPTION =
@@ -12,10 +11,7 @@ export function buildMetadata(
 ): Metadata {
   const title = seo?.metaTitle ?? fallback.title
   const description = seo?.metaDescription ?? fallback.description ?? DEFAULT_DESCRIPTION
-  const img = seo?.ogImage as { asset?: { _ref?: string } } | undefined
-  const ogImageUrl = img?.asset?._ref
-    ? urlFor(seo!.ogImage!).width(1200).height(630).url()
-    : undefined
+  const ogImageUrl = seo?.ogImage?.src
 
   return {
     title,

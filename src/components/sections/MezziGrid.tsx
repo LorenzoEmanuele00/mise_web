@@ -1,6 +1,6 @@
 import type { MezzoListItem } from "@/lib/types";
 import Section, { SectionLabel } from "@/components/layout/Section";
-import SanityImage from "@/components/ui/SanityImage";
+import R2Image from "@/components/ui/R2Image";
 import Num from "@/components/ui/Num";
 import StaggerGrid from "@/components/ui/StaggerGrid";
 
@@ -19,12 +19,10 @@ export default function MezziGrid({ mezzi }: MezziGridProps) {
           <div key={m._id} className="stagger-item flex flex-col gap-4">
             <div className="relative aspect-[4/3] overflow-hidden bg-bg-deep">
               {m.photo ? (
-                <SanityImage
-                  source={m.photo}
-                  alt={m.name ?? m.code ?? "Mezzo"}
+                <R2Image
+                  image={m.photo}
                   fill
                   className="object-cover"
-                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                 />
               ) : (
                 <div className="absolute inset-0 flex items-center justify-center">

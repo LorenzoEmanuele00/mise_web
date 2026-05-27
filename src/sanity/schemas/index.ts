@@ -14,12 +14,13 @@ import scProgetto          from './objects/scProgetto'
 import scStep              from './objects/scStep'
 import scTestimonianza     from './objects/scTestimonianza'
 import scFaq               from './objects/scFaq'
+import r2Image             from './objects/r2Image'
 
 export const schemaTypes = [
   // Documents
   page, post, servizio, mezzo, settings, servizioCivile,
   contactSubmission, volunteerSubmission,
   // Objects
-  seo, heroSection, timelineEvent,
+  r2Image, seo, heroSection, timelineEvent,
   tipoServizio, scProgetto, scStep, scTestimonianza, scFaq,
 ]

@@ -1,7 +1,7 @@
 import type { PostListItem } from "@/lib/types";
 import Section, { SectionLabel } from "@/components/layout/Section";
 import Btn from "@/components/ui/Btn";
-import SanityImage from "@/components/ui/SanityImage";
+import R2Image from "@/components/ui/R2Image";
 import { formatDate } from "@/sanity/lib/utils";
 import Link from "next/link";
 import StaggerGrid from "@/components/ui/StaggerGrid";
@@ -28,12 +28,10 @@ export default function NewsGrid({ posts, preview = false }: NewsGridProps) {
           >
             {post.cover && (
               <div className="relative aspect-[16/9] overflow-hidden bg-bg-deep">
-                <SanityImage
-                  source={post.cover}
-                  alt={post.title}
+                <R2Image
+                  image={post.cover}
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                 />
               </div>
             )}

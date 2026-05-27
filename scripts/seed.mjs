@@ -1,6 +1,6 @@
 // Seed script — inserisce dati di test nel CMS Sanity
-// Uso: node scripts/seed.mjs
-// Richiede SANITY_API_WRITE_TOKEN in .env.local
+// Uso: node scripts/seed.mjs [--env-file .env.staging]
+// Richiede SANITY_API_WRITE_TOKEN nel file env
 
 import { createClient } from '@sanity/client'
 import { readFileSync } from 'fs'
@@ -9,8 +9,9 @@ import { fileURLToPath } from 'url'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
-// Legge .env.local manualmente
-const envPath = resolve(__dirname, '../.env.local')
+const envFileArg = process.argv.indexOf('--env-file')
+const envFileName = envFileArg !== -1 ? process.argv[envFileArg + 1] : '.env.local'
+const envPath = resolve(__dirname, '..', envFileName)
 const env = Object.fromEntries(
   readFileSync(envPath, 'utf8')
     .split('\n')

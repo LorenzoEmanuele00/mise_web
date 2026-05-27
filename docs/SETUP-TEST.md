@@ -3,19 +3,19 @@
 > Ambiente usa-e-getta per validare Vercel, Sanity e Cloudflare R2 **prima** del go-live sul dominio reale `misericordiadigello.it`.
 >
 > **Architettura:** Vercel Preview deployment (branch → `*.vercel.app`) + dataset Sanity `staging` + bucket R2 `mise-images-test`.
-> Lo scoping Vercel separa i due ambienti: env *Preview* → staging, env *Production* → production (riempita al go-live).
+> Lo scoping Vercel separa i due ambienti: env _Preview_ → staging, env _Production_ → production (riempita al go-live).
 
 ---
 
 ## Panoramica — cosa testare
 
-| Processo | Cosa si verifica |
-|---|---|
-| **Vercel** | Build verde, tutte le pagine caricano sull'URL preview |
-| **Sanity read** | Pagine mostrano i contenuti dal dataset `staging` |
-| **Sanity write** | Form contatti/volontariato salvano submission nel dataset `staging` |
-| **Cloudflare R2** | Le `<img>` caricano dall'host `*.r2.dev` (Network tab del browser) |
-| **Webhook** | Pubblica post in Studio → `/news` si aggiorna senza rebuild entro ~10s |
+| Processo          | Cosa si verifica                                                       |
+| ----------------- | ---------------------------------------------------------------------- |
+| **Vercel**        | Build verde, tutte le pagine caricano sull'URL preview                 |
+| **Sanity read**   | Pagine mostrano i contenuti dal dataset `staging`                      |
+| **Sanity write**  | Form contatti/volontariato salvano submission nel dataset `staging`    |
+| **Cloudflare R2** | Le `<img>` caricano dall'host `*.r2.dev` (Network tab del browser)     |
+| **Webhook**       | Pubblica post in Studio → `/news` si aggiorna senza rebuild entro ~10s |
 
 ---
 
@@ -62,19 +62,22 @@ Il piano free di Sanity consente 2 dataset: `production` (già esistente) e uno 
 
 ## Passo 2 — Seed del dataset `staging`
 
-Il seed (`scripts/seed.mjs`) legge `.env.local` direttamente dal disco, non da `process.env`. Per puntarlo allo staging modifica temporaneamente il file:
+Crea il file `.env.staging` nella root del progetto (è in `.gitignore`, non viene committato):
 
-1. In `.env.local` cambia:
-   ```env
-   NEXT_PUBLIC_SANITY_DATASET=staging
-   SANITY_API_WRITE_TOKEN=<token staging>
-   ```
-2. Lancia il seed:
-   ```bash
-   node scripts/seed.mjs
-   ```
-3. Verifica l'output: deve scrivere 21 documenti senza errori.
-4. **Ripristina** `.env.local` ai valori originali (dataset `production`, token produzione).
+```env
+NEXT_PUBLIC_SANITY_PROJECT_ID=zmh64ht0
+NEXT_PUBLIC_SANITY_DATASET=staging
+NEXT_PUBLIC_SANITY_API_VERSION=2024-01-01
+SANITY_API_WRITE_TOKEN=<token staging dal Passo 0>
+```
+
+Poi lancia il seed puntando a quel file:
+
+```bash
+node scripts/seed.mjs --env-file .env.staging
+```
+
+Verifica l'output: deve scrivere 21 documenti senza errori. `.env.local` non va mai toccato.
 
 > Il seed non popolava URL di immagini. Se vuoi testare le immagini R2, inseriscile manualmente in Studio dopo il Passo 4 (oppure aggiorna `scripts/seed.mjs` aggiungendo oggetti `{src, altText}` con gli URL R2 reali).
 
@@ -92,6 +95,7 @@ Il seed (`scripts/seed.mjs`) legge `.env.local` direttamente dal disco, non da `
    - Copia questo URL → sarà `NEXT_PUBLIC_R2_BASE_URL`
 
 3. **CORS policy** — nel bucket → Settings → CORS → Add CORS policy:
+
    ```json
    [
      {
@@ -105,7 +109,8 @@ Il seed (`scripts/seed.mjs`) legge `.env.local` direttamente dal disco, non da `
      }
    ]
    ```
-   *(Aggiorna `<preview-alias>` con l'URL reale dopo il Passo 5)*
+
+   _(Aggiorna `<preview-alias>` con l'URL reale dopo il Passo 5)_
 
 4. **Carica immagini di test**
    - Ottimizza 2-3 immagini WebP in locale (es. `logo.svg`, `mezzo-test.webp`) con [Squoosh](https://squoosh.app) se necessario
@@ -152,18 +157,18 @@ In alternativa, aggiorna `scripts/seed.mjs` prima del seed (Passo 2) per precomp
 
 In **Settings → Environment Variables**, aggiungi queste variabili selezionando **solo Preview** (non Production, non Development):
 
-| Variabile | Valore |
-|---|---|
-| `NEXT_PUBLIC_SANITY_PROJECT_ID` | `zmh64ht0` |
-| `NEXT_PUBLIC_SANITY_DATASET` | `staging` |
-| `NEXT_PUBLIC_SANITY_API_VERSION` | `2024-01-01` |
-| `SANITY_API_READ_TOKEN` | Token staging (Passo 0) |
-| `SANITY_API_WRITE_TOKEN` | Token staging (Passo 0) |
-| `SANITY_WEBHOOK_SECRET` | Secret staging (Passo 0) |
-| `NEXT_PUBLIC_R2_BASE_URL` | URL `pub-xxx.r2.dev` (Passo 3) |
-| `NEXT_PUBLIC_SITE_URL` | URL preview (da aggiornare dopo il primo deploy) |
+| Variabile                        | Valore                                           |
+| -------------------------------- | ------------------------------------------------ |
+| `NEXT_PUBLIC_SANITY_PROJECT_ID`  | `zmh64ht0`                                       |
+| `NEXT_PUBLIC_SANITY_DATASET`     | `staging`                                        |
+| `NEXT_PUBLIC_SANITY_API_VERSION` | `2024-01-01`                                     |
+| `SANITY_API_READ_TOKEN`          | Token staging (Passo 0)                          |
+| `SANITY_API_WRITE_TOKEN`         | Token staging (Passo 0)                          |
+| `SANITY_WEBHOOK_SECRET`          | Secret staging (Passo 0)                         |
+| `NEXT_PUBLIC_R2_BASE_URL`        | URL `pub-xxx.r2.dev` (Passo 3)                   |
+| `NEXT_PUBLIC_SITE_URL`           | URL preview (da aggiornare dopo il primo deploy) |
 
-> Le variabili *Production* rimangono vuote per ora — le compilerai durante il go-live reale con i valori `production`.
+> Le variabili _Production_ rimangono vuote per ora — le compilerai durante il go-live reale con i valori `production`.
 
 ---
 
@@ -198,18 +203,18 @@ La **Deployment Protection** è attiva di default su Vercel (ottima per accesso 
 
 1. **sanity.io/manage → progetto `zmh64ht0` → API → Webhooks → Add webhook**
 
-| Campo | Valore |
-|---|---|
-| **Name** | `Vercel Revalidation (staging)` |
-| **URL** | `https://<preview-alias>/api/revalidate` |
-| **Dataset** | `staging` |
-| **Trigger on** | ✅ Create, ✅ Update, ✅ Delete |
-| **Filter** | *(vuoto)* |
-| **Projection** | `{ _type }` |
-| **HTTP method** | `POST` |
-| **HTTP Headers** | `Content-Type: application/json` |
-| | `x-vercel-protection-bypass: <secret bypass>` |
-| **Secret** | `SANITY_WEBHOOK_SECRET_STAGING` (Passo 0) |
+| Campo            | Valore                                        |
+| ---------------- | --------------------------------------------- |
+| **Name**         | `Vercel Revalidation (staging)`               |
+| **URL**          | `https://<preview-alias>/api/revalidate`      |
+| **Dataset**      | `staging`                                     |
+| **Trigger on**   | ✅ Create, ✅ Update, ✅ Delete               |
+| **Filter**       | _(vuoto)_                                     |
+| **Projection**   | `{ _type }`                                   |
+| **HTTP method**  | `POST`                                        |
+| **HTTP Headers** | `Content-Type: application/json`              |
+|                  | `x-vercel-protection-bypass: <secret bypass>` |
+| **Secret**       | `SANITY_WEBHOOK_SECRET_STAGING` (Passo 0)     |
 
 2. **Save**
 
@@ -256,14 +261,14 @@ Apri `https://<preview-alias>.vercel.app` (richiede login Vercel al primo access
 
 ## Gotcha e troubleshooting
 
-| Problema | Causa | Soluzione |
-|---|---|---|
-| Webhook 401 | Protection bypass non configurato | Passo 7 — aggiungi header `x-vercel-protection-bypass` |
-| Webhook non scatta | URL del webhook punta al deploy singolo, non all'alias | Usa l'alias per-branch stabile |
-| Immagini non caricano (CORS 403) | URL preview non nel CORS del bucket R2 | Passo 3 — aggiungi alias al CORS |
-| Build fallisce: variabile mancante | Env var non impostata per ambiente Preview | Passo 5 — verifica che tutte le var abbiano l'ambiente Preview selezionato |
-| Studio non carica dati | URL non nelle CORS Origins Sanity | Passo 1 — aggiungi alias alle CORS Origins |
-| Seed scrive su `production` | `.env.local` non aggiornato prima del seed | Passo 2 — imposta `NEXT_PUBLIC_SANITY_DATASET=staging` prima di lanciare |
+| Problema                           | Causa                                                  | Soluzione                                                                  |
+| ---------------------------------- | ------------------------------------------------------ | -------------------------------------------------------------------------- |
+| Webhook 401                        | Protection bypass non configurato                      | Passo 7 — aggiungi header `x-vercel-protection-bypass`                     |
+| Webhook non scatta                 | URL del webhook punta al deploy singolo, non all'alias | Usa l'alias per-branch stabile                                             |
+| Immagini non caricano (CORS 403)   | URL preview non nel CORS del bucket R2                 | Passo 3 — aggiungi alias al CORS                                           |
+| Build fallisce: variabile mancante | Env var non impostata per ambiente Preview             | Passo 5 — verifica che tutte le var abbiano l'ambiente Preview selezionato |
+| Studio non carica dati             | URL non nelle CORS Origins Sanity                      | Passo 1 — aggiungi alias alle CORS Origins                                 |
+| Seed scrive su `production`        | `.env.local` non aggiornato prima del seed             | Passo 2 — imposta `NEXT_PUBLIC_SANITY_DATASET=staging` prima di lanciare   |
 
 ---
 

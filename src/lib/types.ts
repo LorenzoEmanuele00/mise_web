@@ -1,11 +1,14 @@
-import type { SanityImageSource } from '@sanity/image-url'
-
 // ─── Shared object types ─────────────────────────────────────────────────────
+
+export interface R2Image {
+  src: string
+  altText: string
+}
 
 export interface SeoObject {
   metaTitle?: string
   metaDescription?: string
-  ogImage?: SanityImageSource
+  ogImage?: R2Image
 }
 
 export interface HeroSection {
@@ -16,7 +19,7 @@ export interface HeroSection {
   body?: string
   ctaPrimary?: { label: string; href: string }
   ctaSecondary?: { label: string; href: string }
-  image?: SanityImageSource
+  image?: R2Image
 }
 
 export interface TimelineEvent {
@@ -65,7 +68,7 @@ export interface ScStep {
 export interface ScTestimonianza {
   nome: string
   anno?: string
-  foto?: SanityImageSource
+  foto?: R2Image
   testo: string
 }
 
@@ -95,7 +98,7 @@ export interface Post {
   tag?: 'Comunicato' | 'Bando' | 'Formazione' | 'Eventi'
   date: string
   excerpt: string
-  cover?: SanityImageSource
+  cover?: R2Image
   body?: unknown[]
   seo?: SeoObject
 }
@@ -123,7 +126,7 @@ export interface Mezzo {
   name?: string
   year?: string
   role?: string
-  photo?: SanityImageSource
+  photo?: R2Image
   order?: number
 }
 
@@ -138,7 +141,7 @@ export interface Settings {
   _id: string
   _type: 'settings'
   siteName?: string
-  logo?: SanityImageSource
+  logo?: R2Image
   navigation?: NavItem[]
   footerText?: string
   address?: string
@@ -193,7 +196,7 @@ export interface PostListItem {
   tag?: Post['tag']
   date: string
   excerpt: string
-  cover?: SanityImageSource
+  cover?: R2Image
 }
 
 export interface ServizioListItem {
@@ -214,7 +217,7 @@ export interface MezzoListItem {
   name?: string
   year?: string
   role?: string
-  photo?: SanityImageSource
+  photo?: R2Image
 }
 
 export interface HomeData {

@@ -7,6 +7,7 @@ import type { Post } from "@/lib/types";
 import { buildMetadata } from '@/lib/seo'
 import { notFound } from "next/navigation";
 import { PortableText } from "@portabletext/react";
+import type { R2Image } from "@/lib/types";
 import Section from "@/components/layout/Section";
 import Kicker from "@/components/ui/Kicker";
 
@@ -52,6 +53,18 @@ export default async function PostPage({ params }: Props) {
             <div className="body text-ink-soft prose-content">
               <PortableText
                 value={post.body as Parameters<typeof PortableText>[0]["value"]}
+                components={{
+                  types: {
+                    r2Image: ({ value }: { value: R2Image }) => (
+                      <img
+                        src={value.src}
+                        alt={value.altText}
+                        loading="lazy"
+                        className="w-full rounded-lg my-6"
+                      />
+                    ),
+                  },
+                }}
               />
             </div>
           )}

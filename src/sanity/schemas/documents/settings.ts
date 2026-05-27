@@ -13,7 +13,7 @@ export default defineType({
     defineField({
       name: 'logo',
       title: 'Logo',
-      type: 'image',
+      type: 'r2Image',
     }),
     defineField({
       name: 'navigation',

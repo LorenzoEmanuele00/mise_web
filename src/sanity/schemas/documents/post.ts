@@ -60,14 +60,13 @@ export default defineType({
     defineField({
       name: 'cover',
       title: 'Immagine di copertina',
-      type: 'image',
-      options: { hotspot: true },
+      type: 'r2Image',
     }),
     defineField({
       name: 'body',
       title: 'Corpo',
       type: 'array',
-      of: [{ type: 'block' }, { type: 'image', options: { hotspot: true } }],
+      of: [{ type: 'block' }, { type: 'r2Image' }],
     }),
     defineField({
       name: 'seo',
@@ -76,6 +75,6 @@ export default defineType({
     }),
   ],
   preview: {
-    select: { title: 'title', subtitle: 'date', media: 'cover' },
+    select: { title: 'title', subtitle: 'date' },
   },
 })

@@ -28,8 +28,7 @@ export default defineType({
     defineField({
       name: 'photo',
       title: 'Foto',
-      type: 'image',
-      options: { hotspot: true },
+      type: 'r2Image',
     }),
     defineField({
       name: 'order',
@@ -38,6 +37,6 @@ export default defineType({
     }),
   ],
   preview: {
-    select: { title: 'code', subtitle: 'name', media: 'photo' },
+    select: { title: 'code', subtitle: 'name' },
   },
 })

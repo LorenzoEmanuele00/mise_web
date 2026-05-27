@@ -3,7 +3,7 @@ import type { HeroSection as HeroSectionData } from "@/lib/types";
 import Section from "@/components/layout/Section";
 import Btn from "@/components/ui/Btn";
 import Kicker from "@/components/ui/Kicker";
-import SanityImage from "@/components/ui/SanityImage";
+import R2Image from "@/components/ui/R2Image";
 
 interface HeroSectionProps {
   hero?: HeroSectionData | null;
@@ -66,9 +66,8 @@ export default function HeroSection({
           className="relative mt-12 aspect-[16/7] w-full overflow-hidden rounded-2xl animate-fade-up"
           style={{ "--anim-delay": "0.38s" } as CSSProperties}
         >
-          <SanityImage
-            source={hero.image}
-            alt="I volontari della Misericordia di Gello"
+          <R2Image
+            image={hero.image}
             fill
             className="object-cover"
             priority={display}

@@ -42,12 +42,13 @@ export default async function RootLayout({
     { next: { tags: ['settings'] } }
   )
 
+  const base = process.env.NEXT_PUBLIC_R2_BASE_URL ?? ''
   const bg = backgroundImage ?? {}
   const bgVars = {
-    ...(bg.mobile  && { '--bg-mobile':  `url('${bg.mobile}')` }),
-    ...(bg.tablet  && { '--bg-tablet':  `url('${bg.tablet}')` }),
-    ...(bg.desktop && { '--bg-desktop': `url('${bg.desktop}')` }),
-    ...(bg.wide    && { '--bg-wide':    `url('${bg.wide}')` }),
+    ...(bg.mobile  && { '--bg-mobile':  `url('${base}/${bg.mobile}')` }),
+    ...(bg.tablet  && { '--bg-tablet':  `url('${base}/${bg.tablet}')` }),
+    ...(bg.desktop && { '--bg-desktop': `url('${base}/${bg.desktop}')` }),
+    ...(bg.wide    && { '--bg-wide':    `url('${base}/${bg.wide}')` }),
   } as React.CSSProperties
 
   return (

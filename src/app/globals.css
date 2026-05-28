@@ -47,7 +47,7 @@
     background-size: cover;
     background-position: center top;
     background-repeat: no-repeat;
-    background-attachment: scroll;
+    background-attachment: fixed;
   }
 
   @media (min-width: 768px) {
@@ -59,7 +59,6 @@
   @media (min-width: 1024px) {
     html {
       background-image: var(--bg-desktop, var(--bg-tablet, var(--bg-mobile)));
-      background-attachment: fixed;
     }
   }
 

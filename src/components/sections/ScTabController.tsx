@@ -147,7 +147,7 @@ export default function ScTabController({
               {data.progetti.map((p, i) => (
                 <div
                   key={p.codice}
-                  className="grid grid-cols-1 lg:grid-cols-[120px_1fr_1fr_200px] py-10 border-b border-hair-strong gap-10 items-start"
+                  className="grid grid-cols-1 lg:grid-cols-[120px_1fr_1fr_200px] py-10 px-8 border-b border-hair-strong gap-10 items-start bg-bg"
                 >
                   <div>
                     <Num>0{i + 1}</Num>

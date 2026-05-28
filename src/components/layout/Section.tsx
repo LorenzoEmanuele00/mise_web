@@ -19,6 +19,7 @@ export function SectionLabel({ num, label }: SectionLabelProps) {
 interface SectionProps {
   children: ReactNode
   dark?: boolean
+  solid?: boolean
   tight?: boolean
   loose?: boolean
   id?: string
@@ -29,6 +30,7 @@ interface SectionProps {
 export default function Section({
   children,
   dark,
+  solid,
   tight,
   loose,
   id,
@@ -43,6 +45,7 @@ export default function Section({
 
   const cls = [
     dark ? 'dark-band' : '',
+    solid ? 'bg-bg' : '',
     py,
     className ?? '',
   ].filter(Boolean).join(' ')

@@ -25,7 +25,7 @@ export default function NewsGrid({ posts, preview = false }: NewsGridProps) {
             key={post._id}
             href={`/news/${post.slug.current}`}
             prefetch={false}
-            className="stagger-item group flex flex-col gap-4"
+            className="stagger-item group flex flex-col gap-4 bg-bg"
           >
             {post.cover && (
               <div className="relative aspect-[16/9] overflow-hidden bg-bg-deep">
@@ -36,7 +36,7 @@ export default function NewsGrid({ posts, preview = false }: NewsGridProps) {
                 />
               </div>
             )}
-            <div className="flex flex-col gap-2 flex-1">
+            <div className="flex flex-col gap-2 flex-1 px-5 py-5">
               {post.tag && (
                 <span className="kicker no-rule text-accent">{post.tag}</span>
               )}

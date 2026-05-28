@@ -17,9 +17,9 @@ export default function ServiziAccordion({ servizi }: ServiziAccordionProps) {
       {servizi.map((s) => {
         const isOpen = open === s._id;
         return (
-          <div key={s._id} className="border-b border-hair">
+          <div key={s._id} className="border-b border-hair bg-bg">
             <button
-              className="w-full flex items-center gap-6 py-8 text-left"
+              className="w-full flex items-center gap-6 py-8 px-8 text-left"
               onClick={() => setOpen(isOpen ? null : s._id)}
               aria-expanded={isOpen}
             >
@@ -29,7 +29,7 @@ export default function ServiziAccordion({ servizi }: ServiziAccordionProps) {
             </button>
 
             {isOpen && (
-              <div className="pb-10 pl-8 md:pl-14">
+              <div className="pb-10 px-8 md:pl-14">
                 <p className="body max-w-2xl text-ink-soft">{s.shortDesc}</p>
                 {s.longDesc && (
                   <p className="body max-w-2xl mt-4 text-ink-soft">

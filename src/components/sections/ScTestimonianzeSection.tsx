@@ -20,7 +20,7 @@ export default function ScTestimonianzeSection({ testimonianze }: ScTestimonianz
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {testimonianze.map((t) => (
-            <div key={t.nome}>
+            <div key={t.nome} className="bg-bg">
               {t.foto ? (
                 <div className="relative h-80 bg-bg-elev overflow-hidden">
                   <R2Image
@@ -33,16 +33,18 @@ export default function ScTestimonianzeSection({ testimonianze }: ScTestimonianz
                 <div className="h-80 bg-bg-elev border border-hair" />
               )}
 
-              <p className="serif text-[22px] leading-[1.4] mt-6 tracking-[-0.005em]">
-                «{t.testo}»
-              </p>
+              <div className="px-5 pt-6 pb-7">
+                <p className="serif text-[22px] leading-[1.4] tracking-[-0.005em]">
+                  «{t.testo}»
+                </p>
 
-              <div className="flex items-center gap-3 mt-6">
-                <span className="text-sm font-medium">{t.nome}</span>
-                <span className="body-sm text-muted">·</span>
-                {t.anno && (
-                  <Kicker noRule className="text-accent">{t.anno}</Kicker>
-                )}
+                <div className="flex items-center gap-3 mt-6">
+                  <span className="text-sm font-medium">{t.nome}</span>
+                  <span className="body-sm text-muted">·</span>
+                  {t.anno && (
+                    <Kicker noRule className="text-accent">{t.anno}</Kicker>
+                  )}
+                </div>
               </div>
             </div>
           ))}

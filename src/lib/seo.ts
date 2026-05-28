@@ -11,7 +11,8 @@ export function buildMetadata(
 ): Metadata {
   const title = seo?.metaTitle ?? fallback.title
   const description = seo?.metaDescription ?? fallback.description ?? DEFAULT_DESCRIPTION
-  const ogImageUrl = seo?.ogImage?.src
+  const base = process.env.NEXT_PUBLIC_R2_BASE_URL ?? ''
+  const ogImageUrl = seo?.ogImage?.src ? `${base}/${seo.ogImage.src}` : undefined
 
   return {
     title,

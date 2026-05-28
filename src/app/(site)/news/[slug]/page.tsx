@@ -57,7 +57,7 @@ export default async function PostPage({ params }: Props) {
                   types: {
                     r2Image: ({ value }: { value: R2Image }) => (
                       <img
-                        src={value.src}
+                        src={`${process.env.NEXT_PUBLIC_R2_BASE_URL ?? ''}/${value.src}`}
                         alt={value.altText}
                         loading="lazy"
                         className="w-full rounded-lg my-6"

@@ -1,24 +1,26 @@
-import { defineField, defineType } from 'sanity'
+import { defineField, defineType } from "sanity";
 
 export default defineType({
-  name: 'r2Image',
-  title: 'Immagine R2',
-  type: 'object',
+  name: "r2Image",
+  title: "Immagine R2",
+  type: "object",
   fields: [
     defineField({
-      name: 'src',
-      title: 'URL immagine (Cloudflare R2)',
-      type: 'url',
-      validation: (r) => r.required().uri({ scheme: ['https', 'http'] }),
+      name: "src",
+      title: "Path immagine (es. logo.svg, mezzi/ducato.webp)",
+      type: "string",
+      description:
+        "Path relativo al bucket R2 — solo il nome file o sottocartella/file.",
+      validation: (r) => r.required(),
     }),
     defineField({
-      name: 'altText',
-      title: 'Testo alternativo (alt)',
-      type: 'string',
+      name: "altText",
+      title: "Testo alternativo (alt)",
+      type: "string",
       validation: (r) => r.required(),
     }),
   ],
   preview: {
-    select: { title: 'altText', subtitle: 'src' },
+    select: { title: "altText", subtitle: "src" },
   },
-})
+});

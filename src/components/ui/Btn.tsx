@@ -8,6 +8,7 @@ interface BtnProps {
   children: ReactNode
   variant?: Variant
   href?: string
+  prefetch?: boolean
   onClick?: () => void
   arrow?: boolean
   type?: 'button' | 'submit'
@@ -19,6 +20,7 @@ export default function Btn({
   children,
   variant = 'dark',
   href,
+  prefetch,
   onClick,
   arrow = true,
   type = 'button',
@@ -34,7 +36,7 @@ export default function Btn({
   )
 
   if (href) {
-    return <Link href={href} className={cls}>{inner}</Link>
+    return <Link href={href} prefetch={prefetch} className={cls}>{inner}</Link>
   }
 
   return (

@@ -30,7 +30,7 @@ export default function Footer({ settings }: FooterProps) {
               Associazione di volontariato fondata nel 1947. Trasporto sanitario, assistenza alla persona, protezione civile e formazione per la comunità di Gello e dintorni.
             </p>
             <div className="mt-7">
-              <Btn href="/volontariato" variant="accent">Diventa volontario</Btn>
+              <Btn href="/volontariato" variant="accent" prefetch={false}>Diventa volontario</Btn>
             </div>
           </div>
 
@@ -40,7 +40,7 @@ export default function Footer({ settings }: FooterProps) {
             <ul className="mt-6 list-none p-0 space-y-1.5">
               {NAV_ITEMS.map((item) => (
                 <li key={item.href}>
-                  <Link href={item.href} className="body-sm text-bg/70 no-underline hover:text-bg transition-colors">
+                  <Link href={item.href} prefetch={false} className="body-sm text-bg/70 no-underline hover:text-bg transition-colors">
                     {item.label}
                   </Link>
                 </li>
@@ -87,9 +87,9 @@ export default function Footer({ settings }: FooterProps) {
         <div className="flex flex-col md:flex-row justify-between gap-4 pt-6">
           <p className="body-sm text-bg/50">© {year} Misericordia di Gello — C.F. {taxCode}</p>
           <div className="flex gap-6 body-sm text-bg/50">
-            <Link href="/privacy" className="text-bg/50 no-underline hover:text-bg/80 transition-colors">Privacy</Link>
-            <Link href="/trasparenza" className="text-bg/50 no-underline hover:text-bg/80 transition-colors">Trasparenza</Link>
-            <Link href="/cookie" className="text-bg/50 no-underline hover:text-bg/80 transition-colors">Cookie</Link>
+            <Link href="/privacy" prefetch={false} className="text-bg/50 no-underline hover:text-bg/80 transition-colors">Privacy</Link>
+            <Link href="/trasparenza" prefetch={false} className="text-bg/50 no-underline hover:text-bg/80 transition-colors">Trasparenza</Link>
+            <Link href="/cookie" prefetch={false} className="text-bg/50 no-underline hover:text-bg/80 transition-colors">Cookie</Link>
           </div>
         </div>
       </div>

@@ -51,6 +51,7 @@ export default function NewsFilter({ posts }: NewsFilterProps) {
           <Link
             key={post._id}
             href={`/news/${post.slug.current}`}
+            prefetch={false}
             className="group block p-6 transition-colors border border-hair"
           >
             {post.tag && (

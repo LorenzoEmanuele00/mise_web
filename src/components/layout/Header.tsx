@@ -128,6 +128,7 @@ export default function Header() {
             <Link
               key={item.href}
               href={item.href}
+              prefetch={false}
               className={`flex items-center justify-between px-6 py-4 border-b border-white/10 text-bg no-underline hover:bg-white/5 transition-colors${isActive(item.href) ? " bg-white/10" : ""}`}
             >
               <span className="text-base">{item.label}</span>

@@ -45,6 +45,7 @@ export default function ServiziGrid({
               <Link
                 key={s._id}
                 href={`/servizi/${s.slug.current}`}
+                prefetch={false}
                 className="stagger-item block group hover:opacity-90 transition-opacity"
               >
                 {card}
@@ -58,7 +59,7 @@ export default function ServiziGrid({
       {preview && <div className="mt-12 rule" />}
       {preview && (
         <div className="mt-8">
-          <Btn href="/servizi" variant="ghost">
+          <Btn href="/servizi" variant="ghost" prefetch={false}>
             Tutti i servizi
           </Btn>
         </div>

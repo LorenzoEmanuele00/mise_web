@@ -24,6 +24,7 @@ export default function NewsGrid({ posts, preview = false }: NewsGridProps) {
           <Link
             key={post._id}
             href={`/news/${post.slug.current}`}
+            prefetch={false}
             className="stagger-item group flex flex-col gap-4"
           >
             {post.cover && (
@@ -54,7 +55,7 @@ export default function NewsGrid({ posts, preview = false }: NewsGridProps) {
         <>
           <div className="mt-12 rule" />
           <div className="mt-8">
-            <Btn href="/news" variant="ghost">
+            <Btn href="/news" variant="ghost" prefetch={false}>
               Tutte le notizie
             </Btn>
           </div>

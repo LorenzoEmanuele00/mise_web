@@ -4,10 +4,6 @@
 
 ### Review generica:
 
-- Perchè la timeline eventi non è u contenuto sanity?
-
-- ma serve una sorta di rotta di healtcheck ? o ce la fornisce vercel?
-
 - vorrei che le animazioni non fossero semplici animazioni, ma proprio posizionamenti della card. per capire meglio. vorrei che sia scendendo che salendo nella pagina l'animazione avvenisse. Possiamo guardare ad esempio react bits se offre qualcosa per questo
 
 - riguardiamo la parte della timeline please?
@@ -15,8 +11,6 @@
 - Style: vorrei che il tutto rispecchiasse uno stile più 'FELICE', toni di colore, sfondi e loghi. Vorrei che in alto e sinistra nel menù ci fosse un logo(inseribile tramite sanity).
   In fondo vorrei i loghi dei partner(sempre tramite sanity).
   (Piccola precisazione: ovunque si trovi un immagine deve essere sempre gestita tramite il passaggio dal claudflare r2, quindi su sanity si inserisce il path che va nell'src e su r2 si carica l'immagine)
-
-- Piccola aggiunta. per ogni immagine si trovi su sanity vorrei avere anche il campo 'altext' che va a popolare l'alt dell'immagine associata.
 
 ### Domande
 

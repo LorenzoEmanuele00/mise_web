@@ -4,6 +4,8 @@
 
 ### Review generica:
 
+test
+
 ### Domande
 
 **Q: Ho già un vecchio sito con url misericordiadigello.it -> posso usare il dominio di quel sito registrato su aruba? sostituendo il vecchio sito con il nuovo hostato da vercel. tenendo quindi soltanto aruba come registrar?**

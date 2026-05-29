@@ -44,11 +44,12 @@ export default async function RootLayout({
 
   const base = process.env.NEXT_PUBLIC_R2_BASE_URL ?? ''
   const bg = backgroundImage ?? {}
+  const clean = (s: string) => s.replace(/[\u200B\u200C\u200D\uFEFF]/g, '').trim()
   const bgVars = {
-    ...(bg.mobile  && { '--bg-mobile':  `url('${base}/${bg.mobile}')` }),
-    ...(bg.tablet  && { '--bg-tablet':  `url('${base}/${bg.tablet}')` }),
-    ...(bg.desktop && { '--bg-desktop': `url('${base}/${bg.desktop}')` }),
-    ...(bg.wide    && { '--bg-wide':    `url('${base}/${bg.wide}')` }),
+    ...(bg.mobile  && { '--bg-mobile':  `url('${base}/${clean(bg.mobile)}')` }),
+    ...(bg.tablet  && { '--bg-tablet':  `url('${base}/${clean(bg.tablet)}')` }),
+    ...(bg.desktop && { '--bg-desktop': `url('${base}/${clean(bg.desktop)}')` }),
+    ...(bg.wide    && { '--bg-wide':    `url('${base}/${clean(bg.wide)}')` }),
   } as React.CSSProperties
 
   return (

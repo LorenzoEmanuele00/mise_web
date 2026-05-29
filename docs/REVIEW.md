@@ -4,14 +4,6 @@
 
 ### Review generica:
 
-- vorrei che le animazioni non fossero semplici animazioni, ma proprio posizionamenti della card. per capire meglio. vorrei che sia scendendo che salendo nella pagina l'animazione avvenisse. Possiamo guardare ad esempio react bits se offre qualcosa per questo
-
-- riguardiamo la parte della timeline please?
-
-- Style: vorrei che il tutto rispecchiasse uno stile più 'FELICE', toni di colore, sfondi e loghi. Vorrei che in alto e sinistra nel menù ci fosse un logo(inseribile tramite sanity).
-  In fondo vorrei i loghi dei partner(sempre tramite sanity).
-  (Piccola precisazione: ovunque si trovi un immagine deve essere sempre gestita tramite il passaggio dal claudflare r2, quindi su sanity si inserisce il path che va nell'src e su r2 si carica l'immagine)
-
 ### Domande
 
 **Q: Ho già un vecchio sito con url misericordiadigello.it -> posso usare il dominio di quel sito registrato su aruba? sostituendo il vecchio sito con il nuovo hostato da vercel. tenendo quindi soltanto aruba come registrar?**

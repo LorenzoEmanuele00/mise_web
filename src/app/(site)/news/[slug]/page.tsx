@@ -1,21 +1,25 @@
-import { cache } from 'react'
-import type { Metadata } from 'next'
+import { cache } from "react";
+import type { Metadata } from "next";
 import { client } from "@/sanity/lib/client";
 import { POST_QUERY, ALL_POST_SLUGS_QUERY } from "@/sanity/lib/queries";
 import { formatDate } from "@/sanity/lib/utils";
 import type { Post } from "@/lib/types";
-import { buildMetadata } from '@/lib/seo'
+import { buildMetadata } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import { PortableText } from "@portabletext/react";
 import type { R2Image } from "@/lib/types";
 import Section from "@/components/layout/Section";
 import Kicker from "@/components/ui/Kicker";
 
-type Props = { params: Promise<{ slug: string }> }
+type Props = { params: Promise<{ slug: string }> };
 
 const getPost = cache((slug: string) =>
-  client.fetch<Post | null>(POST_QUERY, { slug, lang: 'it' }, { next: { tags: ['post'] } })
-)
+  client.fetch<Post | null>(
+    POST_QUERY,
+    { slug, lang: "it" },
+    { next: { tags: ["post"] } },
+  ),
+);
 
 export async function generateStaticParams() {
   const slugs = await client.fetch<{ slug: string }[]>(ALL_POST_SLUGS_QUERY);
@@ -23,10 +27,13 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params
-  const post = await getPost(slug)
-  if (!post) return {}
-  return buildMetadata(post.seo, { title: post.title, description: post.excerpt })
+  const { slug } = await params;
+  const post = await getPost(slug);
+  if (!post) return {};
+  return buildMetadata(post.seo, {
+    title: post.title,
+    description: post.excerpt,
+  });
 }
 
 export default async function PostPage({ params }: Props) {
@@ -57,7 +64,7 @@ export default async function PostPage({ params }: Props) {
                   types: {
                     r2Image: ({ value }: { value: R2Image }) => (
                       <img
-                        src={`${process.env.NEXT_PUBLIC_R2_BASE_URL ?? ''}/${value.src}`}
+                        src={`${process.env.NEXT_PUBLIC_R2_BASE_URL ?? ""}/${value.src}`}
                         alt={value.altText}
                         loading="lazy"
                         className="w-full rounded-lg my-6"

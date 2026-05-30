@@ -42,7 +42,6 @@ const tx = client.transaction()
 tx.createOrReplace({
   _id: 'singleton-settings',
   _type: 'settings',
-  siteName: 'Misericordia di Gello',
   footerText: 'Confraternita di Misericordia di Gello ODV — Volontariato, soccorso e aggregazione sociale dal 1947.',
   address: 'Via della Misericordia 12, 56017 Gello (PI)',
   phone: '050 000000',
@@ -51,15 +50,6 @@ tx.createOrReplace({
   iban: 'IT00 X000 0000 0000 0000 0000 000',
   codiceFiscale: '90000000000',
   orariSede: 'Lun–Ven: 8:00–13:00 / 15:00–19:00\nSab: 8:00–13:00\nDomenica: chiuso',
-  navigation: [
-    { _key: 'nav-1', label: 'Chi siamo',       href: '/storia' },
-    { _key: 'nav-2', label: 'Servizi',          href: '/servizi' },
-    { _key: 'nav-3', label: 'Servizio Civile',  href: '/servizio-civile' },
-    { _key: 'nav-4', label: 'News',             href: '/news' },
-    { _key: 'nav-5', label: 'Galleria',         href: '/galleria' },
-    { _key: 'nav-6', label: 'Volontariato',     href: '/volontariato' },
-    { _key: 'nav-7', label: 'Contatti',         href: '/contatti' },
-  ],
 })
 
 // ─── Page: Home ─────────────────────────────────────────────────────────────

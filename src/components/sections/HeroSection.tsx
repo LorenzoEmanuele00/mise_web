@@ -19,7 +19,10 @@ export default function HeroSection({
   return (
     <Section loose>
       {hero.kicker && (
-        <p className="mb-6 animate-fade-up" style={{ "--anim-delay": "0s" } as CSSProperties}>
+        <p
+          className="mb-6 animate-fade-up"
+          style={{ "--anim-delay": "0s" } as CSSProperties}
+        >
           <Kicker className="text-accent">{hero.kicker}</Kicker>
         </p>
       )}

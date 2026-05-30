@@ -1,18 +1,27 @@
 interface FormFieldProps {
-  id: string
-  name: string
-  label: string
-  type?: string
-  required?: boolean
-  rows?: number
-  placeholder?: string
+  id: string;
+  name: string;
+  label: string;
+  type?: string;
+  required?: boolean;
+  rows?: number;
+  placeholder?: string;
 }
 
-export default function FormField({ id, name, label, type = 'text', required, rows, placeholder }: FormFieldProps) {
+export default function FormField({
+  id,
+  name,
+  label,
+  type = "text",
+  required,
+  rows,
+  placeholder,
+}: FormFieldProps) {
   return (
     <div className="flex flex-col gap-1">
       <label className="input-label" htmlFor={id}>
-        {label}{required && ' *'}
+        {label}
+        {required && " *"}
       </label>
       {rows ? (
         <textarea
@@ -34,5 +43,5 @@ export default function FormField({ id, name, label, type = 'text', required, ro
         />
       )}
     </div>
-  )
+  );
 }

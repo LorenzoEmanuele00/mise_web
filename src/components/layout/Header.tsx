@@ -3,11 +3,16 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import Arrow from "@/components/ui/Arrow";
 import LogoMark from "@/components/ui/LogoMark";
+import R2Image from "@/components/ui/R2Image";
 import { NAV_ITEMS } from "@/lib/nav";
+import type { R2Image as R2ImageType } from "@/lib/types";
 
-export default function Header() {
+interface HeaderProps {
+  logo?: R2ImageType | null;
+}
+
+export default function Header({ logo }: HeaderProps) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
@@ -40,7 +45,9 @@ export default function Header() {
   }, [open]);
 
   const isActive = (href: string) =>
-    href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(href + "/");
+    href === "/"
+      ? pathname === "/"
+      : pathname === href || pathname.startsWith(href + "/");
 
   return (
     <>
@@ -51,9 +58,15 @@ export default function Header() {
             className="nav-logo"
             aria-label="Misericordia di Gello — home"
           >
-            <LogoMark />
+            {logo?.src ? (
+              <R2Image image={logo} className="h-9 w-auto" />
+            ) : (
+              <LogoMark />
+            )}
             <div className="flex flex-col leading-none">
-              <span className="text-[18px] tracking-[-0.01em]">Misericordia</span>
+              <span className="text-[18px] tracking-[-0.01em]">
+                Misericordia
+              </span>
               <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-muted mt-1">
                 di Gello · dal 1947
               </span>
@@ -86,9 +99,15 @@ export default function Header() {
                 aria-hidden="true"
                 className="flex flex-col justify-center items-center w-5 h-5 gap-1"
               >
-                <span className={`nav-bar-top block h-px bg-current transition-transform duration-200 w-full${open ? ' open' : ''}`} />
-                <span className={`nav-bar-mid block h-px bg-current transition-opacity duration-200 w-full${open ? ' open' : ''}`} />
-                <span className={`nav-bar-bot block h-px bg-current transition-transform duration-200 w-full${open ? ' open' : ''}`} />
+                <span
+                  className={`nav-bar-top block h-px bg-current transition-transform duration-200 w-full${open ? " open" : ""}`}
+                />
+                <span
+                  className={`nav-bar-mid block h-px bg-current transition-opacity duration-200 w-full${open ? " open" : ""}`}
+                />
+                <span
+                  className={`nav-bar-bot block h-px bg-current transition-transform duration-200 w-full${open ? " open" : ""}`}
+                />
               </span>
               <span>{open ? "Chiudi" : "Menu"}</span>
             </button>
@@ -111,7 +130,11 @@ export default function Header() {
       >
         <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">
           <div className="flex items-center gap-2.5">
-            <LogoMark size={32} />
+            {logo?.src ? (
+              <R2Image image={logo} className="h-8 w-auto" />
+            ) : (
+              <LogoMark size={32} />
+            )}
             <span className="kicker no-rule text-bg/60">Menu</span>
           </div>
           <button

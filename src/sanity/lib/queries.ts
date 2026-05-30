@@ -1,60 +1,60 @@
-import { groq } from 'next-sanity'
+import { groq } from "next-sanity";
 
 export const SETTINGS_QUERY = groq`
   *[_type == "settings"][0] {
-    siteName, logo, navigation, footerText,
+    logo, footerText,
     address, phone, email, emailSC, iban, codiceFiscale, orariSede,
     backgroundImage
   }
-`
+`;
 
 export const BACKGROUND_QUERY = groq`
   *[_type == "settings"][0] { backgroundImage }
-`
+`;
 
 export const PAGE_QUERY = groq`
   *[_type == "page" && slug.current == $slug && language == $lang][0] {
     title, slug, language, seo, heroSection
   }
-`
+`;
 
 export const ALL_POST_SLUGS_QUERY = groq`
   *[_type == "post" && defined(slug.current) && language == "it"] { "slug": slug.current }
-`
+`;
 
 export const POSTS_QUERY = groq`
   *[_type == "post" && language == $lang] | order(date desc) {
     _id, title, slug, tag, date, excerpt, cover
   }
-`
+`;
 
 export const POST_QUERY = groq`
   *[_type == "post" && slug.current == $slug && language == $lang][0] {
     title, slug, tag, date, excerpt, cover, body, seo
   }
-`
+`;
 
 export const SERVIZI_QUERY = groq`
   *[_type == "servizio" && language == $lang] | order(order asc) {
     _id, num, title, slug, shortDesc, longDesc, mezzi, orario, contatto
   }
-`
+`;
 
 export const ALL_SERVIZI_SLUGS_QUERY = groq`
   *[_type == "servizio" && defined(slug.current) && language == "it"] { "slug": slug.current }
-`
+`;
 
 export const SERVIZIO_QUERY = groq`
   *[_type == "servizio" && slug.current == $slug && language == "it"][0] {
     _id, num, title, slug, shortDesc, longDesc, mezzi, orario, contatto, seo
   }
-`
+`;
 
 export const MEZZI_QUERY = groq`
   *[_type == "mezzo"] | order(order asc) {
     _id, code, name, year, role, photo
   }
-`
+`;
 
 export const SERVIZIO_CIVILE_QUERY = groq`
   *[_type == "servizioCivile" && _id == "singleton-servizio-civile"][0] {
@@ -73,7 +73,7 @@ export const SERVIZIO_CIVILE_QUERY = groq`
     faq[] { domanda, risposta },
     seo
   }
-`
+`;
 
 export const HOME_QUERY = groq`
   {
@@ -81,4 +81,4 @@ export const HOME_QUERY = groq`
     "servizi": *[_type == "servizio" && language == $lang] | order(order asc)[0..5] { _id, num, title, shortDesc, slug },
     "news":    *[_type == "post" && language == $lang] | order(date desc)[0..2] { _id, title, slug, tag, date, excerpt, cover }
   }
-`
+`;

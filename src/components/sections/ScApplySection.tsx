@@ -8,11 +8,12 @@ import type { TipoServizio } from "@/lib/types";
 
 interface ScApplySectionProps {
   tipi: TipoServizio[];
+  emailSC?: string;
 }
 
 const initial: FormState = { success: false };
 
-export default function ScApplySection({ tipi }: ScApplySectionProps) {
+export default function ScApplySection({ tipi, emailSC }: ScApplySectionProps) {
   const [state, action, pending] = useActionState(submitScInterest, initial);
   const [step, setStep] = useState(0);
   const [stepError, setStepError] = useState<string | undefined>(undefined);
@@ -39,7 +40,9 @@ export default function ScApplySection({ tipi }: ScApplySectionProps) {
           <Kicker className="text-bg/60">Richiesta inviata</Kicker>
           <h2 className="heading-01 mt-8 text-bg">
             Grazie, {form.nome || "te"}.<br />
-            <em className="serif-it text-accent-soft">Ci sentiamo entro 5 giorni.</em>
+            <em className="serif-it text-accent-soft">
+              Ci sentiamo entro 5 giorni.
+            </em>
           </h2>
           <p className="body-lg mt-6 text-bg/75 max-w-[520px] mx-auto">
             Una volontaria della selezione ti scriverà a {form.email || "—"} per
@@ -58,23 +61,32 @@ export default function ScApplySection({ tipi }: ScApplySectionProps) {
           <div>
             <Kicker className="text-bg/60">Manifesta interesse</Kicker>
             <h2 className="heading-01 mt-8 text-bg">
-              Pensi che faccia per te?<br />
-              <em className="serif-it text-accent-soft">Lasciaci i tuoi contatti.</em>
+              Pensi che faccia per te?
+              <br />
+              <em className="serif-it text-accent-soft">
+                Lasciaci i tuoi contatti.
+              </em>
             </h2>
             <p className="body-lg mt-6 text-bg/75">
               Non è la domanda ufficiale (quella si fa su DOL con SPID). È solo
               un modo per dirci che ti interessa: ti invitiamo in sede, ti
-              spieghiamo i progetti, e quando apre il bando ti aiutiamo passo passo.
+              spieghiamo i progetti, e quando apre il bando ti aiutiamo passo
+              passo.
             </p>
             <div className="h-px bg-bg/18 mt-12 mb-6" />
             <div className="body-sm text-bg/65">
               Per dubbi specifici:{" "}
-              <span className="text-accent-soft">serviziocivile@misericordiadigello.it</span>
+              <span className="text-accent-soft">
+                {emailSC ?? "serviziocivile@misericordiadigello.it"}
+              </span>
             </div>
           </div>
 
           {/* Right form */}
-          <form action={action} className="bg-white/4 border border-white/18 p-10">
+          <form
+            action={action}
+            className="bg-white/4 border border-white/18 p-10"
+          >
             {/* Honeypot */}
             <input
               type="text"
@@ -95,14 +107,14 @@ export default function ScApplySection({ tipi }: ScApplySectionProps) {
                 {[0, 1, 2].map((i) => (
                   <div
                     key={i}
-                    className={`w-9 h-[3px] transition-colors duration-300 ${step >= i ? 'bg-accent' : 'bg-white/20'}`}
+                    className={`w-9 h-[3px] transition-colors duration-300 ${step >= i ? "bg-accent" : "bg-white/20"}`}
                   />
                 ))}
               </div>
             </div>
 
             {/* Step 0 — contacts */}
-            <div className={`${step === 0 ? 'grid' : 'hidden'} gap-8`}>
+            <div className={`${step === 0 ? "grid" : "hidden"} gap-8`}>
               <div>
                 <label className="input-label label-on-dark" htmlFor="sc-nome">
                   Nome e cognome
@@ -146,7 +158,7 @@ export default function ScApplySection({ tipi }: ScApplySectionProps) {
             </div>
 
             {/* Step 1 — project picker */}
-            <div className={step === 1 ? 'block' : 'hidden'}>
+            <div className={step === 1 ? "block" : "hidden"}>
               <div className="input-label label-on-dark mb-5">
                 Quale progetto ti interessa?
               </div>
@@ -156,7 +168,7 @@ export default function ScApplySection({ tipi }: ScApplySectionProps) {
                     key={p.codice}
                     type="button"
                     onClick={() => setForm({ ...form, progetto: p.codice })}
-                    className={`text-left px-[22px] py-5 border text-bg cursor-pointer transition-all duration-[250ms] ${form.progetto === p.codice ? 'bg-accent border-accent' : 'bg-transparent border-white/25'}`}
+                    className={`text-left px-[22px] py-5 border text-bg cursor-pointer transition-all duration-[250ms] ${form.progetto === p.codice ? "bg-accent border-accent" : "bg-transparent border-white/25"}`}
                   >
                     <div className="font-mono text-[10px] tracking-[0.18em] opacity-70">
                       {p.tipoCode} · {p.codice}
@@ -168,7 +180,7 @@ export default function ScApplySection({ tipi }: ScApplySectionProps) {
             </div>
 
             {/* Step 2 — motivation */}
-            <div className={step === 2 ? 'block' : 'hidden'}>
+            <div className={step === 2 ? "block" : "hidden"}>
               <label className="input-label label-on-dark" htmlFor="sc-motivo">
                 Perché ti interessa? (facoltativo)
               </label>
@@ -193,9 +205,12 @@ export default function ScApplySection({ tipi }: ScApplySectionProps) {
             <div className="flex justify-between items-center mt-10">
               <button
                 type="button"
-                onClick={() => { setStep(Math.max(0, step - 1)); setStepError(undefined) }}
+                onClick={() => {
+                  setStep(Math.max(0, step - 1));
+                  setStepError(undefined);
+                }}
                 disabled={step === 0}
-                className={`bg-transparent border-none font-mono text-[12px] tracking-[0.18em] uppercase ${step === 0 ? 'text-white/25 cursor-default' : 'text-bg cursor-pointer'}`}
+                className={`bg-transparent border-none font-mono text-[12px] tracking-[0.18em] uppercase ${step === 0 ? "text-white/25 cursor-default" : "text-bg cursor-pointer"}`}
               >
                 ← Indietro
               </button>
@@ -206,16 +221,18 @@ export default function ScApplySection({ tipi }: ScApplySectionProps) {
                   onClick={() => {
                     if (step === 0) {
                       if (form.nome.trim().length < 2) {
-                        setStepError('Inserisci il tuo nome (almeno 2 caratteri)')
-                        return
+                        setStepError(
+                          "Inserisci il tuo nome (almeno 2 caratteri)",
+                        );
+                        return;
                       }
                       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
-                        setStepError("Inserisci un'email valida")
-                        return
+                        setStepError("Inserisci un'email valida");
+                        return;
                       }
-                      setStepError(undefined)
+                      setStepError(undefined);
                     }
-                    setStep(step + 1)
+                    setStep(step + 1);
                   }}
                   className="btn btn-accent"
                 >

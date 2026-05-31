@@ -103,9 +103,19 @@ export default function ScrollStack({
 
   const getElementOffset = useCallback(
     (element: HTMLElement) => {
+      // Use offsetTop (layout-based, ignores transforms) instead of
+      // getBoundingClientRect(): the latter includes the card's own applied
+      // transform, creating a feedback loop that makes pinned cards jitter
+      // while scrolling. In window-scroll mode we accumulate offsetTop up the
+      // offsetParent chain to get the document-relative offset.
       if (useWindowScroll) {
-        const rect = element.getBoundingClientRect();
-        return rect.top + window.scrollY;
+        let top = 0;
+        let el: HTMLElement | null = element;
+        while (el) {
+          top += el.offsetTop;
+          el = el.offsetParent as HTMLElement | null;
+        }
+        return top;
       }
       return element.offsetTop;
     },

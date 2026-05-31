@@ -62,7 +62,6 @@ export default function ScrollStack({
   const stackCompletedRef = useRef(false);
   const animationFrameRef = useRef<number | null>(null);
   const lenisRef = useRef<Lenis | null>(null);
-  const nativeScrollCleanupRef = useRef<(() => void) | null>(null);
   const cardsRef = useRef<HTMLElement[]>([]);
   const lastTransformsRef = useRef(new Map<number, CardTransform>());
   const isUpdatingRef = useRef(false);
@@ -238,25 +237,9 @@ export default function ScrollStack({
   }, [updateCardTransforms]);
 
   const setupLenis = useCallback(() => {
-    // On touch devices we deliberately skip Lenis: smooth-scrolling there only
-    // risks hijacking/accelerating the native touch scroll (the whole window is
-    // driven by Lenis in useWindowScroll mode). A passive scroll listener is
-    // enough to drive the card animation from the real scroll position.
-    const prefersNativeScroll =
-      typeof window !== "undefined" &&
-      window.matchMedia("(pointer: coarse)").matches;
-
-    if (prefersNativeScroll) {
-      const target: Window | HTMLElement | null = useWindowScroll
-        ? window
-        : scrollerRef.current;
-      if (!target) return;
-      target.addEventListener("scroll", handleScroll, { passive: true });
-      nativeScrollCleanupRef.current = () =>
-        target.removeEventListener("scroll", handleScroll);
-      return;
-    }
-
+    // Lenis drives the scroll (incl. touch via syncTouch) so the pinned cards
+    // stay glued to the scroll position with no main-thread/compositor lag.
+    // touchMultiplier stays at 1 so touch scroll keeps its native speed.
     if (useWindowScroll) {
       const lenis = new Lenis({
         duration: 1.2,
@@ -266,7 +249,7 @@ export default function ScrollStack({
         infinite: false,
         wheelMultiplier: 1,
         lerp: 0.1,
-        syncTouch: false,
+        syncTouch: true,
         syncTouchLerp: 0.075,
       });
 
@@ -295,7 +278,7 @@ export default function ScrollStack({
       infinite: false,
       wheelMultiplier: 1,
       lerp: 0.1,
-      syncTouch: false,
+      syncTouch: true,
       syncTouchLerp: 0.075,
     });
 
@@ -344,10 +327,6 @@ export default function ScrollStack({
       }
       if (lenisRef.current) {
         lenisRef.current.destroy();
-      }
-      if (nativeScrollCleanupRef.current) {
-        nativeScrollCleanupRef.current();
-        nativeScrollCleanupRef.current = null;
       }
       stackCompletedRef.current = false;
       cardsRef.current = [];

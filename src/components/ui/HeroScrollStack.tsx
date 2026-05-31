@@ -19,7 +19,7 @@ export default function HeroScrollStack({ cards }: HeroScrollStackProps) {
   if (!isMobile || items.length === 0) return null;
 
   return (
-    <ScrollStack useWindowScroll className="lg:hidden animate-fade-in">
+    <ScrollStack useWindowScroll itemDistance={60} className="lg:hidden animate-fade-in">
       {items.map((card, i) => (
         <ScrollStackItem key={card.src}>
           <R2Image image={card} fill className="object-cover" priority={i === 0} />

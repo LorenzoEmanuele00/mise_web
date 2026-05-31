@@ -262,11 +262,11 @@ export default function ScrollStack({
         duration: 1.2,
         easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         smoothWheel: true,
-        touchMultiplier: 2,
+        touchMultiplier: 1,
         infinite: false,
         wheelMultiplier: 1,
         lerp: 0.1,
-        syncTouch: true,
+        syncTouch: false,
         syncTouchLerp: 0.075,
       });
 

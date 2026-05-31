@@ -1,10 +1,10 @@
-import type { ReactNode } from 'react'
-import Kicker from '@/components/ui/Kicker'
-import Num from '@/components/ui/Num'
+import type { ReactNode } from "react";
+import Kicker from "@/components/ui/Kicker";
+import Num from "@/components/ui/Num";
 
 interface SectionLabelProps {
-  num: string
-  label: string
+  num: string;
+  label: string;
 }
 
 export function SectionLabel({ num, label }: SectionLabelProps) {
@@ -13,18 +13,18 @@ export function SectionLabel({ num, label }: SectionLabelProps) {
       <Kicker>{label}</Kicker>
       <Num>{num}</Num>
     </div>
-  )
+  );
 }
 
 interface SectionProps {
-  children: ReactNode
-  dark?: boolean
-  solid?: boolean
-  tight?: boolean
-  loose?: boolean
-  id?: string
-  className?: string
-  noShell?: boolean
+  children: ReactNode;
+  dark?: boolean;
+  solid?: boolean;
+  tight?: boolean;
+  loose?: boolean;
+  id?: string;
+  className?: string;
+  noShell?: boolean;
 }
 
 export default function Section({
@@ -38,21 +38,23 @@ export default function Section({
   noShell,
 }: SectionProps) {
   const py = tight
-    ? 'py-[clamp(3rem,4vw,4rem)]'
+    ? "py-[clamp(3rem,4vw,4rem)]"
     : loose
-      ? 'py-[clamp(7rem,10vw,10rem)]'
-      : 'py-[clamp(5rem,8vw,7rem)]'
+      ? "py-[clamp(7rem,10vw,10rem)]"
+      : "py-[clamp(5rem,8vw,7rem)]";
 
   const cls = [
-    dark ? 'dark-band' : '',
-    solid ? 'bg-bg' : '',
+    dark ? "dark-band" : "",
+    solid ? "bg-bg" : "",
     py,
-    className ?? '',
-  ].filter(Boolean).join(' ')
+    className ?? "",
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   return (
     <section id={id} className={cls}>
       {noShell ? children : <div className="shell">{children}</div>}
     </section>
-  )
+  );
 }

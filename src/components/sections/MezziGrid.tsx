@@ -19,14 +19,12 @@ export default function MezziGrid({ mezzi }: MezziGridProps) {
           <div key={m._id} className="stagger-item flex flex-col gap-4 bg-bg">
             <div className="relative aspect-[4/3] overflow-hidden bg-bg-deep">
               {m.photo ? (
-                <R2Image
-                  image={m.photo}
-                  fill
-                  className="object-cover"
-                />
+                <R2Image image={m.photo} fill className="object-cover" />
               ) : (
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="body-sm text-muted">Foto non disponibile</span>
+                  <span className="body-sm text-muted">
+                    Foto non disponibile
+                  </span>
                 </div>
               )}
             </div>

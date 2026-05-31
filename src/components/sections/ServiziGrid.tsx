@@ -53,7 +53,11 @@ export default function ServiziGrid({
             );
           }
 
-          return <div key={s._id} className="stagger-item">{card}</div>;
+          return (
+            <div key={s._id} className="stagger-item">
+              {card}
+            </div>
+          );
         })}
       </StaggerGrid>
       {preview && <div className="mt-12 rule" />}

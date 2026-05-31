@@ -1,14 +1,16 @@
-import Kicker from '@/components/ui/Kicker'
-import Num from '@/components/ui/Num'
-import R2Image from '@/components/ui/R2Image'
-import type { ScTestimonianza } from '@/lib/types'
+import Kicker from "@/components/ui/Kicker";
+import Num from "@/components/ui/Num";
+import R2Image from "@/components/ui/R2Image";
+import type { ScTestimonianza } from "@/lib/types";
 
 interface ScTestimonianzeSectionProps {
-  testimonianze: ScTestimonianza[]
+  testimonianze: ScTestimonianza[];
 }
 
-export default function ScTestimonianzeSection({ testimonianze }: ScTestimonianzeSectionProps) {
-  if (!testimonianze.length) return null
+export default function ScTestimonianzeSection({
+  testimonianze,
+}: ScTestimonianzeSectionProps) {
+  if (!testimonianze.length) return null;
 
   return (
     <section className="py-[clamp(5rem,10vw,7.5rem)]">
@@ -23,11 +25,7 @@ export default function ScTestimonianzeSection({ testimonianze }: ScTestimonianz
             <div key={t.nome} className="bg-bg">
               {t.foto ? (
                 <div className="relative h-80 bg-bg-elev overflow-hidden">
-                  <R2Image
-                    image={t.foto}
-                    fill
-                    className="object-cover"
-                  />
+                  <R2Image image={t.foto} fill className="object-cover" />
                 </div>
               ) : (
                 <div className="h-80 bg-bg-elev border border-hair" />
@@ -42,7 +40,9 @@ export default function ScTestimonianzeSection({ testimonianze }: ScTestimonianz
                   <span className="text-sm font-medium">{t.nome}</span>
                   <span className="body-sm text-muted">·</span>
                   {t.anno && (
-                    <Kicker noRule className="text-accent">{t.anno}</Kicker>
+                    <Kicker noRule className="text-accent">
+                      {t.anno}
+                    </Kicker>
                   )}
                 </div>
               </div>
@@ -51,5 +51,5 @@ export default function ScTestimonianzeSection({ testimonianze }: ScTestimonianz
         </div>
       </div>
     </section>
-  )
+  );
 }

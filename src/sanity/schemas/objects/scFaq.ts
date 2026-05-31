@@ -1,25 +1,25 @@
-import { defineField, defineType } from 'sanity'
+import { defineField, defineType } from "sanity";
 
 export default defineType({
-  name: 'scFaq',
-  title: 'FAQ',
-  type: 'object',
+  name: "scFaq",
+  title: "FAQ",
+  type: "object",
   fields: [
     defineField({
-      name: 'domanda',
-      title: 'Domanda',
-      type: 'string',
+      name: "domanda",
+      title: "Domanda",
+      type: "string",
       validation: (r) => r.required(),
     }),
     defineField({
-      name: 'risposta',
-      title: 'Risposta',
-      type: 'text',
+      name: "risposta",
+      title: "Risposta",
+      type: "text",
       rows: 3,
       validation: (r) => r.required(),
     }),
   ],
   preview: {
-    select: { title: 'domanda' },
+    select: { title: "domanda" },
   },
-})
+});

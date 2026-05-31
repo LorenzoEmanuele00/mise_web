@@ -29,11 +29,15 @@ export default function ScFaqSection({ faq }: { faq: ScFaq[] }) {
                   <span className="serif text-[clamp(18px,1.5vw,22px)]">
                     {item.domanda}
                   </span>
-                  <span className={`text-lg shrink-0 transition-transform duration-300${open === i ? ' rotate-45' : ''}`}>
+                  <span
+                    className={`text-lg shrink-0 transition-transform duration-300${open === i ? " rotate-45" : ""}`}
+                  >
                     +
                   </span>
                 </button>
-                <div className={`overflow-hidden transition-[max-height] duration-[400ms] ease-[cubic-bezier(.2,.7,.2,1)]${open === i ? ' max-h-[300px]' : ' max-h-0'}`}>
+                <div
+                  className={`overflow-hidden transition-[max-height] duration-[400ms] ease-[cubic-bezier(.2,.7,.2,1)]${open === i ? " max-h-[300px]" : " max-h-0"}`}
+                >
                   <p className="body pb-6 max-w-[720px] leading-[1.7] text-ink-soft">
                     {item.risposta}
                   </p>

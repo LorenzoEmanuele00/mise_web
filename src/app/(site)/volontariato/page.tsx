@@ -1,27 +1,32 @@
-import type { Metadata } from 'next'
-import { client } from '@/sanity/lib/client'
-import { PAGE_QUERY } from '@/sanity/lib/queries'
-import type { Page } from '@/lib/types'
-import { buildMetadata } from '@/lib/seo'
-import HeroSection from '@/components/sections/HeroSection'
-import Section from '@/components/layout/Section'
-import { SectionLabel } from '@/components/layout/Section'
-import VolunteerForm from '@/components/forms/VolunteerForm'
+import type { Metadata } from "next";
+import { client } from "@/sanity/lib/client";
+import { PAGE_QUERY } from "@/sanity/lib/queries";
+import type { Page } from "@/lib/types";
+import { buildMetadata } from "@/lib/seo";
+import HeroSection from "@/components/sections/HeroSection";
+import Section from "@/components/layout/Section";
+import { SectionLabel } from "@/components/layout/Section";
+import VolunteerForm from "@/components/forms/VolunteerForm";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const page = await client.fetch<Page | null>(PAGE_QUERY, { slug: 'volontariato', lang: 'it' }, { next: { tags: ['page'] } })
+  const page = await client.fetch<Page | null>(
+    PAGE_QUERY,
+    { slug: "volontariato", lang: "it" },
+    { next: { tags: ["page"] } },
+  );
   return buildMetadata(page?.seo, {
-    title: 'Diventa volontario',
-    description: 'Unisciti alla Misericordia di Gello: compila il modulo e ti contatteremo per un incontro in sede.',
-  })
+    title: "Diventa volontario",
+    description:
+      "Unisciti alla Misericordia di Gello: compila il modulo e ti contatteremo per un incontro in sede.",
+  });
 }
 
 export default async function VolontariatoPage() {
   const page = await client.fetch<Page | null>(
     PAGE_QUERY,
-    { slug: 'volontariato', lang: 'it' },
-    { next: { tags: ['page'] } }
-  )
+    { slug: "volontariato", lang: "it" },
+    { next: { tags: ["page"] } },
+  );
 
   return (
     <main>
@@ -33,5 +38,5 @@ export default async function VolontariatoPage() {
         </div>
       </Section>
     </main>
-  )
+  );
 }

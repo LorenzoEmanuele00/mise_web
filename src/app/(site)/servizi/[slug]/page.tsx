@@ -1,18 +1,22 @@
-import { cache } from 'react'
-import type { Metadata } from 'next'
+import { cache } from "react";
+import type { Metadata } from "next";
 import { client } from "@/sanity/lib/client";
 import { SERVIZIO_QUERY, ALL_SERVIZI_SLUGS_QUERY } from "@/sanity/lib/queries";
 import type { Servizio } from "@/lib/types";
-import { buildMetadata } from '@/lib/seo'
+import { buildMetadata } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import Section from "@/components/layout/Section";
 import Kicker from "@/components/ui/Kicker";
 
-type Props = { params: Promise<{ slug: string }> }
+type Props = { params: Promise<{ slug: string }> };
 
 const getServizio = cache((slug: string) =>
-  client.fetch<Servizio | null>(SERVIZIO_QUERY, { slug }, { next: { tags: ['servizio'] } })
-)
+  client.fetch<Servizio | null>(
+    SERVIZIO_QUERY,
+    { slug },
+    { next: { tags: ["servizio"] } },
+  ),
+);
 
 export async function generateStaticParams() {
   const slugs = await client.fetch<{ slug: string }[]>(ALL_SERVIZI_SLUGS_QUERY);
@@ -20,10 +24,13 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params
-  const servizio = await getServizio(slug)
-  if (!servizio) return {}
-  return buildMetadata(servizio.seo, { title: servizio.title, description: servizio.shortDesc })
+  const { slug } = await params;
+  const servizio = await getServizio(slug);
+  if (!servizio) return {};
+  return buildMetadata(servizio.seo, {
+    title: servizio.title,
+    description: servizio.shortDesc,
+  });
 }
 
 export default async function ServizioPage({ params }: Props) {

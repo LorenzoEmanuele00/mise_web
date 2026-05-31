@@ -11,7 +11,8 @@ export default function ScStepsSection({ steps }: { steps: ScStep[] }) {
           <Num>0{steps.length} step</Num>
         </div>
         <h2 className="heading-01 mb-16 max-w-[800px]">
-          Dal click <em className="serif-it">al primo giorno</em>, in cinque passaggi.
+          Dal click <em className="serif-it">al primo giorno</em>, in cinque
+          passaggi.
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 border border-bg/15 bg-bg/15 gap-px">
           {steps.map((step) => (

@@ -52,8 +52,7 @@ export default function ScTabController({
           <h1 className="h-display">
             Un anno
             <br />
-            dalla parte{" "}
-            <em className="serif-it text-accent">giusta</em>.
+            dalla parte <em className="serif-it text-accent">giusta</em>.
           </h1>
 
           <p className="body-lg max-w-[720px] mt-8 text-ink-soft">
@@ -69,7 +68,7 @@ export default function ScTabController({
                 type="button"
                 onClick={() => handleSelect(i)}
                 onAnimationEnd={() => setBouncingIdx(null)}
-                className={`w-full lg:flex-1 rounded-[14px] lg:rounded-full px-7 py-3 border-none cursor-pointer font-sans text-sm flex gap-3 items-center justify-center transition-colors duration-300 ${activeIdx === i ? 'bg-ink text-bg' : 'bg-transparent text-ink'} ${bouncingIdx === i ? 'animate-bounce-in' : ''}`}
+                className={`w-full lg:flex-1 rounded-[14px] lg:rounded-full px-7 py-3 border-none cursor-pointer font-sans text-sm flex gap-3 items-center justify-center transition-colors duration-300 ${activeIdx === i ? "bg-ink text-bg" : "bg-transparent text-ink"} ${bouncingIdx === i ? "animate-bounce-in" : ""}`}
               >
                 <span className="font-mono text-[11px] tracking-[0.16em] opacity-70">
                   {t.code}
@@ -89,18 +88,25 @@ export default function ScTabController({
               {stats.map(([k, v]) => (
                 <div key={k} className="px-6 py-8 bg-bg-elev">
                   <Kicker noRule>{k}</Kicker>
-                  <div className="serif text-[28px] mt-3.5 leading-[1.05]">{v}</div>
+                  <div className="serif text-[28px] mt-3.5 leading-[1.05]">
+                    {v}
+                  </div>
                 </div>
               ))}
             </div>
           )}
 
           {data.scadenza && (
-            <div className="dark-band flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between mt-4 px-9 py-8 animate-fade-up" style={{ "--anim-delay": "0.1s" } as CSSProperties}>
+            <div
+              className="dark-band flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between mt-4 px-9 py-8 animate-fade-up"
+              style={{ "--anim-delay": "0.1s" } as CSSProperties}
+            >
               <div>
                 <Kicker className="text-bg/60">Prossima scadenza</Kicker>
                 <div className="heading-02 mt-3">
-                  <span className="text-accent-soft">{formatDate(data.scadenza)}</span>
+                  <span className="text-accent-soft">
+                    {formatDate(data.scadenza)}
+                  </span>
                   {data.scadenzaOra && (
                     <span className="text-bg/50 text-[22px] ml-6">
                       ore {data.scadenzaOra}
@@ -109,7 +115,8 @@ export default function ScTabController({
                 </div>
                 {data.ente && (
                   <p className="body-sm mt-3 text-bg/70">
-                    La domanda si presenta online sul portale di {data.ente}, tramite SPID.
+                    La domanda si presenta online sul portale di {data.ente},
+                    tramite SPID.
                   </p>
                 )}
               </div>
@@ -124,7 +131,9 @@ export default function ScTabController({
                   <Arrow />
                 </a>
               ) : (
-                <Btn variant="accent" href="/contatti">Candidati</Btn>
+                <Btn variant="accent" href="/contatti">
+                  Candidati
+                </Btn>
               )}
             </div>
           )}
@@ -134,13 +143,18 @@ export default function ScTabController({
       {/* ── Projects ─────────────────────────────────── */}
       {data.progetti && data.progetti.length > 0 && (
         <section className="pt-8 pb-24">
-          <div className="shell animate-fade-up" key={`proj-${activeIdx}`} style={{ "--anim-delay": "0.15s" } as CSSProperties}>
+          <div
+            className="shell animate-fade-up"
+            key={`proj-${activeIdx}`}
+            style={{ "--anim-delay": "0.15s" } as CSSProperties}
+          >
             <div className="flex justify-between items-center mb-12">
               <Kicker>Progetti · {data.code} 2026</Kicker>
               <Num>{data.progetti.length} progetti aperti</Num>
             </div>
             <h2 className="heading-01 mb-12 max-w-[800px]">
-              Scegli il <em className="serif-it">progetto</em> che ti somiglia di più.
+              Scegli il <em className="serif-it">progetto</em> che ti somiglia
+              di più.
             </h2>
 
             <div className="border-t border-hair-strong">
@@ -161,7 +175,9 @@ export default function ScTabController({
                       {p.titolo}
                     </div>
                     {p.focus && (
-                      <p className="body mt-4 max-w-[480px] text-ink-soft">{p.focus}</p>
+                      <p className="body mt-4 max-w-[480px] text-ink-soft">
+                        {p.focus}
+                      </p>
                     )}
                   </div>
 

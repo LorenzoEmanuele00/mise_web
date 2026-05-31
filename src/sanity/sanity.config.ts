@@ -1,53 +1,55 @@
-import { defineConfig } from 'sanity'
-import { structureTool } from 'sanity/structure'
-import { visionTool } from '@sanity/vision'
-import { apiVersion, dataset, projectId } from './env'
-import { schemaTypes } from './schemas'
+import { defineConfig } from "sanity";
+import { structureTool } from "sanity/structure";
+import { visionTool } from "@sanity/vision";
+import { apiVersion, dataset, projectId } from "./env";
+import { schemaTypes } from "./schemas";
 
-const SINGLETONS = new Set(['settings', 'servizioCivile'])
-const READONLY = new Set(['contactSubmission', 'volunteerSubmission'])
+const SINGLETONS = new Set(["settings", "servizioCivile"]);
+const READONLY = new Set(["contactSubmission", "volunteerSubmission"]);
 
 export default defineConfig({
-  name: 'misericordia-gello',
-  title: 'Misericordia di Gello',
-  basePath: '/studio',
+  name: "misericordia-gello",
+  title: "Misericordia di Gello",
+  basePath: "/studio",
   projectId,
   dataset,
   plugins: [
     structureTool({
       structure: (S) =>
         S.list()
-          .title('Contenuti')
+          .title("Contenuti")
           .items([
             S.listItem()
-              .title('Impostazioni Sito')
-              .id('settings')
+              .title("Impostazioni Sito")
+              .id("settings")
               .child(
                 S.editor()
-                  .id('settings')
-                  .schemaType('settings')
-                  .documentId('settings'),
+                  .id("settings")
+                  .schemaType("settings")
+                  .documentId("settings"),
               ),
             S.listItem()
-              .title('Servizio Civile')
-              .id('servizioCivile')
+              .title("Servizio Civile")
+              .id("servizioCivile")
               .child(
                 S.editor()
-                  .id('servizioCivile')
-                  .schemaType('servizioCivile')
-                  .documentId('singleton-servizio-civile'),
+                  .id("servizioCivile")
+                  .schemaType("servizioCivile")
+                  .documentId("singleton-servizio-civile"),
               ),
             S.divider(),
             ...S.documentTypeListItems().filter(
-              (item) => !SINGLETONS.has(item.getId() ?? '') && !READONLY.has(item.getId() ?? ''),
+              (item) =>
+                !SINGLETONS.has(item.getId() ?? "") &&
+                !READONLY.has(item.getId() ?? ""),
             ),
             S.divider(),
             S.listItem()
-              .title('Messaggi Contatti')
-              .child(S.documentTypeList('contactSubmission')),
+              .title("Messaggi Contatti")
+              .child(S.documentTypeList("contactSubmission")),
             S.listItem()
-              .title('Candidature Volontari')
-              .child(S.documentTypeList('volunteerSubmission')),
+              .title("Candidature Volontari")
+              .child(S.documentTypeList("volunteerSubmission")),
           ]),
     }),
     visionTool({ defaultApiVersion: apiVersion }),
@@ -55,4 +57,4 @@ export default defineConfig({
   schema: {
     types: schemaTypes,
   },
-})
+});

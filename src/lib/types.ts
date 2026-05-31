@@ -20,6 +20,7 @@ export interface HeroSection {
   ctaPrimary?: { label: string; href: string };
   ctaSecondary?: { label: string; href: string };
   image?: R2Image;
+  swapCards?: R2Image[];
 }
 
 export interface TimelineEvent {

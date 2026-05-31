@@ -54,5 +54,13 @@ export default defineType({
       title: "Foto volontari",
       type: "r2Image",
     }),
+    defineField({
+      name: "swapCards",
+      title: "Card animate (immagini stack)",
+      type: "array",
+      of: [{ type: "r2Image" }],
+      validation: (r) => r.max(4),
+      description: "Fino a 4 immagini per lo stack animato accanto al titolo.",
+    }),
   ],
 });

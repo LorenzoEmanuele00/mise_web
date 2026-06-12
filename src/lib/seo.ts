@@ -3,7 +3,7 @@ import type { SeoObject } from "@/lib/types";
 
 const SITE_NAME = "Misericordia di Gello";
 const DEFAULT_DESCRIPTION =
-  "Confraternita Misericordia di Gello — volontariato, soccorso e aggregazione sociale dal 1947.";
+  "Confraternita Misericordia di Gello — volontariato, soccorso e aggregazione sociale dal 1994.";
 
 export function buildMetadata(
   seo: SeoObject | undefined,

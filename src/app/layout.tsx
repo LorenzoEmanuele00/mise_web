@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     default: "Misericordia di Gello",
   },
   description:
-    "Confraternita Misericordia di Gello — volontariato, soccorso e aggregazione sociale dal 1947.",
+    "Confraternita Misericordia di Gello — volontariato, soccorso e aggregazione sociale dal 1994.",
 };
 
 export default async function RootLayout({

@@ -68,7 +68,7 @@ export default function Header({ logo }: HeaderProps) {
                 Misericordia
               </span>
               <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-muted mt-1">
-                di Gello · dal 1947
+                di Gello · dal 1994
               </span>
             </div>
           </Link>

@@ -22,7 +22,7 @@
 @keyframes card-swap {
   0%     { transform: translate3d(0, 0, 0) skewY(var(--skew)); opacity: 1; z-index: 40; }
   14%    { transform: translate3d(0, 0, 0) skewY(var(--skew)); opacity: 1; z-index: 40; }
-  20%    { transform: translate3d(calc(var(--gx) * -0.4), 30px, 64px) skewY(-5deg); opacity: 0; z-index: 40; }
+  20%    { transform: translate3d(0, 90px, 0) skewY(var(--skew)); opacity: 0; z-index: 40; }
   20.01% { transform: translate3d(calc(var(--gx) * 3), calc(var(--gy) * -3), calc(var(--gz) * -3)) skewY(var(--skew)); opacity: 0; z-index: 10; }
   25%    { transform: translate3d(calc(var(--gx) * 3), calc(var(--gy) * -3), calc(var(--gz) * -3)) skewY(var(--skew)); opacity: 1; z-index: 10; }
   50%    { transform: translate3d(calc(var(--gx) * 2), calc(var(--gy) * -2), calc(var(--gz) * -2)) skewY(var(--skew)); opacity: 1; z-index: 20; }
@@ -331,7 +331,7 @@
   /* CardSwap — 3D stack of cards, count passed via --card-count */
   .card-swap {
     position: relative;
-    width: clamp(240px, 64vw, 380px);
+    width: clamp(240px, 64vw, 480px);
     aspect-ratio: 3 / 2;
     perspective: 1100px;
     transform-style: preserve-3d;
@@ -340,7 +340,7 @@
     --gx: 24px;
     --gy: 26px;
     --gz: 52px;
-    --skew: 6deg;
+    --skew: 2deg;
     position: absolute;
     inset: 0;
     border-radius: 1rem;

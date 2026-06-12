@@ -42,7 +42,7 @@ const tx = client.transaction()
 tx.createOrReplace({
   _id: 'singleton-settings',
   _type: 'settings',
-  footerText: 'Confraternita di Misericordia di Gello ODV — Volontariato, soccorso e aggregazione sociale dal 1947.',
+  footerText: 'Confraternita di Misericordia di Gello ODV — Volontariato, soccorso e aggregazione sociale dal 1994.',
   address: 'Via della Misericordia 12, 56017 Gello (PI)',
   phone: '050 000000',
   email: 'info@misericordiadigello.it',
@@ -60,7 +60,7 @@ tx.createOrReplace({
   title: 'Home',
   slug: { _type: 'slug', current: 'home' },
   heroSection: {
-    kicker: 'Misericordia di Gello dal 1947',
+    kicker: 'Misericordia di Gello dal 1994',
     headingPre: 'Volontari al tuo',
     headingEm: 'fianco',
     headingPost: '24 ore su 24',
@@ -86,7 +86,7 @@ tx.createOrReplace({
     headingPre: 'Quasi ottant\'anni di',
     headingEm: 'servizio',
     headingPost: 'alla comunità',
-    body: 'Fondata nel 1947 da un gruppo di volontari della comunità di Gello, la Misericordia è cresciuta fino a diventare un punto di riferimento per l\'intera area di San Giuliano Terme.',
+    body: 'Fondata nel 1994 da un gruppo di volontari della comunità di Gello, la Misericordia è cresciuta fino a diventare un punto di riferimento per l\'intera area di San Giuliano Terme.',
   },
 })
 

@@ -4,13 +4,18 @@
 
 ### Review generica:
 
-test
+- privacy cookie e altro via di torno.
+- logo non si vede
+- vorrei la banda in alto di colore blu e il testo bianco e che sia uguale a in altezza a quella del titolo nell'offcanvas che entra con il menu
+- vorrei un bottone donazioni (stripe????)
+- facciamo un aggiustatina al logo, spazio bianco in crechio, raggio 3px più ampio dell'icona
+
 
 ### Domande
 
-**Q: Ho già un vecchio sito con url misericordiadigello.it -> posso usare il dominio di quel sito registrato su aruba? sostituendo il vecchio sito con il nuovo hostato da vercel. tenendo quindi soltanto aruba come registrar?**
+**Q: Ho già un vecchio sito con url misericordiadigello.it -> posso usare il dominio di quel sito registrato su register? sostituendo il vecchio sito con il nuovo hostato da vercel. tenendo quindi soltanto register come registrar?**
 
-Sì. Tieni Aruba solo come registrar e nel pannello DNS di Aruba:
+Sì. Tieni Register solo come registrar e nel pannello DNS di Register:
 
 - Record **A** per `misericordiadigello.it` → `76.76.21.21` (IP Vercel)
 - Record **CNAME** per `www.misericordiadigello.it` → `cname.vercel-dns.com`
@@ -28,5 +33,3 @@ No, non devi fare nulla. Vercel gestisce automaticamente i certificati SSL trami
 **Q: Noi non prevediamo utilizzo di GTM e google analytics. quindi non dovrebbe servire abilitare una cookiebar, ne avvisare che collezioniamo dati. giusto?**
 
 Sostanzialmente sì, a condizione che il sito non usi altri servizi di terze parti con tracking (pixel, chat widget, etc.). Sanity non imposta cookie sul sito pubblico. Verificare che Vercel Analytics sia disabilitato o configurato in modalità privacy-first (non usa cookie). Resta comunque obbligatoria una **Privacy Policy** di base (titolare del trattamento, contatti) se il sito raccoglie email tramite form di contatto.
-
-- Per essere sicuro che tutto funzioni sarebbe possibile avere una sorta di sito di test temporaneo? che poi verrà sostituito dal reale? (chiuso da password ovviamente, in modo che non si accessibile.)

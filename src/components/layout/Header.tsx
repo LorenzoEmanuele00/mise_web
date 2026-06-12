@@ -131,9 +131,9 @@ export default function Header({ logo }: HeaderProps) {
         <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">
           <div className="flex items-center gap-2.5">
             {logo?.src ? (
-              <R2Image image={logo} className="h-8 w-auto" />
+              <R2Image image={logo} className="h-9 w-auto" />
             ) : (
-              <LogoMark size={32} />
+              <LogoMark size={36} />
             )}
             <span className="kicker no-rule text-bg/60">Menu</span>
           </div>

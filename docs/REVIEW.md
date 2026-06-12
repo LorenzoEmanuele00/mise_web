@@ -5,10 +5,9 @@
 ### Review generica:
 
 - privacy cookie e altro via di torno.
-- logo non si vede
-- vorrei la banda in alto di colore blu e il testo bianco e che sia uguale a in altezza a quella del titolo nell'offcanvas che entra con il menu
 - vorrei un bottone donazioni (stripe????)
 - facciamo un aggiustatina al logo, spazio bianco in crechio, raggio 3px più ampio dell'icona
+- La parte di storia dovrebbe essere a blocchi per ogni pezzetto della timeline che appare scrollando. Voglio che la timeline sia sempre visibile sulla sinistra con le date come adesso, ma il testo appare allo scroll
 
 
 ### Domande

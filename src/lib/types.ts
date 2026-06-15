@@ -214,6 +214,11 @@ export interface MezzoListItem {
   photo?: R2Image;
 }
 
+export interface GalleriaData {
+  intro?: string;
+  images?: R2Image[];
+}
+
 export interface HomeData {
   page: Pick<Page, "title" | "heroSection" | "seo"> | null;
   servizi: Pick<

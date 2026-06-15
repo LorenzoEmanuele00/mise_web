@@ -4,7 +4,7 @@ import { visionTool } from "@sanity/vision";
 import { apiVersion, dataset, projectId } from "./env";
 import { schemaTypes } from "./schemas";
 
-const SINGLETONS = new Set(["settings", "servizioCivile"]);
+const SINGLETONS = new Set(["settings", "servizioCivile", "galleria"]);
 const READONLY = new Set(["contactSubmission", "volunteerSubmission"]);
 
 export default defineConfig({
@@ -36,6 +36,15 @@ export default defineConfig({
                   .id("servizioCivile")
                   .schemaType("servizioCivile")
                   .documentId("singleton-servizio-civile"),
+              ),
+            S.listItem()
+              .title("Galleria fotografica")
+              .id("galleria")
+              .child(
+                S.editor()
+                  .id("galleria")
+                  .schemaType("galleria")
+                  .documentId("singleton-galleria"),
               ),
             S.divider(),
             ...S.documentTypeListItems().filter(

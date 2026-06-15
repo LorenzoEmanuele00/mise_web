@@ -9,6 +9,7 @@ const TAG_MAP: Record<string, string[]> = {
   servizio: ["servizio"],
   mezzo: ["mezzo"],
   servizioCivile: ["servizioCivile"],
+  galleria: ["galleria"],
 };
 
 export async function POST(req: NextRequest) {

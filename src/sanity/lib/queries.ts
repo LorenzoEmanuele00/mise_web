@@ -75,6 +75,13 @@ export const SERVIZIO_CIVILE_QUERY = groq`
   }
 `;
 
+export const GALLERIA_QUERY = groq`
+  *[_type == "galleria" && _id == "singleton-galleria"][0] {
+    intro,
+    images[] { src, altText }
+  }
+`;
+
 export const HOME_QUERY = groq`
   {
     "page":    *[_type == "page" && slug.current == "home" && language == $lang][0] { title, heroSection, seo },

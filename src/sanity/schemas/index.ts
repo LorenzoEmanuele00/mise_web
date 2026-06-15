@@ -1,5 +1,6 @@
 import page from "./documents/page";
 import post from "./documents/post";
+import galleria from "./documents/galleria";
 import servizio from "./documents/servizio";
 import mezzo from "./documents/mezzo";
 import settings from "./documents/settings";
@@ -20,6 +21,7 @@ export const schemaTypes = [
   // Documents
   page,
   post,
+  galleria,
   servizio,
   mezzo,
   settings,

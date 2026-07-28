@@ -22,7 +22,7 @@
 @keyframes card-swap {
   0%     { transform: translate3d(0, 0, 0) skewY(var(--skew)); opacity: 1; z-index: 40; }
   14%    { transform: translate3d(0, 0, 0) skewY(var(--skew)); opacity: 1; z-index: 40; }
-  20%    { transform: translate3d(calc(var(--gx) * -0.4), 30px, 64px) skewY(-5deg); opacity: 0; z-index: 40; }
+  20%    { transform: translate3d(0, 90px, 0) skewY(var(--skew)); opacity: 0; z-index: 40; }
   20.01% { transform: translate3d(calc(var(--gx) * 3), calc(var(--gy) * -3), calc(var(--gz) * -3)) skewY(var(--skew)); opacity: 0; z-index: 10; }
   25%    { transform: translate3d(calc(var(--gx) * 3), calc(var(--gy) * -3), calc(var(--gz) * -3)) skewY(var(--skew)); opacity: 1; z-index: 10; }
   50%    { transform: translate3d(calc(var(--gx) * 2), calc(var(--gy) * -2), calc(var(--gz) * -2)) skewY(var(--skew)); opacity: 1; z-index: 20; }
@@ -335,7 +335,7 @@
   /* CardSwap — 3D stack of cards, count passed via --card-count */
   .card-swap {
     position: relative;
-    width: clamp(240px, 64vw, 380px);
+    width: clamp(240px, 64vw, 480px);
     aspect-ratio: 3 / 2;
     perspective: 1100px;
     transform-style: preserve-3d;
@@ -344,7 +344,7 @@
     --gx: 24px;
     --gy: 26px;
     --gz: 52px;
-    --skew: 6deg;
+    --skew: 2deg;
     position: absolute;
     inset: 0;
     border-radius: 1rem;
@@ -422,15 +422,17 @@
     position: sticky;
     top: 0;
     z-index: 50;
-    background-color: var(--color-bg);
-    border-bottom: 1px solid var(--color-hair);
+    background-color: var(--color-ink);
+    color: var(--color-bg);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(8px);
   }
   .nav-inner {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 4rem;
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
   }
   .nav-logo {
     display: flex;
@@ -449,6 +451,10 @@
     flex-shrink: 0;
     font-family: var(--font-display);
     font-style: italic;
+  }
+  .nav .nav-logo-mark {
+    background-color: var(--color-bg);
+    color: var(--color-ink);
   }
   .nav-links {
     display: none;
@@ -514,7 +520,7 @@
     top: 0;
     right: 0;
     bottom: 0;
-    width: min(22rem, 90vw);
+    width: 100vw;
     z-index: 60;
     overflow-y: auto;
     background-color: var(--color-ink);
@@ -523,6 +529,11 @@
     flex-direction: column;
     transform: translateX(100%);
     transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @media (min-width: 768px) {
+    .nav-drawer {
+      width: min(22rem, 90vw);
+    }
   }
   .nav-drawer.open {
     transform: translateX(0);

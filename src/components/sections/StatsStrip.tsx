@@ -10,10 +10,10 @@ interface StatsStripProps {
 }
 
 const DEFAULT_STATS: Stat[] = [
-  { value: "1947", label: "Anno di fondazione" },
-  { value: "6", label: "Servizi attivi" },
+  { value: "1994", label: "Anno di fondazione" },
+  { value: "4", label: "Servizi attivi" },
   { value: "24/7", label: "Reperibilità" },
-  { value: "ODV", label: "Organizzazione di volontariato" },
+  { value: "Pistoia", label: "Territorio" },
 ];
 
 export default function StatsStrip({ stats = DEFAULT_STATS }: StatsStripProps) {

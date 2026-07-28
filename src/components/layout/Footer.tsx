@@ -20,7 +20,7 @@ export default function Footer({ settings }: FooterProps) {
   const logo = settings?.logo;
   const footerText =
     settings?.footerText ??
-    "Associazione di volontariato fondata nel 1947. Trasporto sanitario, assistenza alla persona, protezione civile e formazione per la comunità di Gello e dintorni.";
+    "Associazione di volontariato fondata nel 1994. Trasporto sanitario, assistenza alla persona, protezione civile e formazione per la comunità di Gello e dintorni.";
 
   return (
     <footer className="dark-band py-[clamp(4rem,7vw,6rem)]">

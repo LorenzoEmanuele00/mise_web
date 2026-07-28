@@ -236,7 +236,7 @@ Stessa logica di `contactSubmission` per il form volontariato.
 |---|---|---|
 | Logo nell'header | No | Hardcoded: lettera "M" in `Header.tsx:18-27` |
 | Voci di navigazione (desktop + mobile) | No | Hardcoded in `Header.tsx:8-16` e `Footer.tsx:6-15` |
-| Testo "dal 1947" nell'header | No | Hardcoded in `Header.tsx:65` |
+| Testo "dal 1994" nell'header | No | Hardcoded in `Header.tsx:65` |
 | Link "Unisciti" nell'header | No | Hardcoded → `/volontariato` |
 | Numero "118" nell'header e footer | No | Hardcoded |
 | Hero homepage (titolo, kicker, CTA) | **Sì** | Da `page` slug=`home` → `heroSection` |

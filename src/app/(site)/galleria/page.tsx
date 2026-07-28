@@ -1,13 +1,39 @@
-export default function GalleriaPage() {
+import type { Metadata } from "next";
+import { client } from "@/sanity/lib/client";
+import { GALLERIA_QUERY } from "@/sanity/lib/queries";
+import type { GalleriaData } from "@/lib/types";
+import Section from "@/components/layout/Section";
+import PageHeader from "@/components/layout/PageHeader";
+import GalleriaGrid from "@/components/sections/GalleriaGrid";
+
+export const metadata: Metadata = {
+  title: "Galleria",
+  description:
+    "Galleria fotografica della Misericordia di Gello — immagini delle attività, dei mezzi e dei volontari.",
+};
+
+export default async function GalleriaPage() {
+  const data = await client.fetch<GalleriaData>(
+    GALLERIA_QUERY,
+    {},
+    { next: { tags: ["galleria"] } },
+  );
+
   return (
     <main>
-      <section className="shell py-24">
-        <p className="kicker text-accent mb-6">Fotografie</p>
-        <h1 className="heading-01 text-ink">Galleria</h1>
-        <p className="body-lg text-muted mt-8">
-          La galleria fotografica sarà disponibile a breve.
-        </p>
-      </section>
+      <Section loose>
+        <PageHeader kicker="Fotografie" title="Galleria" />
+        {data?.intro && (
+          <p className="body-lg text-ink-soft mb-12">{data.intro}</p>
+        )}
+        {data?.images?.length ? (
+          <GalleriaGrid images={data.images} />
+        ) : (
+          <p className="body-lg text-muted">
+            La galleria fotografica sarà disponibile a breve.
+          </p>
+        )}
+      </Section>
     </main>
   );
 }

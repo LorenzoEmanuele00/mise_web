@@ -21,10 +21,10 @@ export interface FormState {
 
 // Converts a Zod safeParse failure into a field -> first-message map.
 function fieldErrors(error: z.ZodError): Record<string, string> {
-  const flattened = error.flatten().fieldErrors;
   const out: Record<string, string> = {};
-  for (const [field, messages] of Object.entries(flattened)) {
-    if (messages && messages[0]) out[field] = messages[0];
+  for (const issue of error.issues) {
+    const field = String(issue.path[0] ?? "");
+    if (field && !out[field]) out[field] = issue.message;
   }
   return out;
 }

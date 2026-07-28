@@ -15,20 +15,38 @@ const writeClient = createClient({
 export interface FormState {
   success: boolean;
   error?: string;
+  errors?: Record<string, string>;
+  values?: Record<string, string>;
 }
 
+// Converts a Zod safeParse failure into a field -> first-message map.
+function fieldErrors(error: z.ZodError): Record<string, string> {
+  const flattened = error.flatten().fieldErrors;
+  const out: Record<string, string> = {};
+  for (const [field, messages] of Object.entries(flattened)) {
+    if (messages && messages[0]) out[field] = messages[0];
+  }
+  return out;
+}
+
+const phoneRegex = /^[0-9+\-\s]{6,20}$/;
+
 const contactSchema = z.object({
-  nome: z.string().min(2, "Nome troppo corto"),
-  email: z.string().email("Email non valida"),
-  oggetto: z.string().min(2, "Oggetto troppo corto"),
-  messaggio: z.string().min(10, "Messaggio troppo corto"),
+  nome: z.string().min(2, "Inserisci il tuo nome (almeno 2 caratteri)"),
+  email: z.string().email("Inserisci un indirizzo email valido"),
+  oggetto: z.string().min(2, "Inserisci un oggetto (almeno 2 caratteri)"),
+  messaggio: z.string().min(10, "Il messaggio deve avere almeno 10 caratteri"),
 });
 
 const volunteerSchema = z.object({
-  nome: z.string().min(2, "Nome troppo corto"),
-  cognome: z.string().min(2, "Cognome troppo corto"),
-  email: z.string().email("Email non valida"),
-  telefono: z.string().optional(),
+  nome: z.string().min(2, "Inserisci il tuo nome (almeno 2 caratteri)"),
+  cognome: z.string().min(2, "Inserisci il tuo cognome (almeno 2 caratteri)"),
+  email: z.string().email("Inserisci un indirizzo email valido"),
+  telefono: z
+    .string()
+    .regex(phoneRegex, "Numero di telefono non valido")
+    .optional()
+    .or(z.literal("")),
   disponibilita: z.string().optional(),
 });
 
@@ -38,18 +56,16 @@ export async function submitContact(
 ): Promise<FormState> {
   if (formData.get("website")) return { success: false };
 
-  const result = contactSchema.safeParse({
-    nome: formData.get("nome"),
-    email: formData.get("email"),
-    oggetto: formData.get("oggetto"),
-    messaggio: formData.get("messaggio"),
-  });
+  const raw = {
+    nome: String(formData.get("nome") ?? ""),
+    email: String(formData.get("email") ?? ""),
+    oggetto: String(formData.get("oggetto") ?? ""),
+    messaggio: String(formData.get("messaggio") ?? ""),
+  };
+  const result = contactSchema.safeParse(raw);
 
   if (!result.success) {
-    return {
-      success: false,
-      error: result.error.issues[0]?.message ?? "Dati non validi",
-    };
+    return { success: false, errors: fieldErrors(result.error), values: raw };
   }
 
   try {
@@ -65,8 +81,8 @@ export async function submitContact(
 }
 
 const scInterestSchema = z.object({
-  nome: z.string().min(2, "Nome troppo corto"),
-  email: z.string().email("Email non valida"),
+  nome: z.string().min(2, "Inserisci il tuo nome (almeno 2 caratteri)"),
+  email: z.string().email("Inserisci un indirizzo email valido"),
   eta: z.string().optional(),
   progetto: z.string().optional(),
   motivo: z.string().optional(),
@@ -90,6 +106,7 @@ export async function submitScInterest(
     return {
       success: false,
       error: result.error.issues[0]?.message ?? "Dati non validi",
+      errors: fieldErrors(result.error),
     };
   }
 
@@ -124,19 +141,21 @@ export async function submitVolunteer(
 ): Promise<FormState> {
   if (formData.get("website")) return { success: false };
 
+  const raw = {
+    nome: String(formData.get("nome") ?? ""),
+    cognome: String(formData.get("cognome") ?? ""),
+    email: String(formData.get("email") ?? ""),
+    telefono: String(formData.get("telefono") ?? ""),
+    disponibilita: String(formData.get("disponibilita") ?? ""),
+  };
   const result = volunteerSchema.safeParse({
-    nome: formData.get("nome"),
-    cognome: formData.get("cognome"),
-    email: formData.get("email"),
-    telefono: formData.get("telefono") || undefined,
-    disponibilita: formData.get("disponibilita") || undefined,
+    ...raw,
+    telefono: raw.telefono || undefined,
+    disponibilita: raw.disponibilita || undefined,
   });
 
   if (!result.success) {
-    return {
-      success: false,
-      error: result.error.issues[0]?.message ?? "Dati non validi",
-    };
+    return { success: false, errors: fieldErrors(result.error), values: raw };
   }
 
   const areeInteresse = formData

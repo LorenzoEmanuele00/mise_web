@@ -29,7 +29,10 @@ export default function VolunteerForm() {
   }
 
   return (
-    <form action={action} className="flex flex-col gap-8">
+    <form
+      action={action}
+      className="bg-bg-elev border border-hair p-8 sm:p-10 flex flex-col gap-8"
+    >
       <input
         type="text"
         name="website"
@@ -40,8 +43,22 @@ export default function VolunteerForm() {
       />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-        <FormField id="v-nome" name="nome" label="Nome" required />
-        <FormField id="v-cognome" name="cognome" label="Cognome" required />
+        <FormField
+          id="v-nome"
+          name="nome"
+          label="Nome"
+          required
+          error={state.errors?.nome}
+          defaultValue={state.values?.nome}
+        />
+        <FormField
+          id="v-cognome"
+          name="cognome"
+          label="Cognome"
+          required
+          error={state.errors?.cognome}
+          defaultValue={state.values?.cognome}
+        />
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
@@ -51,12 +68,16 @@ export default function VolunteerForm() {
           label="Email"
           type="email"
           required
+          error={state.errors?.email}
+          defaultValue={state.values?.email}
         />
         <FormField
           id="v-telefono"
           name="telefono"
           label="Telefono"
           type="tel"
+          error={state.errors?.telefono}
+          defaultValue={state.values?.telefono}
         />
       </div>
 
@@ -81,9 +102,15 @@ export default function VolunteerForm() {
         label="Disponibilità"
         rows={3}
         placeholder="Es. week-end, serate nei giorni feriali…"
+        error={state.errors?.disponibilita}
+        defaultValue={state.values?.disponibilita}
       />
 
-      {state.error && <p className="body-sm text-accent">{state.error}</p>}
+      {state.error && (
+        <p className="body-sm text-accent" role="alert">
+          {state.error}
+        </p>
+      )}
 
       <div>
         <Btn type="submit" variant="dark" disabled={pending}>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useActionState } from "react";
+import { useState, useActionState, useEffect } from "react";
 import Kicker from "@/components/ui/Kicker";
 import Arrow from "@/components/ui/Arrow";
 import { submitScInterest, type FormState } from "@/app/actions/submitForms";
@@ -16,7 +16,10 @@ const initial: FormState = { success: false };
 export default function ScApplySection({ tipi, emailSC }: ScApplySectionProps) {
   const [state, action, pending] = useActionState(submitScInterest, initial);
   const [step, setStep] = useState(0);
-  const [stepError, setStepError] = useState<string | undefined>(undefined);
+  const [clientErrors, setClientErrors] = useState<{
+    nome?: string;
+    email?: string;
+  }>({});
   const [form, setForm] = useState({
     nome: "",
     email: "",
@@ -25,6 +28,9 @@ export default function ScApplySection({ tipi, emailSC }: ScApplySectionProps) {
     motivo: "",
   });
 
+  const nomeError = clientErrors.nome ?? state.errors?.nome;
+  const emailError = clientErrors.email ?? state.errors?.email;
+
   const allProjects = tipi.flatMap((t) =>
     (t.progetti ?? []).map((p) => ({
       ...p,
@@ -32,6 +38,12 @@ export default function ScApplySection({ tipi, emailSC }: ScApplySectionProps) {
       tipoLabel: t.label,
     })),
   );
+
+  // Step 0 fields are hidden via CSS on later steps — jump back so a
+  // server-side validation error on nome/email is actually visible.
+  useEffect(() => {
+    if (state.errors?.nome || state.errors?.email) setStep(0);
+  }, [state.errors]);
 
   if (state.success) {
     return (
@@ -124,9 +136,24 @@ export default function ScApplySection({ tipi, emailSC }: ScApplySectionProps) {
                   name="nome"
                   className="input input-on-dark"
                   value={form.nome}
-                  onChange={(e) => setForm({ ...form, nome: e.target.value })}
+                  onChange={(e) => {
+                    setForm({ ...form, nome: e.target.value });
+                    if (clientErrors.nome)
+                      setClientErrors({ ...clientErrors, nome: undefined });
+                  }}
                   placeholder="Es. Sofia Mancini"
+                  aria-invalid={!!nomeError}
+                  aria-describedby={nomeError ? "sc-nome-error" : undefined}
                 />
+                {nomeError && (
+                  <p
+                    id="sc-nome-error"
+                    className="body-sm text-accent-soft mt-2"
+                    role="alert"
+                  >
+                    {nomeError}
+                  </p>
+                )}
               </div>
               <div>
                 <label className="input-label label-on-dark" htmlFor="sc-email">
@@ -138,9 +165,24 @@ export default function ScApplySection({ tipi, emailSC }: ScApplySectionProps) {
                   type="email"
                   className="input input-on-dark"
                   value={form.email}
-                  onChange={(e) => setForm({ ...form, email: e.target.value })}
+                  onChange={(e) => {
+                    setForm({ ...form, email: e.target.value });
+                    if (clientErrors.email)
+                      setClientErrors({ ...clientErrors, email: undefined });
+                  }}
                   placeholder="nome@email.it"
+                  aria-invalid={!!emailError}
+                  aria-describedby={emailError ? "sc-email-error" : undefined}
                 />
+                {emailError && (
+                  <p
+                    id="sc-email-error"
+                    className="body-sm text-accent-soft mt-2"
+                    role="alert"
+                  >
+                    {emailError}
+                  </p>
+                )}
               </div>
               <div>
                 <label className="input-label label-on-dark" htmlFor="sc-eta">
@@ -195,9 +237,9 @@ export default function ScApplySection({ tipi, emailSC }: ScApplySectionProps) {
               />
             </div>
 
-            {(state.error || stepError) && (
-              <p className="body-sm text-accent-soft mt-4">
-                {stepError ?? state.error}
+            {state.error && (
+              <p className="body-sm text-accent-soft mt-4" role="alert">
+                {state.error}
               </p>
             )}
 
@@ -207,7 +249,7 @@ export default function ScApplySection({ tipi, emailSC }: ScApplySectionProps) {
                 type="button"
                 onClick={() => {
                   setStep(Math.max(0, step - 1));
-                  setStepError(undefined);
+                  setClientErrors({});
                 }}
                 disabled={step === 0}
                 className={`bg-transparent border-none font-mono text-[12px] tracking-[0.18em] uppercase ${step === 0 ? "text-white/25 cursor-default" : "text-bg cursor-pointer"}`}
@@ -220,17 +262,19 @@ export default function ScApplySection({ tipi, emailSC }: ScApplySectionProps) {
                   type="button"
                   onClick={() => {
                     if (step === 0) {
+                      const errors: { nome?: string; email?: string } = {};
                       if (form.nome.trim().length < 2) {
-                        setStepError(
-                          "Inserisci il tuo nome (almeno 2 caratteri)",
-                        );
-                        return;
+                        errors.nome =
+                          "Inserisci il tuo nome (almeno 2 caratteri)";
                       }
                       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
-                        setStepError("Inserisci un'email valida");
+                        errors.email = "Inserisci un indirizzo email valido";
+                      }
+                      if (errors.nome || errors.email) {
+                        setClientErrors(errors);
                         return;
                       }
-                      setStepError(undefined);
+                      setClientErrors({});
                     }
                     setStep(step + 1);
                   }}

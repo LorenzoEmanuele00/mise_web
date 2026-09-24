@@ -220,6 +220,10 @@
     border-bottom-color: var(--color-ink);
   }
 
+  .input[aria-invalid="true"] {
+    border-bottom-color: var(--color-accent);
+  }
+
   .input-label {
     display: block;
     font-family: var(--font-sans);

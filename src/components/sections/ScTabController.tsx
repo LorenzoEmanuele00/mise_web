@@ -6,6 +6,7 @@ import Num from "@/components/ui/Num";
 import Btn from "@/components/ui/Btn";
 import Arrow from "@/components/ui/Arrow";
 import type { TipoServizio } from "@/lib/types";
+import { safeUrl } from "@/lib/url";
 import { formatDate } from "@/sanity/lib/utils";
 
 interface ScTabControllerProps {
@@ -120,9 +121,9 @@ export default function ScTabController({
                   </p>
                 )}
               </div>
-              {data.portaleCandidatura ? (
+              {safeUrl(data.portaleCandidatura) ? (
                 <a
-                  href={data.portaleCandidatura}
+                  href={safeUrl(data.portaleCandidatura)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn btn-accent"
@@ -195,9 +196,9 @@ export default function ScTabController({
                   </div>
 
                   <div className="flex justify-end">
-                    {p.schedaPdfUrl ? (
+                    {safeUrl(p.schedaPdfUrl) ? (
                       <a
-                        href={p.schedaPdfUrl}
+                        href={safeUrl(p.schedaPdfUrl)}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="btn btn-ghost"

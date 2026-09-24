@@ -3,6 +3,7 @@
 import { useActionState } from "react";
 import { submitContact, type FormState } from "@/app/actions/submitForms";
 import Btn from "@/components/ui/Btn";
+import HoneypotFields from "@/components/forms/HoneypotFields";
 import FormField from "@/components/forms/FormField";
 import FormSuccess from "@/components/forms/FormSuccess";
 
@@ -25,14 +26,7 @@ export default function ContactForm() {
       action={action}
       className="bg-bg-elev border border-hair p-8 sm:p-10 flex flex-col gap-8"
     >
-      <input
-        type="text"
-        name="website"
-        className="hidden"
-        tabIndex={-1}
-        autoComplete="off"
-        aria-hidden="true"
-      />
+      <HoneypotFields />
 
       <FormField
         id="c-nome"

@@ -3,17 +3,11 @@
 import { useActionState } from "react";
 import { submitVolunteer, type FormState } from "@/app/actions/submitForms";
 import Btn from "@/components/ui/Btn";
+import HoneypotFields from "@/components/forms/HoneypotFields";
 import FormField from "@/components/forms/FormField";
 import FormSuccess from "@/components/forms/FormSuccess";
+import { VOLUNTEER_AREAS } from "@/lib/forms";
 
-const AREE = [
-  "Emergenza",
-  "Assistenza anziani",
-  "Trasporti",
-  "Gestione mezzi",
-  "Ufficio",
-  "Formazione",
-];
 const initial: FormState = { success: false };
 
 export default function VolunteerForm() {
@@ -33,14 +27,7 @@ export default function VolunteerForm() {
       action={action}
       className="bg-bg-elev border border-hair p-8 sm:p-10 flex flex-col gap-8"
     >
-      <input
-        type="text"
-        name="website"
-        className="hidden"
-        tabIndex={-1}
-        autoComplete="off"
-        aria-hidden="true"
-      />
+      <HoneypotFields />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
         <FormField
@@ -84,7 +71,7 @@ export default function VolunteerForm() {
       <div className="flex flex-col gap-3">
         <span className="input-label">Aree di interesse</span>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-          {AREE.map((area) => (
+          {VOLUNTEER_AREAS.map((area) => (
             <label
               key={area}
               className="flex items-center gap-2 body-sm text-ink cursor-pointer"

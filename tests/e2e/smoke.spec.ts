@@ -51,6 +51,23 @@ for (const { section, from } of DETAIL_SOURCES) {
   });
 }
 
+test("il menu mobile si chiude dopo la navigazione", async ({
+  page,
+  isMobile,
+}) => {
+  test.skip(!isMobile, "il menu a scomparsa esiste solo su mobile");
+
+  await page.goto("/");
+  await page.getByRole("button", { name: "Apri menu" }).click();
+  const drawer = page.locator("#nav-drawer");
+  await expect(drawer).toHaveClass(/\bopen\b/);
+
+  await drawer.getByRole("link", { name: "Contatti" }).click();
+
+  await expect(page).toHaveURL(/\/contatti$/);
+  await expect(drawer).not.toHaveClass(/\bopen\b/);
+});
+
 test("uno slug inesistente restituisce 404", async ({ page }) => {
   const response = await page.goto("/news/slug-che-non-esiste-e2e");
   expect(response?.status()).toBe(404);

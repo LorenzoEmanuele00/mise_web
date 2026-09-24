@@ -15,10 +15,14 @@ interface HeaderProps {
 export default function Header({ logo }: HeaderProps) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const [prevPathname, setPrevPathname] = useState(pathname);
 
-  useEffect(() => {
+  // Chiude il menu al cambio pagina. Il confronto avviene durante il render
+  // invece che in un effect, così si evita un render in più.
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname);
     setOpen(false);
-  }, [pathname]);
+  }
 
   useEffect(() => {
     const onResize = () => {

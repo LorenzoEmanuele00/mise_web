@@ -37,12 +37,13 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { backgroundImage } = await client.fetch<{
+  // null when the settings document does not exist yet (e.g. a fresh dataset).
+  const settings = await client.fetch<{
     backgroundImage?: BackgroundImage;
-  }>(BACKGROUND_QUERY, {}, { next: { tags: ["settings"] } });
+  } | null>(BACKGROUND_QUERY, {}, { next: { tags: ["settings"] } });
 
   const base = process.env.NEXT_PUBLIC_R2_BASE_URL ?? "";
-  const bg = backgroundImage ?? {};
+  const bg = settings?.backgroundImage ?? {};
   const clean = (s: string) =>
     s.replace(/[\u200B\u200C\u200D\uFEFF]/g, "").trim();
   const bgVars = {

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useActionState } from "react";
+import { regexes } from "zod/v4/core";
 import Kicker from "@/components/ui/Kicker";
 import Arrow from "@/components/ui/Arrow";
 import { submitScInterest, type FormState } from "@/app/actions/submitForms";
@@ -31,6 +32,9 @@ export default function ScApplySection({ tipi, emailSC }: ScApplySectionProps) {
 
   const nomeError = clientErrors.nome ?? state.errors?.nome;
   const emailError = clientErrors.email ?? state.errors?.email;
+  // Nome/email server errors are already shown under their own fields.
+  const formError =
+    state.errors?.nome || state.errors?.email ? undefined : state.error;
 
   const allProjects = tipi.flatMap((t) =>
     (t.progetti ?? []).map((p) => ({
@@ -234,9 +238,9 @@ export default function ScApplySection({ tipi, emailSC }: ScApplySectionProps) {
               />
             </div>
 
-            {state.error && (
+            {formError && (
               <p className="body-sm text-accent-soft mt-4" role="alert">
-                {state.error}
+                {formError}
               </p>
             )}
 
@@ -254,8 +258,12 @@ export default function ScApplySection({ tipi, emailSC }: ScApplySectionProps) {
                 ← Indietro
               </button>
 
+              {/* Distinct keys: otherwise React reuses the same <button> and
+                  turns it into type="submit" while the "Avanti" click is
+                  still being handled, and the browser submits the form. */}
               {step < 2 ? (
                 <button
+                  key="next"
                   type="button"
                   onClick={() => {
                     if (step === 0) {
@@ -264,7 +272,8 @@ export default function ScApplySection({ tipi, emailSC }: ScApplySectionProps) {
                         errors.nome =
                           "Inserisci il tuo nome (almeno 2 caratteri)";
                       }
-                      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+                      // Same pattern as z.email() in the server action.
+                      if (!regexes.email.test(form.email)) {
                         errors.email = "Inserisci un indirizzo email valido";
                       }
                       if (errors.nome || errors.email) {
@@ -282,6 +291,7 @@ export default function ScApplySection({ tipi, emailSC }: ScApplySectionProps) {
                 </button>
               ) : (
                 <button
+                  key="submit"
                   type="submit"
                   className="btn btn-accent"
                   disabled={pending}

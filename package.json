@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:staging": "set -a && . ./.env.staging && set +a && next dev",
+    "dev:production": "set -a && . ./.env.prod && set +a && next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",

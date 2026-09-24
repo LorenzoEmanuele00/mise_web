@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useActionState, useEffect } from "react";
+import { useState, useActionState } from "react";
 import Kicker from "@/components/ui/Kicker";
 import Arrow from "@/components/ui/Arrow";
 import { submitScInterest, type FormState } from "@/app/actions/submitForms";
@@ -41,9 +41,13 @@ export default function ScApplySection({ tipi, emailSC }: ScApplySectionProps) {
 
   // Step 0 fields are hidden via CSS on later steps — jump back so a
   // server-side validation error on nome/email is actually visible.
-  useEffect(() => {
+  // Compared during render (each action result is a new object) instead of
+  // in an effect, to avoid an extra cascading render.
+  const [prevErrors, setPrevErrors] = useState(state.errors);
+  if (state.errors !== prevErrors) {
+    setPrevErrors(state.errors);
     if (state.errors?.nome || state.errors?.email) setStep(0);
-  }, [state.errors]);
+  }
 
   if (state.success) {
     return (

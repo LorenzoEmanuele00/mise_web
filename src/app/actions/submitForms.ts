@@ -3,6 +3,7 @@
 import { createClient } from "next-sanity";
 import { z } from "zod";
 import { apiVersion, dataset, projectId } from "@/sanity/env";
+import { checkSpam, VOLUNTEER_AREAS } from "@/lib/forms";
 
 const writeClient = createClient({
   projectId,
@@ -19,6 +20,19 @@ export interface FormState {
   values?: Record<string, string>;
 }
 
+const SEND_ERROR = "Errore nell'invio. Riprova più tardi.";
+const TOO_FAST_ERROR = "Invio non riuscito. Attendi qualche secondo e riprova.";
+
+// Upper bounds keep a single submission from writing oversized documents.
+const MAX = {
+  name: 100,
+  email: 254,
+  subject: 200,
+  longText: 5000,
+  age: 20,
+  project: 100,
+} as const;
+
 // Converts a Zod safeParse failure into a field -> first-message map.
 function fieldErrors(error: z.ZodError): Record<string, string> {
   const out: Record<string, string> = {};
@@ -29,32 +43,71 @@ function fieldErrors(error: z.ZodError): Record<string, string> {
   return out;
 }
 
+// Returns the early response for spam, or null when the submission may proceed.
+// Honeypot hits get a silent failure so bots learn nothing.
+function rejectSpam(formData: FormData): FormState | null {
+  const verdict = checkSpam(formData);
+  if (verdict === "honeypot") return { success: false };
+  if (verdict === "too-fast") return { success: false, error: TOO_FAST_ERROR };
+  return null;
+}
+
+// Logs a failed Sanity write without the submitted personal data.
+function logWriteError(action: string, error: unknown) {
+  const detail = error instanceof Error ? error.message : String(error);
+  console.error(`[${action}] Sanity write failed: ${detail}`);
+}
+
 const phoneRegex = /^[0-9+\-\s]{6,20}$/;
 
+const nameField = (label: string) =>
+  z
+    .string()
+    .min(2, `Inserisci il tuo ${label} (almeno 2 caratteri)`)
+    .max(MAX.name, `Il ${label} può avere al massimo ${MAX.name} caratteri`);
+
+const emailField = z
+  .string()
+  .max(MAX.email, "Indirizzo email troppo lungo")
+  .email("Inserisci un indirizzo email valido");
+
+const longTextField = (label: string) =>
+  z
+    .string()
+    .max(MAX.longText, `${label}: massimo ${MAX.longText} caratteri`);
+
 const contactSchema = z.object({
-  nome: z.string().min(2, "Inserisci il tuo nome (almeno 2 caratteri)"),
-  email: z.string().email("Inserisci un indirizzo email valido"),
-  oggetto: z.string().min(2, "Inserisci un oggetto (almeno 2 caratteri)"),
-  messaggio: z.string().min(10, "Il messaggio deve avere almeno 10 caratteri"),
+  nome: nameField("nome"),
+  email: emailField,
+  oggetto: z
+    .string()
+    .min(2, "Inserisci un oggetto (almeno 2 caratteri)")
+    .max(MAX.subject, `L'oggetto può avere al massimo ${MAX.subject} caratteri`),
+  messaggio: longTextField("Messaggio").min(
+    10,
+    "Il messaggio deve avere almeno 10 caratteri",
+  ),
 });
 
 const volunteerSchema = z.object({
-  nome: z.string().min(2, "Inserisci il tuo nome (almeno 2 caratteri)"),
-  cognome: z.string().min(2, "Inserisci il tuo cognome (almeno 2 caratteri)"),
-  email: z.string().email("Inserisci un indirizzo email valido"),
+  nome: nameField("nome"),
+  cognome: nameField("cognome"),
+  email: emailField,
   telefono: z
     .string()
     .regex(phoneRegex, "Numero di telefono non valido")
     .optional()
     .or(z.literal("")),
-  disponibilita: z.string().optional(),
+  disponibilita: longTextField("Disponibilità").optional(),
+  areeInteresse: z.array(z.enum(VOLUNTEER_AREAS)).max(VOLUNTEER_AREAS.length),
 });
 
 export async function submitContact(
   _: FormState,
   formData: FormData,
 ): Promise<FormState> {
-  if (formData.get("website")) return { success: false };
+  const spam = rejectSpam(formData);
+  if (spam) return spam;
 
   const raw = {
     nome: String(formData.get("nome") ?? ""),
@@ -75,24 +128,26 @@ export async function submitContact(
       createdAt: new Date().toISOString(),
     });
     return { success: true };
-  } catch {
-    return { success: false, error: "Errore nell'invio. Riprova più tardi." };
+  } catch (error) {
+    logWriteError("submitContact", error);
+    return { success: false, error: SEND_ERROR };
   }
 }
 
 const scInterestSchema = z.object({
-  nome: z.string().min(2, "Inserisci il tuo nome (almeno 2 caratteri)"),
-  email: z.string().email("Inserisci un indirizzo email valido"),
-  eta: z.string().optional(),
-  progetto: z.string().optional(),
-  motivo: z.string().optional(),
+  nome: nameField("nome"),
+  email: emailField,
+  eta: z.string().max(MAX.age, "Età: massimo 20 caratteri").optional(),
+  progetto: z.string().max(MAX.project, "Progetto non valido").optional(),
+  motivo: longTextField("Motivazione").optional(),
 });
 
 export async function submitScInterest(
   _: FormState,
   formData: FormData,
 ): Promise<FormState> {
-  if (formData.get("website")) return { success: false };
+  const spam = rejectSpam(formData);
+  if (spam) return spam;
 
   const result = scInterestSchema.safeParse({
     nome: formData.get("nome"),
@@ -130,8 +185,9 @@ export async function submitScInterest(
       createdAt: new Date().toISOString(),
     });
     return { success: true };
-  } catch {
-    return { success: false, error: "Errore nell'invio. Riprova più tardi." };
+  } catch (error) {
+    logWriteError("submitScInterest", error);
+    return { success: false, error: SEND_ERROR };
   }
 }
 
@@ -139,7 +195,8 @@ export async function submitVolunteer(
   _: FormState,
   formData: FormData,
 ): Promise<FormState> {
-  if (formData.get("website")) return { success: false };
+  const spam = rejectSpam(formData);
+  if (spam) return spam;
 
   const raw = {
     nome: String(formData.get("nome") ?? ""),
@@ -152,25 +209,22 @@ export async function submitVolunteer(
     ...raw,
     telefono: raw.telefono || undefined,
     disponibilita: raw.disponibilita || undefined,
+    areeInteresse: formData.getAll("areeInteresse"),
   });
 
   if (!result.success) {
     return { success: false, errors: fieldErrors(result.error), values: raw };
   }
 
-  const areeInteresse = formData
-    .getAll("areeInteresse")
-    .filter((a): a is string => typeof a === "string");
-
   try {
     await writeClient.create({
       _type: "volunteerSubmission",
       ...result.data,
-      areeInteresse,
       createdAt: new Date().toISOString(),
     });
     return { success: true };
-  } catch {
-    return { success: false, error: "Errore nell'invio. Riprova più tardi." };
+  } catch (error) {
+    logWriteError("submitVolunteer", error);
+    return { success: false, error: SEND_ERROR };
   }
 }

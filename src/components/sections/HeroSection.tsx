@@ -6,6 +6,7 @@ import CardSwap from "@/components/ui/CardSwap";
 import HeroScrollStack from "@/components/ui/HeroScrollStack";
 import Kicker from "@/components/ui/Kicker";
 import R2Image from "@/components/ui/R2Image";
+import { safeUrl } from "@/lib/url";
 
 interface HeroSectionProps {
   hero?: HeroSectionData | null;
@@ -19,6 +20,8 @@ export default function HeroSection({
   if (!hero) return null;
 
   const hasCards = Boolean(hero.swapCards?.length);
+  const primaryHref = safeUrl(hero.ctaPrimary?.href);
+  const secondaryHref = safeUrl(hero.ctaSecondary?.href);
 
   return (
     <Section loose>
@@ -53,19 +56,19 @@ export default function HeroSection({
               {hero.body}
             </p>
           )}
-          {(hero.ctaPrimary?.href || hero.ctaSecondary?.href) && (
+          {(primaryHref || secondaryHref) && (
             <div
               className="mt-10 flex flex-wrap gap-4 animate-fade-up"
               style={{ "--anim-delay": "0.28s" } as CSSProperties}
             >
-              {hero.ctaPrimary?.href && (
-                <Btn href={hero.ctaPrimary.href} variant="dark">
-                  {hero.ctaPrimary.label}
+              {primaryHref && (
+                <Btn href={primaryHref} variant="dark">
+                  {hero.ctaPrimary?.label}
                 </Btn>
               )}
-              {hero.ctaSecondary?.href && (
-                <Btn href={hero.ctaSecondary.href} variant="ghost">
-                  {hero.ctaSecondary.label}
+              {secondaryHref && (
+                <Btn href={secondaryHref} variant="ghost">
+                  {hero.ctaSecondary?.label}
                 </Btn>
               )}
             </div>

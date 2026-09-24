@@ -4,6 +4,7 @@ import { useState, useActionState } from "react";
 import Kicker from "@/components/ui/Kicker";
 import Arrow from "@/components/ui/Arrow";
 import { submitScInterest, type FormState } from "@/app/actions/submitForms";
+import HoneypotFields from "@/components/forms/HoneypotFields";
 import type { TipoServizio } from "@/lib/types";
 
 interface ScApplySectionProps {
@@ -103,15 +104,7 @@ export default function ScApplySection({ tipi, emailSC }: ScApplySectionProps) {
             action={action}
             className="bg-white/4 border border-white/18 p-10"
           >
-            {/* Honeypot */}
-            <input
-              type="text"
-              name="website"
-              className="hidden"
-              tabIndex={-1}
-              autoComplete="off"
-              aria-hidden="true"
-            />
+            <HoneypotFields />
 
             {/* Hidden inputs always submitted */}
             <input type="hidden" name="progetto" value={form.progetto} />

@@ -3,6 +3,7 @@
 ## Comandi
 
 - Dev: `npm run dev`. Con ECC va lanciato dentro tmux, altrimenti l'hook lo blocca.
+- Dataset Sanity: `.env.local` punta a **`staging`** (default per sviluppo e test). `npm run dev:staging` forza staging da `.env.staging`; `npm run dev:production` usa `.env.prod` (dati veri: solo quando serve davvero).
 - Build: `npm run build`
 - Lint: `npm run lint`
 - Typecheck: `npm run typecheck`

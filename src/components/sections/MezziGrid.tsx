@@ -32,7 +32,7 @@ export default function MezziGrid({ mezzi }: MezziGridProps) {
               <div>
                 {m.code && <Num>{m.code}</Num>}
                 {m.name && (
-                  <h3 className="heading-03 text-ink mt-1">{m.name}</h3>
+                  <h2 className="heading-03 text-ink mt-1">{m.name}</h2>
                 )}
                 {m.role && (
                   <p className="body-sm mt-1 text-ink-soft">{m.role}</p>

@@ -1,6 +1,11 @@
 "use client";
 
-import { useState, type CSSProperties } from "react";
+import {
+  useRef,
+  useState,
+  type CSSProperties,
+  type KeyboardEvent,
+} from "react";
 import Kicker from "@/components/ui/Kicker";
 import Num from "@/components/ui/Num";
 import Btn from "@/components/ui/Btn";
@@ -20,12 +25,32 @@ export default function ScTabController({
 }: ScTabControllerProps) {
   const [activeIdx, setActiveIdx] = useState(0);
   const [bouncingIdx, setBouncingIdx] = useState<number | null>(null);
+  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const data = tipi[activeIdx] ?? tipi[0];
 
   const handleSelect = (i: number) => {
     if (i === activeIdx) return;
     setActiveIdx(i);
     setBouncingIdx(i);
+  };
+
+  // Pattern WAI-ARIA dei tab: frecce e Home/End spostano selezione e focus.
+  const handleTabKeyDown = (e: KeyboardEvent, i: number) => {
+    const last = tipi.length - 1;
+    const target =
+      e.key === "ArrowRight" || e.key === "ArrowDown"
+        ? (i + 1) % tipi.length
+        : e.key === "ArrowLeft" || e.key === "ArrowUp"
+          ? (i - 1 + tipi.length) % tipi.length
+          : e.key === "Home"
+            ? 0
+            : e.key === "End"
+              ? last
+              : null;
+    if (target === null) return;
+    e.preventDefault();
+    handleSelect(target);
+    tabRefs.current[target]?.focus();
   };
   if (!data) return null;
 
@@ -62,12 +87,25 @@ export default function ScTabController({
           </p>
 
           {/* Tab switcher */}
-          <div className="flex flex-col lg:flex-row rounded-[20px] lg:rounded-full mt-14 p-1.5 bg-bg-elev border border-hair-strong">
+          <div
+            role="tablist"
+            aria-label="Tipo di servizio civile"
+            className="flex flex-col lg:flex-row rounded-[20px] lg:rounded-full mt-14 p-1.5 bg-bg-elev border border-hair-strong"
+          >
             {tipi.map((t, i) => (
               <button
                 key={t.code}
+                ref={(el) => {
+                  tabRefs.current[i] = el;
+                }}
                 type="button"
+                role="tab"
+                id={`sc-tab-${i}`}
+                aria-selected={activeIdx === i}
+                aria-controls="sc-tabpanel"
+                tabIndex={activeIdx === i ? 0 : -1}
                 onClick={() => handleSelect(i)}
+                onKeyDown={(e) => handleTabKeyDown(e, i)}
                 onAnimationEnd={() => setBouncingIdx(null)}
                 className={`w-full lg:flex-1 rounded-[14px] lg:rounded-full px-7 py-3 border-none cursor-pointer font-sans text-sm flex gap-3 items-center justify-center transition-colors duration-300 ${activeIdx === i ? "bg-ink text-bg" : "bg-transparent text-ink"} ${bouncingIdx === i ? "animate-bounce-in" : ""}`}
               >
@@ -83,7 +121,13 @@ export default function ScTabController({
 
       {/* ── Summary ──────────────────────────────────── */}
       <section className="py-[clamp(3rem,6vw,5rem)]">
-        <div className="shell" key={activeIdx}>
+        <div
+          className="shell"
+          key={activeIdx}
+          role="tabpanel"
+          id="sc-tabpanel"
+          aria-labelledby={`sc-tab-${activeIdx}`}
+        >
           {stats.length > 0 && (
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 border border-hair-strong bg-hair-strong gap-px animate-fade-up">
               {stats.map(([k, v]) => (

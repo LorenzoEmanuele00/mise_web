@@ -8,6 +8,7 @@ interface FormFieldProps {
   placeholder?: string;
   error?: string;
   defaultValue?: string;
+  autoComplete?: string;
 }
 
 export default function FormField({
@@ -20,6 +21,7 @@ export default function FormField({
   placeholder,
   error,
   defaultValue,
+  autoComplete,
 }: FormFieldProps) {
   const errorId = `${id}-error`;
 
@@ -38,6 +40,7 @@ export default function FormField({
           required={required}
           placeholder={placeholder}
           defaultValue={defaultValue}
+          autoComplete={autoComplete}
           aria-invalid={!!error}
           aria-describedby={error ? errorId : undefined}
         />
@@ -50,6 +53,7 @@ export default function FormField({
           required={required}
           placeholder={placeholder}
           defaultValue={defaultValue}
+          autoComplete={autoComplete}
           aria-invalid={!!error}
           aria-describedby={error ? errorId : undefined}
         />

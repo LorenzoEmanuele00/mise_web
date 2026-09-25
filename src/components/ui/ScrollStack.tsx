@@ -311,6 +311,13 @@ export default function ScrollStack({
       if (i < cards.length - 1) {
         card.style.marginBottom = `${itemDistance}px`;
       }
+    });
+
+    // Con prefers-reduced-motion le card restano statiche: niente Lenis,
+    // né scale, blur o rotazioni.
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    cards.forEach((card) => {
       card.style.willChange = "transform, filter";
       card.style.transformOrigin = "top center";
       card.style.backfaceVisibility = "hidden";

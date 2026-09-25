@@ -31,6 +31,7 @@ export default function ContactForm() {
       <FormField
         id="c-nome"
         name="nome"
+        autoComplete="name"
         label="Nome"
         required
         error={state.errors?.nome}
@@ -39,6 +40,7 @@ export default function ContactForm() {
       <FormField
         id="c-email"
         name="email"
+        autoComplete="email"
         label="Email"
         type="email"
         required

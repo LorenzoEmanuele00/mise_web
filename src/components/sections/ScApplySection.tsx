@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useActionState } from "react";
+import { useState, useActionState, useRef } from "react";
 import { regexes } from "zod/v4/core";
 import Kicker from "@/components/ui/Kicker";
 import Arrow from "@/components/ui/Arrow";
@@ -18,6 +18,7 @@ const initial: FormState = { success: false };
 export default function ScApplySection({ tipi, emailSC }: ScApplySectionProps) {
   const [state, action, pending] = useActionState(submitScInterest, initial);
   const [step, setStep] = useState(0);
+  const formRef = useRef<HTMLFormElement>(null);
   const [clientErrors, setClientErrors] = useState<{
     nome?: string;
     email?: string;
@@ -54,10 +55,25 @@ export default function ScApplySection({ tipi, emailSC }: ScApplySectionProps) {
     if (state.errors?.nome || state.errors?.email) setStep(0);
   }
 
+  // Cambio di step: sposta il focus sul primo controllo del nuovo step, così
+  // chi usa tastiera o screen reader non resta sul pulsante ormai nascosto.
+  const goToStep = (next: number) => {
+    setStep(next);
+    const firstControl = ["#sc-nome", "[data-progetto]", "#sc-motivo"][next];
+    requestAnimationFrame(() =>
+      formRef.current?.querySelector<HTMLElement>(firstControl ?? "")?.focus(),
+    );
+  };
+
   if (state.success) {
     return (
       <section className="dark-band py-[clamp(5rem,10vw,7.5rem)]">
-        <div className="shell text-center">
+        <div
+          className="shell text-center outline-none"
+          role="status"
+          tabIndex={-1}
+          ref={(el) => el?.focus()}
+        >
           <Kicker className="text-bg/60">Richiesta inviata</Kicker>
           <h2 className="heading-01 mt-8 text-bg">
             Grazie, {form.nome || "te"}.<br />
@@ -105,6 +121,7 @@ export default function ScApplySection({ tipi, emailSC }: ScApplySectionProps) {
 
           {/* Right form */}
           <form
+            ref={formRef}
             action={action}
             className="bg-white/4 border border-white/18 p-10"
           >
@@ -115,7 +132,9 @@ export default function ScApplySection({ tipi, emailSC }: ScApplySectionProps) {
 
             {/* Step indicators */}
             <div className="flex justify-between items-center mb-8">
-              <Kicker className="text-bg/55">Step {step + 1} di 3</Kicker>
+              <div role="status">
+                <Kicker className="text-bg/55">Step {step + 1} di 3</Kicker>
+              </div>
               <div className="flex gap-1.5">
                 {[0, 1, 2].map((i) => (
                   <div
@@ -210,6 +229,8 @@ export default function ScApplySection({ tipi, emailSC }: ScApplySectionProps) {
                   <button
                     key={p.codice}
                     type="button"
+                    data-progetto
+                    aria-pressed={form.progetto === p.codice}
                     onClick={() => setForm({ ...form, progetto: p.codice })}
                     className={`text-left px-[22px] py-5 border text-bg cursor-pointer transition-all duration-[250ms] ${form.progetto === p.codice ? "bg-accent border-accent" : "bg-transparent border-white/25"}`}
                   >
@@ -249,7 +270,7 @@ export default function ScApplySection({ tipi, emailSC }: ScApplySectionProps) {
               <button
                 type="button"
                 onClick={() => {
-                  setStep(Math.max(0, step - 1));
+                  goToStep(Math.max(0, step - 1));
                   setClientErrors({});
                 }}
                 disabled={step === 0}
@@ -282,7 +303,7 @@ export default function ScApplySection({ tipi, emailSC }: ScApplySectionProps) {
                       }
                       setClientErrors({});
                     }
-                    setStep(step + 1);
+                    goToStep(step + 1);
                   }}
                   className="btn btn-accent"
                 >

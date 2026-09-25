@@ -40,7 +40,7 @@
   --color-bg-elev: #eae4d4;
   --color-bg-deep: #e5dfcf;
   --color-ink-soft: #2e2b27;
-  --color-muted: #b8b5b1;
+  --color-muted: #635f59;
   --color-accent-soft: #d48a6b;
   --color-accent-deep: #7a3218;
   --color-accent-yellow: #f6e328;
@@ -230,7 +230,7 @@
     font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: #b8b5b1;
+    color: var(--color-muted);
     margin-bottom: 0.25rem;
   }
 
@@ -539,4 +539,19 @@
     transform: translateX(0);
   }
 
+}
+
+/* Skip link: visibile solo quando riceve il focus da tastiera */
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: 0;
+  z-index: 100;
+  padding: 0.75rem 1rem;
+  background: var(--color-ink);
+  color: var(--color-bg);
+  transform: translateY(-120%);
+}
+.skip-link:focus {
+  transform: translateY(0.5rem);
 }

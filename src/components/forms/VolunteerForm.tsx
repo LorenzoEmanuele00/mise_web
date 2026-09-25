@@ -33,6 +33,7 @@ export default function VolunteerForm() {
         <FormField
           id="v-nome"
           name="nome"
+          autoComplete="given-name"
           label="Nome"
           required
           error={state.errors?.nome}
@@ -41,6 +42,7 @@ export default function VolunteerForm() {
         <FormField
           id="v-cognome"
           name="cognome"
+          autoComplete="family-name"
           label="Cognome"
           required
           error={state.errors?.cognome}
@@ -52,6 +54,7 @@ export default function VolunteerForm() {
         <FormField
           id="v-email"
           name="email"
+          autoComplete="email"
           label="Email"
           type="email"
           required
@@ -61,6 +64,7 @@ export default function VolunteerForm() {
         <FormField
           id="v-telefono"
           name="telefono"
+          autoComplete="tel"
           label="Telefono"
           type="tel"
           error={state.errors?.telefono}
@@ -68,8 +72,8 @@ export default function VolunteerForm() {
         />
       </div>
 
-      <div className="flex flex-col gap-3">
-        <span className="input-label">Aree di interesse</span>
+      <fieldset className="flex flex-col gap-3 border-none p-0 m-0 min-w-0">
+        <legend className="input-label">Aree di interesse</legend>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
           {VOLUNTEER_AREAS.map((area) => (
             <label
@@ -81,7 +85,7 @@ export default function VolunteerForm() {
             </label>
           ))}
         </div>
-      </div>
+      </fieldset>
 
       <FormField
         id="v-disponibilita"

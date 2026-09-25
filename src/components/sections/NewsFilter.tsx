@@ -30,6 +30,8 @@ export default function NewsFilter({ posts }: NewsFilterProps) {
         {TAGS.map((tag) => (
           <button
             key={tag}
+            type="button"
+            aria-pressed={active === tag}
             onClick={() => setActive(tag)}
             className={`kicker no-rule px-4 py-2 transition-colors border ${
               active === tag
@@ -41,6 +43,11 @@ export default function NewsFilter({ posts }: NewsFilterProps) {
           </button>
         ))}
       </div>
+
+      <p role="status" className="sr-only">
+        {filtered.length === 1 ? "1 articolo" : `${filtered.length} articoli`}
+        {active !== "Tutti" && ` nella categoria ${active}`}
+      </p>
 
       {filtered.length === 0 && (
         <p className="body text-muted">Nessun articolo per questa categoria.</p>

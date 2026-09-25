@@ -36,6 +36,14 @@ export default async function ServizioCivilePage() {
     ),
   ]);
 
+  if (!sc) {
+    // The page still renders (header/footer only), but the empty state must
+    // show up in the build and Vercel logs instead of passing unnoticed.
+    console.warn(
+      "[servizio-civile] Documento servizioCivile mancante: la pagina è vuota",
+    );
+  }
+
   return (
     <main>
       {sc?.tipi && sc.tipi.length > 0 && (

@@ -12,8 +12,16 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 const envFileArg = process.argv.indexOf('--env-file')
 const envFileName = envFileArg !== -1 ? process.argv[envFileArg + 1] : '.env.local'
 const envPath = resolve(__dirname, '..', envFileName)
+let envText
+try {
+  envText = readFileSync(envPath, 'utf8')
+} catch (error) {
+  console.error(`Impossibile leggere ${envFileName}: ${error.message}`)
+  process.exit(1)
+}
+
 const env = Object.fromEntries(
-  readFileSync(envPath, 'utf8')
+  envText
     .split('\n')
     .filter(l => l && !l.startsWith('#') && l.includes('='))
     .map(l => {
@@ -22,15 +30,21 @@ const env = Object.fromEntries(
     })
 )
 
-const writeToken = env['SANITY_API_WRITE_TOKEN']
-if (!writeToken) {
-  console.error('SANITY_API_WRITE_TOKEN mancante in .env.local')
+// No defaults: seeding the wrong dataset overwrites real content.
+const required = ['SANITY_API_WRITE_TOKEN', 'NEXT_PUBLIC_SANITY_PROJECT_ID', 'NEXT_PUBLIC_SANITY_DATASET']
+const missing = required.filter(key => !env[key])
+if (missing.length > 0) {
+  console.error(`Variabili mancanti in ${envFileName}: ${missing.join(', ')}`)
   process.exit(1)
 }
 
+const writeToken = env['SANITY_API_WRITE_TOKEN']
+const dataset = env['NEXT_PUBLIC_SANITY_DATASET']
+console.log(`Seed sul dataset "${dataset}" (da ${envFileName})`)
+
 const client = createClient({
   projectId: env['NEXT_PUBLIC_SANITY_PROJECT_ID'],
-  dataset: env['NEXT_PUBLIC_SANITY_DATASET'] ?? 'production',
+  dataset,
   apiVersion: env['NEXT_PUBLIC_SANITY_API_VERSION'] ?? '2024-01-01',
   token: writeToken,
   useCdn: false,

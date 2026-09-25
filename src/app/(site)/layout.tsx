@@ -1,25 +1,9 @@
-import { client } from "@/sanity/lib/client";
-import { SETTINGS_QUERY } from "@/sanity/lib/queries";
-import type { Settings } from "@/lib/types";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
+import SiteShell from "@/components/layout/SiteShell";
 
-export default async function SiteLayout({
+export default function SiteLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const settings = await client.fetch<Settings>(
-    SETTINGS_QUERY,
-    {},
-    { next: { tags: ["settings"] } },
-  );
-
-  return (
-    <>
-      <Header logo={settings?.logo ?? null} />
-      <div className="flex-1">{children}</div>
-      <Footer settings={settings} />
-    </>
-  );
+  return <SiteShell>{children}</SiteShell>;
 }

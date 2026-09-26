@@ -64,6 +64,7 @@ export interface ScStep {
 }
 
 export interface ScTestimonianza {
+  _key: string;
   nome: string;
   anno?: string;
   foto?: R2Image;
@@ -71,6 +72,7 @@ export interface ScTestimonianza {
 }
 
 export interface ScFaq {
+  _key: string;
   domanda: string;
   risposta: string;
 }

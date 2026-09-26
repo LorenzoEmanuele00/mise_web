@@ -88,7 +88,7 @@ export default function GalleriaGrid({ images }: GalleriaGridProps) {
       </StaggerGrid>
 
       {/* Lightbox */}
-      {isOpen && currentImage && (
+      {selectedIndex !== null && currentImage && (
         <div
           ref={dialogRef}
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/90"
@@ -112,7 +112,7 @@ export default function GalleriaGrid({ images }: GalleriaGridProps) {
 
           {/* Counter */}
           <span className="absolute top-4 left-4 z-10 body-sm text-white/60">
-            {selectedIndex! + 1} / {images.length}
+            {selectedIndex + 1} / {images.length}
           </span>
 
           {/* Prev */}

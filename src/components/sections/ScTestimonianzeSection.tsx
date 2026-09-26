@@ -22,7 +22,7 @@ export default function ScTestimonianzeSection({
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {testimonianze.map((t) => (
-            <div key={t.nome} className="bg-bg">
+            <div key={t._key} className="bg-bg">
               {t.foto ? (
                 <div className="relative h-80 bg-bg-elev overflow-hidden">
                   <R2Image image={t.foto} fill className="object-cover" />

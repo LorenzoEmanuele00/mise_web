@@ -10,6 +10,8 @@ import { PortableText } from "@portabletext/react";
 import type { R2Image } from "@/lib/types";
 import Section from "@/components/layout/Section";
 import Kicker from "@/components/ui/Kicker";
+import JsonLd from "@/components/seo/JsonLd";
+import { SITE_NAME, SITE_URL } from "@/lib/site";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -42,8 +44,25 @@ export default async function PostPage({ params }: Props) {
 
   if (!post) notFound();
 
+  const coverUrl = post.cover?.src
+    ? `${process.env.NEXT_PUBLIC_R2_BASE_URL ?? ""}/${post.cover.src}`
+    : undefined;
+
   return (
     <main>
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "NewsArticle",
+          headline: post.title,
+          description: post.excerpt,
+          datePublished: post.date,
+          url: `${SITE_URL}/news/${slug}`,
+          inLanguage: "it",
+          ...(coverUrl && { image: [coverUrl] }),
+          publisher: { "@type": "Organization", name: SITE_NAME },
+        }}
+      />
       <Section loose>
         <article className="max-w-3xl">
           <div className="mb-8">
@@ -67,6 +86,8 @@ export default async function PostPage({ params }: Props) {
                         src={`${process.env.NEXT_PUBLIC_R2_BASE_URL ?? ""}/${value.src}`}
                         alt={value.altText}
                         loading="lazy"
+                        width={value.width}
+                        height={value.height}
                         className="w-full rounded-lg my-6"
                       />
                     ),

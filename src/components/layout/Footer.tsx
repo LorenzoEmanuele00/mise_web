@@ -119,29 +119,6 @@ export default function Footer({ settings }: FooterProps) {
             © {year} Misericordia di Gello — C.F. {taxCode}
             {iban ? ` · IBAN ${iban}` : ""}
           </p>
-          <div className="flex gap-6 body-sm text-bg/50">
-            <Link
-              href="/privacy"
-              prefetch={false}
-              className="text-bg/50 no-underline hover:text-bg/80 transition-colors"
-            >
-              Privacy
-            </Link>
-            <Link
-              href="/trasparenza"
-              prefetch={false}
-              className="text-bg/50 no-underline hover:text-bg/80 transition-colors"
-            >
-              Trasparenza
-            </Link>
-            <Link
-              href="/cookie"
-              prefetch={false}
-              className="text-bg/50 no-underline hover:text-bg/80 transition-colors"
-            >
-              Cookie
-            </Link>
-          </div>
         </div>
       </div>
     </footer>

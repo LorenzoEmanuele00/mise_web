@@ -38,6 +38,7 @@ export default function R2Image({
       src={`${cleanPath(BASE)}/${src}`}
       alt={image.altText}
       loading={priority ? "eager" : "lazy"}
+      fetchPriority={priority ? "high" : undefined}
       className={
         fill ? `absolute inset-0 w-full h-full ${className ?? ""}` : className
       }

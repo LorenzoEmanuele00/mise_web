@@ -7,6 +7,8 @@ import HeroSection from "@/components/sections/HeroSection";
 import StatsStrip from "@/components/sections/StatsStrip";
 import ServiziGrid from "@/components/sections/ServiziGrid";
 import NewsGrid from "@/components/sections/NewsGrid";
+import JsonLd from "@/components/seo/JsonLd";
+import { SITE_NAME, SITE_URL } from "@/lib/site";
 
 export async function generateMetadata(): Promise<Metadata> {
   const data = await client.fetch<HomeData>(
@@ -26,6 +28,15 @@ export default async function HomePage() {
 
   return (
     <main>
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "NGO",
+          name: SITE_NAME,
+          url: SITE_URL,
+          foundingDate: "1994",
+        }}
+      />
       <HeroSection hero={data?.page?.heroSection} display />
       <StatsStrip />
       <ServiziGrid servizi={data?.servizi ?? []} preview />

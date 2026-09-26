@@ -3,6 +3,7 @@ import { Instrument_Serif, DM_Sans, JetBrains_Mono } from "next/font/google";
 import { client } from "@/sanity/lib/client";
 import { BACKGROUND_QUERY } from "@/sanity/lib/queries";
 import type { BackgroundImage } from "@/lib/types";
+import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 const instrumentSerif = Instrument_Serif({
@@ -24,6 +25,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
+  // "./" si risolve nell'URL della pagina corrente rispetto a metadataBase.
+  alternates: { canonical: "./" },
   title: {
     template: "%s | Misericordia di Gello",
     default: "Misericordia di Gello",

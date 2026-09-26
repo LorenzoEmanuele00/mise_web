@@ -3,6 +3,8 @@
 export interface R2Image {
   src: string;
   altText: string;
+  width?: number;
+  height?: number;
 }
 
 export interface SeoObject {

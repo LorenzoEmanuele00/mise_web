@@ -1,18 +1,19 @@
 import type { MetadataRoute } from "next";
 import { client } from "@/sanity/lib/client";
+import { SITE_URL } from "@/lib/site";
 import {
   ALL_POST_SLUGS_QUERY,
   ALL_SERVIZI_SLUGS_QUERY,
 } from "@/sanity/lib/queries";
 
-const BASE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://misericordiadigello.it";
+const BASE_URL = SITE_URL;
 
 const STATIC_ROUTES = [
   { url: "/", priority: 1.0, changeFrequency: "weekly" },
   { url: "/storia", priority: 0.7, changeFrequency: "monthly" },
   { url: "/servizi", priority: 0.9, changeFrequency: "monthly" },
   { url: "/news", priority: 0.8, changeFrequency: "weekly" },
+  { url: "/galleria", priority: 0.5, changeFrequency: "monthly" },
   { url: "/volontariato", priority: 0.8, changeFrequency: "monthly" },
   { url: "/contatti", priority: 0.7, changeFrequency: "yearly" },
   { url: "/servizio-civile", priority: 0.8, changeFrequency: "monthly" },

@@ -24,6 +24,8 @@ export default function ScFaqSection({ faq }: { faq: ScFaq[] }) {
                 <button
                   type="button"
                   onClick={() => setOpen(open === i ? -1 : i)}
+                  aria-expanded={open === i}
+                  aria-controls={`faq-panel-${i}`}
                   className="w-full py-6 bg-transparent border-none text-left cursor-pointer flex justify-between items-center gap-6"
                 >
                   <span className="serif text-[clamp(18px,1.5vw,22px)]">
@@ -36,6 +38,8 @@ export default function ScFaqSection({ faq }: { faq: ScFaq[] }) {
                   </span>
                 </button>
                 <div
+                  id={`faq-panel-${i}`}
+                  inert={open !== i}
                   className={`overflow-hidden transition-[max-height] duration-[400ms] ease-[cubic-bezier(.2,.7,.2,1)]${open === i ? " max-h-[300px]" : " max-h-0"}`}
                 >
                   <p className="body pb-6 max-w-[720px] leading-[1.7] text-ink-soft">

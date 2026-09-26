@@ -40,9 +40,9 @@ export default function NewsGrid({ posts, preview = false }: NewsGridProps) {
               {post.tag && (
                 <span className="kicker no-rule text-accent">{post.tag}</span>
               )}
-              <h3 className="heading-03 text-ink group-hover:opacity-70 transition-opacity">
+              <h2 className="heading-03 text-ink group-hover:opacity-70 transition-opacity">
                 {post.title}
-              </h3>
+              </h2>
               <p className="body flex-1 line-clamp-3 text-ink-soft">
                 {post.excerpt}
               </p>

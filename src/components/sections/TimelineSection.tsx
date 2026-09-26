@@ -28,7 +28,7 @@ export default function TimelineSection({ events }: TimelineSectionProps) {
                   className="absolute -left-[calc(1.75rem+1px)] top-1.5 w-2 heading-02 rounded-full hidden md:block bg-accent"
                   aria-hidden="true"
                 />
-                <h3 className="heading-03 text-ink">{ev.title}</h3>
+                <h2 className="heading-03 text-ink">{ev.title}</h2>
                 {ev.text && (
                   <p className="body mt-3 max-w-2xl text-ink-soft">{ev.text}</p>
                 )}

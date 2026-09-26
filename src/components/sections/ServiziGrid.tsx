@@ -30,7 +30,7 @@ export default function ServiziGrid({
           const card = (
             <div className="p-8 flex flex-col gap-4 h-full bg-bg">
               <Num>{s.num}</Num>
-              <h3 className="heading-03 text-ink">{s.title}</h3>
+              <h2 className="heading-03 text-ink">{s.title}</h2>
               <p className="body flex-1 text-ink-soft">{s.shortDesc}</p>
               {s.slug?.current && (
                 <span className="flex items-center gap-2 body-sm text-accent">

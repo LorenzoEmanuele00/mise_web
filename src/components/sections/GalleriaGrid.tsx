@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import type { R2Image as R2ImageType } from "@/lib/types";
 import R2Image from "@/components/ui/R2Image";
 import StaggerGrid from "@/components/ui/StaggerGrid";
@@ -13,6 +13,8 @@ export default function GalleriaGrid({ images }: GalleriaGridProps) {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   const isOpen = selectedIndex !== null;
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   const close = useCallback(() => setSelectedIndex(null), []);
 
@@ -27,10 +29,30 @@ export default function GalleriaGrid({ images }: GalleriaGridProps) {
   useEffect(() => {
     if (!isOpen) return;
 
+    // Il focus passa al pulsante Chiudi e torna alla miniatura alla chiusura.
+    const trigger = document.activeElement as HTMLElement | null;
+    closeButtonRef.current?.focus();
+
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") close();
       if (e.key === "ArrowLeft") prev();
       if (e.key === "ArrowRight") next();
+      if (e.key !== "Tab") return;
+
+      // Focus trap: Tab e Shift+Tab ruotano tra i pulsanti della lightbox.
+      const items = Array.from(
+        dialogRef.current?.querySelectorAll<HTMLElement>("button") ?? [],
+      );
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (!first || !last) return;
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
     };
 
     document.addEventListener("keydown", onKey);
@@ -39,6 +61,7 @@ export default function GalleriaGrid({ images }: GalleriaGridProps) {
     return () => {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
+      trigger?.focus();
     };
   }, [isOpen, close, prev, next]);
 
@@ -67,6 +90,7 @@ export default function GalleriaGrid({ images }: GalleriaGridProps) {
       {/* Lightbox */}
       {isOpen && currentImage && (
         <div
+          ref={dialogRef}
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/90"
           onClick={close}
           role="dialog"
@@ -75,6 +99,7 @@ export default function GalleriaGrid({ images }: GalleriaGridProps) {
         >
           {/* Close button */}
           <button
+            ref={closeButtonRef}
             type="button"
             onClick={close}
             aria-label="Chiudi galleria"

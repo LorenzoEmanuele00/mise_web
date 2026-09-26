@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import LogoMark from "@/components/ui/LogoMark";
@@ -14,6 +14,8 @@ interface HeaderProps {
 
 export default function Header({ logo }: HeaderProps) {
   const [open, setOpen] = useState(false);
+  const burgerRef = useRef<HTMLButtonElement>(null);
+  const drawerRef = useRef<HTMLElement>(null);
   const pathname = usePathname();
   const [prevPathname, setPrevPathname] = useState(pathname);
 
@@ -32,13 +34,39 @@ export default function Header({ logo }: HeaderProps) {
     return () => window.removeEventListener("resize", onResize);
   }, []);
 
+  // Con il menu aperto: Escape chiude, Tab resta dentro il drawer.
+  // Il focus va sul primo elemento all'apertura e torna al burger alla chiusura.
   useEffect(() => {
-    if (!open) return;
+    const drawer = drawerRef.current;
+    if (!open || !drawer) return;
+    const burger = burgerRef.current;
+    const focusables = () =>
+      Array.from(drawer.querySelectorAll<HTMLElement>("button, a[href]"));
+    focusables()[0]?.focus();
+
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
+      if (e.key === "Escape") {
+        setOpen(false);
+        return;
+      }
+      if (e.key !== "Tab") return;
+      const items = focusables();
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (!first || !last) return;
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
     };
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      burger?.focus();
+    };
   }, [open]);
 
   useEffect(() => {
@@ -71,7 +99,7 @@ export default function Header({ logo }: HeaderProps) {
               <span className="text-[18px] tracking-[-0.01em]">
                 Misericordia
               </span>
-              <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-muted mt-1">
+              <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-muted-on-dark mt-1">
                 di Gello · dal 1994
               </span>
             </div>
@@ -93,6 +121,7 @@ export default function Header({ logo }: HeaderProps) {
 
           <div className="nav-cta">
             <button
+              ref={burgerRef}
               className="nav-burger"
               aria-expanded={open}
               aria-controls="nav-drawer"
@@ -128,8 +157,10 @@ export default function Header({ logo }: HeaderProps) {
       <aside
         id="nav-drawer"
         className={`nav-drawer${open ? " open" : ""}`}
-        aria-hidden={!open}
+        ref={drawerRef}
+        inert={!open}
         role="dialog"
+        aria-modal="true"
         aria-label="Menu di navigazione"
       >
         <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">
@@ -159,7 +190,9 @@ export default function Header({ logo }: HeaderProps) {
               className={`flex items-center justify-between px-6 py-4 border-b border-white/10 text-bg no-underline hover:bg-white/5 transition-colors${isActive(item.href) ? " bg-white/10" : ""}`}
             >
               <span className="text-base">{item.label}</span>
-              <span className="num text-bg/40">0{i + 1}</span>
+              <span aria-hidden="true" className="num text-bg/40">
+                0{i + 1}
+              </span>
             </Link>
           ))}
         </nav>

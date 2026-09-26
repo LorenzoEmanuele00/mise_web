@@ -16,8 +16,13 @@ export default async function SiteShell({ children }: { children: ReactNode }) {
 
   return (
     <>
+      <a href="#main" className="skip-link">
+        Salta al contenuto
+      </a>
       <Header logo={settings?.logo ?? null} />
-      <div className="flex-1">{children}</div>
+      <div id="main" tabIndex={-1} className="flex-1 outline-none">
+        {children}
+      </div>
       <Footer settings={settings} />
     </>
   );

@@ -18,18 +18,21 @@ export default function ServiziAccordion({ servizi }: ServiziAccordionProps) {
         const isOpen = open === s._id;
         return (
           <div key={s._id} className="border-b border-hair bg-bg">
-            <button
-              className="w-full flex items-center gap-6 py-8 px-8 text-left"
-              onClick={() => setOpen(isOpen ? null : s._id)}
-              aria-expanded={isOpen}
-            >
-              <Num>{s.num}</Num>
-              <span className="heading-03 flex-1 text-ink">{s.title}</span>
-              <Arrow dir={isOpen ? "up" : "down"} size={16} />
-            </button>
+            <h2>
+              <button
+                className="w-full flex items-center gap-6 py-8 px-8 text-left"
+                onClick={() => setOpen(isOpen ? null : s._id)}
+                aria-expanded={isOpen}
+                aria-controls={`servizio-${s._id}`}
+              >
+                <Num>{s.num}</Num>
+                <span className="heading-03 flex-1 text-ink">{s.title}</span>
+                <Arrow dir={isOpen ? "up" : "down"} size={16} />
+              </button>
+            </h2>
 
             {isOpen && (
-              <div className="pb-10 px-8 md:pl-14">
+              <div id={`servizio-${s._id}`} className="pb-10 px-8 md:pl-14">
                 <p className="body max-w-2xl text-ink-soft">{s.shortDesc}</p>
                 {s.longDesc && (
                   <p className="body max-w-2xl mt-4 text-ink-soft">

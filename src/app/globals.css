@@ -41,6 +41,8 @@
   --color-bg-deep: #e5dfcf;
   --color-ink-soft: #2e2b27;
   --color-muted: #635f59;
+  /* Grigio chiaro per i testi secondari su sfondo blu (header, footer) */
+  --color-muted-on-dark: #b8b5b1;
   --color-accent-soft: #d48a6b;
   --color-accent-deep: #7a3218;
   --color-accent-yellow: #f6e328;

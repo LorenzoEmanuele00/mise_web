@@ -99,7 +99,7 @@ export default function Header({ logo }: HeaderProps) {
               <span className="text-[18px] tracking-[-0.01em]">
                 Misericordia
               </span>
-              <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-muted mt-1">
+              <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-muted-on-dark mt-1">
                 di Gello · dal 1994
               </span>
             </div>

@@ -48,7 +48,7 @@ export default function Footer({ settings }: FooterProps) {
 
           {/* Nav */}
           <div>
-            <Kicker noRule className="text-bg/60">
+            <Kicker noRule className="text-bg/50">
               Naviga
             </Kicker>
             <ul className="mt-6 list-none p-0 space-y-1.5">
@@ -68,7 +68,7 @@ export default function Footer({ settings }: FooterProps) {
 
           {/* Contatti */}
           <div>
-            <Kicker noRule className="text-bg/60">
+            <Kicker noRule className="text-bg/50">
               Contatti
             </Kicker>
             <div className="mt-6 body text-bg/70 space-y-0.5">
@@ -96,17 +96,17 @@ export default function Footer({ settings }: FooterProps) {
 
           {/* Emergenze */}
           <div>
-            <Kicker noRule className="text-bg/60">
+            <Kicker noRule className="text-bg/50">
               Emergenze
             </Kicker>
             <div className="mt-6">
               <div className="serif text-5xl text-bg leading-none">118</div>
-              <p className="body-sm text-bg/60 mt-2">
+              <p className="body-sm text-bg/50 mt-2">
                 Pronto soccorso sanitario
               </p>
             </div>
             <div className="mt-7">
-              <p className="body-sm text-bg/60">Centralino sede</p>
+              <p className="body-sm text-bg/50">Centralino sede</p>
               <div className="serif text-bg mt-1 text-2xl">{phone}</div>
             </div>
           </div>
@@ -115,29 +115,29 @@ export default function Footer({ settings }: FooterProps) {
         <div className="rule" />
 
         <div className="flex flex-col md:flex-row justify-between gap-4 pt-6">
-          <p className="body-sm text-bg/60">
+          <p className="body-sm text-bg/50">
             © {year} Misericordia di Gello — C.F. {taxCode}
             {iban ? ` · IBAN ${iban}` : ""}
           </p>
-          <div className="flex gap-6 body-sm text-bg/60">
+          <div className="flex gap-6 body-sm text-bg/50">
             <Link
               href="/privacy"
               prefetch={false}
-              className="text-bg/60 no-underline hover:text-bg/80 transition-colors"
+              className="text-bg/50 no-underline hover:text-bg/80 transition-colors"
             >
               Privacy
             </Link>
             <Link
               href="/trasparenza"
               prefetch={false}
-              className="text-bg/60 no-underline hover:text-bg/80 transition-colors"
+              className="text-bg/50 no-underline hover:text-bg/80 transition-colors"
             >
               Trasparenza
             </Link>
             <Link
               href="/cookie"
               prefetch={false}
-              className="text-bg/60 no-underline hover:text-bg/80 transition-colors"
+              className="text-bg/50 no-underline hover:text-bg/80 transition-colors"
             >
               Cookie
             </Link>

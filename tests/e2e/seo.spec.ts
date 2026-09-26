@@ -24,6 +24,22 @@ test("la sitemap include /galleria", async ({ request }) => {
   expect(await response.text()).toContain("/galleria</loc>");
 });
 
+test("robots.txt punta alla sitemap con la stessa origine dei canonical", async ({
+  page,
+  request,
+}) => {
+  await page.goto("/");
+  const canonical = await page
+    .locator('link[rel="canonical"]')
+    .getAttribute("href");
+
+  const response = await request.get("/robots.txt");
+  expect(response.status()).toBe(200);
+  expect(await response.text()).toContain(
+    `Sitemap: ${new URL(canonical!).origin}/sitemap.xml`,
+  );
+});
+
 test("la home espone JSON-LD NGO valido", async ({ page }) => {
   await page.goto("/");
   const raw = await page

@@ -131,9 +131,10 @@ export default function ScrollStack({
     const stackPositionPx = parsePercentage(stackPosition, containerHeight);
     const scaleEndPositionPx = parsePercentage(scaleEndPosition, containerHeight);
 
-    const endElement = useWindowScroll
-      ? document.querySelector<HTMLElement>(".scroll-stack-end")
-      : scrollerRef.current?.querySelector<HTMLElement>(".scroll-stack-end");
+    // Sempre circoscritto al proprio contenitore, anche con lo scroll della
+    // finestra: due istanze montate insieme non si contaminano a vicenda.
+    const endElement =
+      scrollerRef.current?.querySelector<HTMLElement>(".scroll-stack-end");
 
     const endElementTop = endElement ? getElementOffset(endElement) : 0;
 
@@ -224,7 +225,6 @@ export default function ScrollStack({
     baseScale,
     rotationAmount,
     blurAmount,
-    useWindowScroll,
     onStackComplete,
     calculateProgress,
     parsePercentage,
@@ -299,9 +299,7 @@ export default function ScrollStack({
     if (!scroller) return;
 
     const cards = Array.from(
-      useWindowScroll
-        ? document.querySelectorAll<HTMLElement>(".scroll-stack-card")
-        : scroller.querySelectorAll<HTMLElement>(".scroll-stack-card"),
+      scroller.querySelectorAll<HTMLElement>(".scroll-stack-card"),
     );
 
     cardsRef.current = cards;

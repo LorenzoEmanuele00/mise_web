@@ -69,8 +69,8 @@ export const SERVIZIO_CIVILE_QUERY = groq`
       }
     },
     steps[] { numero, titolo, descrizione },
-    testimonianze[] { nome, anno, foto, testo },
-    faq[] { domanda, risposta },
+    testimonianze[] { _key, nome, anno, foto, testo },
+    faq[] { _key, domanda, risposta },
     seo
   }
 `;

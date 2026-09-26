@@ -20,7 +20,7 @@ export default function ScFaqSection({ faq }: { faq: ScFaq[] }) {
 
           <div className="border-t border-hair-strong">
             {faq.map((item, i) => (
-              <div key={i} className="border-b border-hair">
+              <div key={item._key} className="border-b border-hair">
                 <button
                   type="button"
                   onClick={() => setOpen(open === i ? -1 : i)}
